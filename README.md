@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Dec Walls
 
-## Getting Started
+Production-oriented e-commerce monorepo: customer storefront, ops admin, and CMS — powered by Next.js and Supabase.
 
-First, run the development server:
+## Structure
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```text
+apps/storefront   Public storefront (SEO)
+apps/ops          Admin + CMS
+packages/*        Shared UI, design system, domain, db, auth, integrations
+supabase/         Config + RLS policies
+docs/             Architecture notes
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Prerequisites
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Node.js 20+
+- npm 10+
+- Supabase project (optional for UI seed mode)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Setup
 
-## Learn More
+```bash
+cp .env.example apps/storefront/.env.local
+cp .env.example apps/ops/.env.local
+npm install
+```
 
-To learn more about Next.js, take a look at the following resources:
+Fill Supabase + `DATABASE_URL` when ready. Without them, domain seed data still serves the storefront and ops dashboards.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Develop
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run dev:storefront   # http://127.0.0.1:3000
+npm run dev:ops          # http://127.0.0.1:3001
+# or both
+npm run dev
+```
 
-## Deploy on Vercel
+## Database
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npm run db:generate
+npm run db:migrate
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Apply [`supabase/policies/rls.sql`](supabase/policies/rls.sql) in the Supabase SQL editor.
+
+## Test
+
+```bash
+npx vitest run
+npx playwright test
+```
+
+## Design sources
+
+- Tokens: [`design.md`](design.md)
+- Homepage composition: [`desgin/homePage/`](desgin/homePage/) (Bareeze Home capture)
+
+See [`docs/architecture.md`](docs/architecture.md) for boundaries and data flow.

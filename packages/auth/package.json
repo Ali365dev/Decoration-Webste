@@ -1,0 +1,30 @@
+{
+  "name": "@dec-walls/auth",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./permissions": "./src/permissions.ts",
+    "./supabase": "./src/supabase.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@dec-walls/config": "*",
+    "@dec-walls/db": "*",
+    "@dec-walls/types": "*",
+    "@supabase/ssr": "^0.7.0",
+    "@supabase/supabase-js": "^2.75.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19",
+    "next": "16.3.6",
+    "typescript": "^5"
+  },
+  "peerDependencies": {
+    "next": "^16.0.0"
+  }
+}

@@ -1,0 +1,22 @@
+# Dec Walls local Supabase config placeholder.
+# Run `npx supabase init` / `npx supabase start` to generate a full config.
+# Link DATABASE_URL to the local Postgres URL from `supabase status`.
+
+project_id = "dec-walls"
+
+[api]
+enabled = true
+port = 54321
+
+[db]
+port = 54322
+major_version = 15
+
+[studio]
+enabled = true
+port = 54323
+
+[auth]
+enabled = true
+site_url = "http://127.0.0.1:3000"
+additional_redirect_urls = ["http://127.0.0.1:3000", "http://127.0.0.1:3001"]

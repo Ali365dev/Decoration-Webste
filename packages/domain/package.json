@@ -1,0 +1,31 @@
+{
+  "name": "@dec-walls/domain",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./catalog": "./src/catalog/index.ts",
+    "./cart": "./src/cart/index.ts",
+    "./cms": "./src/cms/index.ts",
+    "./media": "./src/media/index.ts",
+    "./checkout": "./src/checkout/index.ts",
+    "./orders": "./src/orders/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@dec-walls/auth": "*",
+    "@dec-walls/config": "*",
+    "@dec-walls/db": "*",
+    "@dec-walls/integrations": "*",
+    "@dec-walls/types": "*",
+    "@dec-walls/validation": "*",
+    "drizzle-orm": "^0.44.5"
+  },
+  "devDependencies": {
+    "typescript": "^5"
+  }
+}

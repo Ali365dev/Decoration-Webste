@@ -15,7 +15,16 @@
 
 # next.js
 /.next/
+**/.next/
 /out/
+
+# turbo
+.turbo/
+
+# playwright
+/test-results/
+/playwright-report/
+/blob-report/
 
 # production
 /build

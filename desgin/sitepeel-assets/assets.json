@@ -1,0 +1,1790 @@
+{
+  "source": "https://bareezehome.com.pk/",
+  "assets": [
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/logo_svg.svg?v=1690200723",
+      "kind": "Image",
+      "width": 300,
+      "height": 81,
+      "alt": "Bareeze Home",
+      "label": "Bareeze Home",
+      "category": "Images",
+      "index": 0
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/bs-433a.jpg?v=1790163907",
+      "kind": "Image",
+      "width": 197,
+      "height": 197,
+      "alt": "QUILT & BED SHEET",
+      "label": "QUILT & BED SHEET",
+      "category": "Images",
+      "index": 1
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/bs-433acloseup1.jpg?v=1790163907",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "QUILT & BED SHEET",
+      "label": "QUILT & BED SHEET",
+      "category": "Images",
+      "index": 2
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/fpbs-195closeup1.jpg?v=1790154171",
+      "kind": "Image",
+      "width": 197,
+      "height": 197,
+      "alt": "SILK PLAIN BED SHEET SET",
+      "label": "SILK PLAIN BED SHEET SET",
+      "category": "Images",
+      "index": 3
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/fpbs-195closeup2.jpg?v=1790154171",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "SILK PLAIN BED SHEET SET",
+      "label": "SILK PLAIN BED SHEET SET",
+      "category": "Images",
+      "index": 4
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/fpbs-194.jpg?v=1790154160",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "SILK PLAIN BED SHEET SET",
+      "label": "SILK PLAIN BED SHEET SET",
+      "category": "Images",
+      "index": 5
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/fpbs-194closeup1.jpg?v=1790154160",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "SILK PLAIN BED SHEET SET",
+      "label": "SILK PLAIN BED SHEET SET",
+      "category": "Images",
+      "index": 6
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/cte-184.jpg?v=1789368897",
+      "kind": "Image",
+      "width": 197,
+      "height": 197,
+      "alt": "TOWEL SET (04-PCS)",
+      "label": "TOWEL SET (04-PCS)",
+      "category": "Images",
+      "index": 7
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/cte-181.jpg?v=1789368887",
+      "kind": "Image",
+      "width": 197,
+      "height": 197,
+      "alt": "TOWEL SET (04-PCS)",
+      "label": "TOWEL SET (04-PCS)",
+      "category": "Images",
+      "index": 8
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/cte-180.jpg?v=1789368842",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "TOWEL SET (04-PCS)",
+      "label": "TOWEL SET (04-PCS)",
+      "category": "Images",
+      "index": 9
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/ftl-249.jpg?v=1790154221",
+      "kind": "Image",
+      "width": 197,
+      "height": 197,
+      "alt": "Table Linen",
+      "label": "Table Linen",
+      "category": "Images",
+      "index": 10
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/ftl-249tissuebox.jpg?v=1790154221",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "Table Linen",
+      "label": "Table Linen",
+      "category": "Images",
+      "index": 11
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/ftl-248.jpg?v=1790154213",
+      "kind": "Image",
+      "width": 197,
+      "height": 197,
+      "alt": "Table Linen",
+      "label": "Table Linen",
+      "category": "Images",
+      "index": 12
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/ftl-248tissuebox.jpg?v=1790154213",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "Table Linen",
+      "label": "Table Linen",
+      "category": "Images",
+      "index": 13
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/ftl-247.jpg?v=1790154205",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "Table Linen",
+      "label": "Table Linen",
+      "category": "Images",
+      "index": 14
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/ftl-247tissueboxcloseup.jpg?v=1790154205",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "Table Linen",
+      "label": "Table Linen",
+      "category": "Images",
+      "index": 15
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/fch-578dneckroll.jpg?v=1790163915",
+      "kind": "Image",
+      "width": 197,
+      "height": 197,
+      "alt": "NECK ROLL",
+      "label": "NECK ROLL",
+      "category": "Images",
+      "index": 16
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/qpc-139small.jpg?v=1790154247",
+      "kind": "Image",
+      "width": 197,
+      "height": 197,
+      "alt": "QURAN COVER",
+      "label": "QURAN COVER",
+      "category": "Images",
+      "index": 17
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/qpc-139big.jpg?v=1790154247",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "QURAN COVER",
+      "label": "QURAN COVER",
+      "category": "Images",
+      "index": 18
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/qpc-138small.jpg?v=1790154237",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "QURAN COVER",
+      "label": "QURAN COVER",
+      "category": "Images",
+      "index": 19
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/fkh-142.jpg?v=1789369242",
+      "kind": "Image",
+      "width": 197,
+      "height": 197,
+      "alt": "KHAISE",
+      "label": "KHAISE",
+      "category": "Images",
+      "index": 20
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/fkh-142closeup-1.jpg?v=1789369242",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "KHAISE",
+      "label": "KHAISE",
+      "category": "Images",
+      "index": 21
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/fkh-139.jpg?v=1789369235",
+      "kind": "Image",
+      "width": 197,
+      "height": 197,
+      "alt": "KHAISE",
+      "label": "KHAISE",
+      "category": "Images",
+      "index": 22
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/fkh-139closeup-1.jpg?v=1789369235",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "KHAISE",
+      "label": "KHAISE",
+      "category": "Images",
+      "index": 23
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/fkh-137.jpg?v=1789369226",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "KHAISE",
+      "label": "KHAISE",
+      "category": "Images",
+      "index": 24
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/fkh-137closeup-1.jpg?v=1789369226",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "KHAISE",
+      "label": "KHAISE",
+      "category": "Images",
+      "index": 25
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/fpbs-193.jpg?v=1790153883",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "SILK PLAIN BED SHEET SET",
+      "label": "SILK PLAIN BED SHEET SET",
+      "category": "Images",
+      "index": 26
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/fpbs-193closeup1.jpg?v=1790153883",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "SILK PLAIN BED SHEET SET",
+      "label": "SILK PLAIN BED SHEET SET",
+      "category": "Images",
+      "index": 27
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/Artboard_1_copy_3.jpg?v=1790154063",
+      "kind": "Image",
+      "width": 197,
+      "height": 197,
+      "alt": "BED IN A BAG",
+      "label": "BED IN A BAG",
+      "category": "Images",
+      "index": 28
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/capp-179closeup3.jpg?v=1790154029",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "BED IN A BAG",
+      "label": "BED IN A BAG",
+      "category": "Images",
+      "index": 29
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/CAPP-184.jpg?v=1789711352",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "BED IN A BAG",
+      "label": "BED IN A BAG",
+      "category": "Images",
+      "index": 30
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/CAPP-184closeup1.jpg?v=1789711352",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "BED IN A BAG",
+      "label": "BED IN A BAG",
+      "category": "Images",
+      "index": 31
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/cprt-193.jpg?v=1790153898",
+      "kind": "Image",
+      "width": 197,
+      "height": 197,
+      "alt": "PRINTED BED SHEET SET",
+      "label": "PRINTED BED SHEET SET",
+      "category": "Images",
+      "index": 32
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/cprt-193closeup2.jpg?v=1790153898",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "PRINTED BED SHEET SET",
+      "label": "PRINTED BED SHEET SET",
+      "category": "Images",
+      "index": 33
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/cprt-192.jpg?v=1790153958",
+      "kind": "Image",
+      "width": 197,
+      "height": 197,
+      "alt": "PRINTED BED SHEET SET",
+      "label": "PRINTED BED SHEET SET",
+      "category": "Images",
+      "index": 34
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/cprt-192closeup2.jpg?v=1790153958",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "PRINTED BED SHEET SET",
+      "label": "PRINTED BED SHEET SET",
+      "category": "Images",
+      "index": 35
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/cprt-191.jpg?v=1790153872",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "PRINTED BED SHEET SET",
+      "label": "PRINTED BED SHEET SET",
+      "category": "Images",
+      "index": 36
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/cprt-191closeup2.jpg?v=1790153872",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "PRINTED BED SHEET SET",
+      "label": "PRINTED BED SHEET SET",
+      "category": "Images",
+      "index": 37
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/fch-570ab.jpg?v=1790154145",
+      "kind": "Image",
+      "width": 197,
+      "height": 197,
+      "alt": "CUSHION",
+      "label": "CUSHION",
+      "category": "Images",
+      "index": 38
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/fch-570ab16x16closeup.jpg?v=1790154145",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "CUSHION",
+      "label": "CUSHION",
+      "category": "Images",
+      "index": 39
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/fch-569ab.jpg?v=1790154015",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "CUSHION",
+      "label": "CUSHION",
+      "category": "Images",
+      "index": 40
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/fch-569ab16x16closeup1.jpg?v=1790154015",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "CUSHION",
+      "label": "CUSHION",
+      "category": "Images",
+      "index": 41
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FJY-141.jpg?v=1789711228",
+      "kind": "Image",
+      "width": 197,
+      "height": 197,
+      "alt": "PRAYER MAT",
+      "label": "PRAYER MAT",
+      "category": "Images",
+      "index": 42
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FJY-141closeup.jpg?v=1789711228",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "PRAYER MAT",
+      "label": "PRAYER MAT",
+      "category": "Images",
+      "index": 43
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FJY-145.jpg?v=1789563087",
+      "kind": "Image",
+      "width": 197,
+      "height": 197,
+      "alt": "PRAYER MAT",
+      "label": "PRAYER MAT",
+      "category": "Images",
+      "index": 44
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FJY-145cLOSEUP.jpg?v=1789563087",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "PRAYER MAT",
+      "label": "PRAYER MAT",
+      "category": "Images",
+      "index": 45
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FJY-144.jpg?v=1789563080",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "PRAYER MAT",
+      "label": "PRAYER MAT",
+      "category": "Images",
+      "index": 46
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FJY-144CLOSEUP.jpg?v=1789563080",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "PRAYER MAT",
+      "label": "PRAYER MAT",
+      "category": "Images",
+      "index": 47
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/qpc-137small.jpg?v=1790154229",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "QURAN COVER",
+      "label": "QURAN COVER",
+      "category": "Images",
+      "index": 48
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/qpc-137big.jpg?v=1790154229",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "QURAN COVER",
+      "label": "QURAN COVER",
+      "category": "Images",
+      "index": 49
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FQB-125.jpg?v=1771485396",
+      "kind": "Image",
+      "width": 197,
+      "height": 197,
+      "alt": "QURAN BOX",
+      "label": "QURAN BOX",
+      "category": "Images",
+      "index": 50
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FQB-125closeup1.jpg?v=1771485396",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "QURAN BOX",
+      "label": "QURAN BOX",
+      "category": "Images",
+      "index": 51
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FQB-124closeup2.jpg?v=1771485389",
+      "kind": "Image",
+      "width": 197,
+      "height": 197,
+      "alt": "QURAN BOX",
+      "label": "QURAN BOX",
+      "category": "Images",
+      "index": 52
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FQB-124.jpg?v=1771485389",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "QURAN BOX",
+      "label": "QURAN BOX",
+      "category": "Images",
+      "index": 53
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FQB-122.jpg?v=1771485341",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "QURAN BOX",
+      "label": "QURAN BOX",
+      "category": "Images",
+      "index": 54
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FQB-122closeup-1.jpg?v=1771485341",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "QURAN BOX",
+      "label": "QURAN BOX",
+      "category": "Images",
+      "index": 55
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FTSB-128.jpg?v=1776341259",
+      "kind": "Image",
+      "width": 197,
+      "height": 197,
+      "alt": "TASBEEH BOX",
+      "label": "TASBEEH BOX",
+      "category": "Images",
+      "index": 56
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FTSB-128closeup.jpg?v=1776341259",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "TASBEEH BOX",
+      "label": "TASBEEH BOX",
+      "category": "Images",
+      "index": 57
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FTSB-129.jpg?v=1776341264",
+      "kind": "Image",
+      "width": 197,
+      "height": 197,
+      "alt": "TASBEEH BOX",
+      "label": "TASBEEH BOX",
+      "category": "Images",
+      "index": 58
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FTSB-129closeup.jpg?v=1776341264",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "TASBEEH BOX",
+      "label": "TASBEEH BOX",
+      "category": "Images",
+      "index": 59
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FTSB-125.jpg?v=1771485532",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "TASBEEH BOX",
+      "label": "TASBEEH BOX",
+      "category": "Images",
+      "index": 60
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FTSB-125closeup1.jpg?v=1771485532",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "TASBEEH BOX",
+      "label": "TASBEEH BOX",
+      "category": "Images",
+      "index": 61
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FTS-90closeup.jpg?v=1760099149",
+      "kind": "Image",
+      "width": 197,
+      "height": 197,
+      "alt": "Tasbeeh",
+      "label": "Tasbeeh",
+      "category": "Images",
+      "index": 62
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FTS-90.jpg?v=1760099149",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "Tasbeeh",
+      "label": "Tasbeeh",
+      "category": "Images",
+      "index": 63
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FTS-87.jpg?v=1741603782",
+      "kind": "Image",
+      "width": 197,
+      "height": 197,
+      "alt": "Tasbeeh",
+      "label": "Tasbeeh",
+      "category": "Images",
+      "index": 64
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FTS-87-Closeup-1.jpg?v=1741603782",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "Tasbeeh",
+      "label": "Tasbeeh",
+      "category": "Images",
+      "index": 65
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FTS-47.jpg?v=1729586869",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "Tasbeeh",
+      "label": "Tasbeeh",
+      "category": "Images",
+      "index": 66
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FTS-47-Closeup-1.jpg?v=1729586868",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "Tasbeeh",
+      "label": "Tasbeeh",
+      "category": "Images",
+      "index": 67
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FRT-30.jpg?v=1776341331",
+      "kind": "Image",
+      "width": 197,
+      "height": 199,
+      "alt": "RING TRAY SET",
+      "label": "RING TRAY SET",
+      "category": "Images",
+      "index": 68
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FRT-30closeup.jpg?v=1776341331",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "RING TRAY SET",
+      "label": "RING TRAY SET",
+      "category": "Images",
+      "index": 69
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FRT-29.jpg?v=1771485380",
+      "kind": "Image",
+      "width": 197,
+      "height": 197,
+      "alt": "RING TRAY SET",
+      "label": "RING TRAY SET",
+      "category": "Images",
+      "index": 70
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FRT-29closeup1.jpg?v=1771485380",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "RING TRAY SET",
+      "label": "RING TRAY SET",
+      "category": "Images",
+      "index": 71
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FRT-26.jpg?v=1771485372",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "RING TRAY SET",
+      "label": "RING TRAY SET",
+      "category": "Images",
+      "index": 72
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FRT-26closeup1.jpg?v=1771485372",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "RING TRAY SET",
+      "label": "RING TRAY SET",
+      "category": "Images",
+      "index": 73
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FTP-125.jpg?v=1771485481",
+      "kind": "Image",
+      "width": 197,
+      "height": 197,
+      "alt": "POUCH",
+      "label": "POUCH",
+      "category": "Images",
+      "index": 74
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FTP-125closeup1.jpg?v=1771485481",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "POUCH",
+      "label": "POUCH",
+      "category": "Images",
+      "index": 75
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FTP-124.jpg?v=1771485467",
+      "kind": "Image",
+      "width": 197,
+      "height": 197,
+      "alt": "POUCH",
+      "label": "POUCH",
+      "category": "Images",
+      "index": 76
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FTP-124closeup1.jpg?v=1771485467",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "POUCH",
+      "label": "POUCH",
+      "category": "Images",
+      "index": 77
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FTP-123.jpg?v=1771485443",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "POUCH",
+      "label": "POUCH",
+      "category": "Images",
+      "index": 78
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FTP-123closeup1.jpg?v=1771485443",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "POUCH",
+      "label": "POUCH",
+      "category": "Images",
+      "index": 79
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FPU-57.jpg?v=1715252533",
+      "kind": "Image",
+      "width": 197,
+      "height": 197,
+      "alt": "Velva Pouffe",
+      "label": "Velva Pouffe",
+      "category": "Images",
+      "index": 80
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FPU-57-closeup-1.jpg?v=1715252533",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "Velva Pouffe",
+      "label": "Velva Pouffe",
+      "category": "Images",
+      "index": 81
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/fth-115-rp.jpg?v=1779254666",
+      "kind": "Image",
+      "width": 197,
+      "height": 197,
+      "alt": "BED THROW",
+      "label": "BED THROW",
+      "category": "Images",
+      "index": 82
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/fth-115-rp-closeup.jpg?v=1779254633",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "BED THROW",
+      "label": "BED THROW",
+      "category": "Images",
+      "index": 83
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/fth-113-rp.jpg?v=1779254625",
+      "kind": "Image",
+      "width": 197,
+      "height": 197,
+      "alt": "BED THROW",
+      "label": "BED THROW",
+      "category": "Images",
+      "index": 84
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/fth-113-rp-closeup-1.jpg?v=1779254625",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "BED THROW",
+      "label": "BED THROW",
+      "category": "Images",
+      "index": 85
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/OUDVANILLA.jpg?v=1780402494",
+      "kind": "Image",
+      "width": 197,
+      "height": 197,
+      "alt": "OUD VANILLA",
+      "label": "OUD VANILLA",
+      "category": "Images",
+      "index": 86
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/OUDVANILLA02.jpg?v=1780402494",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "OUD VANILLA",
+      "label": "OUD VANILLA",
+      "category": "Images",
+      "index": 87
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/Cirtus-03.jpg?v=1780402488",
+      "kind": "Image",
+      "width": 197,
+      "height": 197,
+      "alt": "CIRTUS",
+      "label": "CIRTUS",
+      "category": "Images",
+      "index": 88
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/CIRTUS.jpg?v=1780402488",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "CIRTUS",
+      "label": "CIRTUS",
+      "category": "Images",
+      "index": 89
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/WoodSandal.jpg?v=1780402485",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "WOOD SANDAL",
+      "label": "WOOD SANDAL",
+      "category": "Images",
+      "index": 90
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/WoodSandal02.jpg?v=1780402484",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "WOOD SANDAL",
+      "label": "WOOD SANDAL",
+      "category": "Images",
+      "index": 91
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/products/flg-23_2.jpg?v=1707896875",
+      "kind": "Image",
+      "width": 197,
+      "height": 197,
+      "alt": "Pillow Filling",
+      "label": "Pillow Filling",
+      "category": "Images",
+      "index": 92
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/products/summer_quilt.jpg?v=1690267675",
+      "kind": "Image",
+      "width": 197,
+      "height": 197,
+      "alt": "SUMMER QUILT",
+      "label": "SUMMER QUILT",
+      "category": "Images",
+      "index": 93
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/products/winter_quilt_a652c266-7248-4e63-8a98-fac40e243f4e.jpg?v=1690268958",
+      "kind": "Image",
+      "width": 197,
+      "height": 197,
+      "alt": "WINTER QUILT",
+      "label": "WINTER QUILT",
+      "category": "Images",
+      "index": 94
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/WSS-01.jpg?v=1776341200",
+      "kind": "Image",
+      "width": 197,
+      "height": 197,
+      "alt": "Serene Sand Round Stool",
+      "label": "Serene Sand Round Stool",
+      "category": "Images",
+      "index": 95
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/WSS-01closeup1.jpg?v=1776341200",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "Serene Sand Round Stool",
+      "label": "Serene Sand Round Stool",
+      "category": "Images",
+      "index": 96
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/WSS-02BotanicalMeadowRoundStool.jpg?v=1774351440",
+      "kind": "Image",
+      "width": 197,
+      "height": 197,
+      "alt": "Botanical Meadow Round Stool",
+      "label": "Botanical Meadow Round Stool",
+      "category": "Images",
+      "index": 97
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/WSS-02BotanicalMeadowRoundStoolcloseup1.jpg?v=1774351440",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "Botanical Meadow Round Stool",
+      "label": "Botanical Meadow Round Stool",
+      "category": "Images",
+      "index": 98
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FS-2601.jpg?v=1766407017",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "Antique Stool",
+      "label": "Antique Stool",
+      "category": "Images",
+      "index": 99
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FS-2602.jpg?v=1766407017",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "Antique Stool",
+      "label": "Antique Stool",
+      "category": "Images",
+      "index": 100
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FMT-01RattanMagzineTable.jpg?v=1765451558",
+      "kind": "Image",
+      "width": 197,
+      "height": 197,
+      "alt": "Rattan Magazine Small Table",
+      "label": "Rattan Magazine Small Table",
+      "category": "Images",
+      "index": 101
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FMT-01RattanMagzineTablecloseup1.jpg?v=1765451558",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "Rattan Magazine Small Table",
+      "label": "Rattan Magazine Small Table",
+      "category": "Images",
+      "index": 102
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FWT-05.jpg?v=1751367679",
+      "kind": "Image",
+      "width": 197,
+      "height": 197,
+      "alt": "Baroque Stitch Table",
+      "label": "Baroque Stitch Table",
+      "category": "Images",
+      "index": 103
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FWT-05Closeup.jpg?v=1751367679",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "Baroque Stitch Table",
+      "label": "Baroque Stitch Table",
+      "category": "Images",
+      "index": 104
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FWT-04_5773e45e-290a-47f0-b9c2-cd93763cf898.jpg?v=1751367647",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "Cane Weave Table",
+      "label": "Cane Weave Table",
+      "category": "Images",
+      "index": 105
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FWT-04Closeup-01.jpg?v=1751367647",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "Cane Weave Table",
+      "label": "Cane Weave Table",
+      "category": "Images",
+      "index": 106
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FWC-06WayFairCHAIR.jpg?v=1765451644",
+      "kind": "Image",
+      "width": 197,
+      "height": 197,
+      "alt": "Way Fair Chair",
+      "label": "Way Fair Chair",
+      "category": "Images",
+      "index": 107
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FWC-06WayFairCHAIRcloseup1.jpg?v=1765451644",
+      "kind": "Image",
+      "width": 282,
+      "height": 274,
+      "alt": "Way Fair Chair",
+      "label": "Way Fair Chair",
+      "category": "Images",
+      "index": 108
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FWC-05Sophia_Chaircloseup1.jpg?v=1765451596",
+      "kind": "Image",
+      "width": 197,
+      "height": 197,
+      "alt": "Sophia Chair",
+      "label": "Sophia Chair",
+      "category": "Images",
+      "index": 109
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FWC-05Sophia_Chaircloseup2.jpg?v=1765451596",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "Sophia Chair",
+      "label": "Sophia Chair",
+      "category": "Images",
+      "index": 110
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FWC-01B.jpg?v=1741257439",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "Blue Lily Chair",
+      "label": "Blue Lily Chair",
+      "category": "Images",
+      "index": 111
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FWC-01Bcloseup.jpg?v=1741257439",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "Blue Lily Chair",
+      "label": "Blue Lily Chair",
+      "category": "Images",
+      "index": 112
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FWDS-02UzbekSuzani2.jpg?v=1765451711",
+      "kind": "Image",
+      "width": 197,
+      "height": 197,
+      "alt": "Uzbek Suzani Dining Set",
+      "label": "Uzbek Suzani Dining Set",
+      "category": "Images",
+      "index": 113
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FWDS-02UzbekSuzani_CHAIRcloseup-1.jpg?v=1765451711",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "Uzbek Suzani Dining Set",
+      "label": "Uzbek Suzani Dining Set",
+      "category": "Images",
+      "index": 114
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/WST-01_561cd712-b4a4-46d4-8754-893f40731eff.jpg?v=1751367712",
+      "kind": "Image",
+      "width": 197,
+      "height": 197,
+      "alt": "Baroque Spiral Settee",
+      "label": "Baroque Spiral Settee",
+      "category": "Images",
+      "index": 115
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/WST-01Closeup-01.jpg?v=1751367712",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "Baroque Spiral Settee",
+      "label": "Baroque Spiral Settee",
+      "category": "Images",
+      "index": 116
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/1_copy_3.jpg?v=1789382502&width=3840",
+      "kind": "Image",
+      "width": 1511,
+      "height": 672,
+      "label": "",
+      "category": "Images",
+      "index": 117
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/2_4138378c-c9aa-465e-96f4-269b46a5cc77.jpg?v=1789382501&width=1100",
+      "kind": "Image",
+      "width": 1512,
+      "height": 2218,
+      "label": "",
+      "category": "Images",
+      "index": 118
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/A_Final.jpg?v=1778657137",
+      "kind": "Image",
+      "width": 500,
+      "height": 584,
+      "label": "",
+      "category": "Images",
+      "index": 119
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/B.jpg?v=1778656764",
+      "kind": "Image",
+      "width": 0,
+      "height": 0,
+      "label": "",
+      "category": "Images",
+      "index": 120
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/Artboard_8.jpg?v=1778659384",
+      "kind": "Image",
+      "width": 500,
+      "height": 584,
+      "label": "",
+      "category": "Images",
+      "index": 121
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/Artboard_14.jpg?v=1778659381",
+      "kind": "Image",
+      "width": 0,
+      "height": 0,
+      "label": "",
+      "category": "Images",
+      "index": 122
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/Artboard_7.jpg?v=1778659383",
+      "kind": "Image",
+      "width": 500,
+      "height": 584,
+      "label": "",
+      "category": "Images",
+      "index": 123
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/Artboard_13.jpg?v=1778659381",
+      "kind": "Image",
+      "width": 0,
+      "height": 0,
+      "label": "",
+      "category": "Images",
+      "index": 124
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/Artboard_11.jpg?v=1778659383",
+      "kind": "Image",
+      "width": 500,
+      "height": 584,
+      "label": "",
+      "category": "Images",
+      "index": 125
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/Artboard_17.jpg?v=1778659380",
+      "kind": "Image",
+      "width": 0,
+      "height": 0,
+      "label": "",
+      "category": "Images",
+      "index": 126
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/Artboard_9.jpg?v=1778659383",
+      "kind": "Image",
+      "width": 500,
+      "height": 584,
+      "label": "",
+      "category": "Images",
+      "index": 127
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/Artboard_15.jpg?v=1778659381",
+      "kind": "Image",
+      "width": 0,
+      "height": 0,
+      "label": "",
+      "category": "Images",
+      "index": 128
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/Artboard_10.jpg?v=1778659383",
+      "kind": "Image",
+      "width": 500,
+      "height": 584,
+      "label": "",
+      "category": "Images",
+      "index": 129
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/Artboard_16.jpg?v=1778659381",
+      "kind": "Image",
+      "width": 0,
+      "height": 0,
+      "label": "",
+      "category": "Images",
+      "index": 130
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/fch-568ab.jpg?v=1790154006",
+      "kind": "Image",
+      "width": 292,
+      "height": 292,
+      "alt": "CUSHION",
+      "label": "CUSHION",
+      "category": "Images",
+      "index": 131
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/fch-568abcloseup.jpg?v=1790154005",
+      "kind": "Image",
+      "width": 292,
+      "height": 292,
+      "alt": "CUSHION",
+      "label": "CUSHION",
+      "category": "Images",
+      "index": 132
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/fbd-195.jpg?v=1790153919",
+      "kind": "Image",
+      "width": 292,
+      "height": 292,
+      "alt": "BED SPREAD SET",
+      "label": "BED SPREAD SET",
+      "category": "Images",
+      "index": 133
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/fbd-195closeup3.jpg?v=1790153919",
+      "kind": "Image",
+      "width": 292,
+      "height": 292,
+      "alt": "BED SPREAD SET",
+      "label": "BED SPREAD SET",
+      "category": "Images",
+      "index": 134
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/fbd-194.jpg?v=1790153995",
+      "kind": "Image",
+      "width": 292,
+      "height": 292,
+      "alt": "BED SPREAD SET",
+      "label": "BED SPREAD SET",
+      "category": "Images",
+      "index": 135
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/fbd-194closeup3.jpg?v=1790153994",
+      "kind": "Image",
+      "width": 292,
+      "height": 292,
+      "alt": "BED SPREAD SET",
+      "label": "BED SPREAD SET",
+      "category": "Images",
+      "index": 136
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/fbd-193.jpg?v=1790153970",
+      "kind": "Image",
+      "width": 292,
+      "height": 292,
+      "alt": "BED SPREAD SET",
+      "label": "BED SPREAD SET",
+      "category": "Images",
+      "index": 137
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/fbd-193closeup3.jpg?v=1790153970",
+      "kind": "Image",
+      "width": 292,
+      "height": 292,
+      "alt": "BED SPREAD SET",
+      "label": "BED SPREAD SET",
+      "category": "Images",
+      "index": 138
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/tw-444b.jpg?v=1789368835",
+      "kind": "Image",
+      "width": 292,
+      "height": 292,
+      "alt": "TOWEL SET (04-PCS)",
+      "label": "TOWEL SET (04-PCS)",
+      "category": "Images",
+      "index": 139
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/TW-444A.jpg?v=1789368824",
+      "kind": "Image",
+      "width": 292,
+      "height": 292,
+      "alt": "TOWEL SET (04-PCS)",
+      "label": "TOWEL SET (04-PCS)",
+      "category": "Images",
+      "index": 140
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/cte-179.jpg?v=1789368817",
+      "kind": "Image",
+      "width": 292,
+      "height": 292,
+      "alt": "TOWEL SET (04-PCS)",
+      "label": "TOWEL SET (04-PCS)",
+      "category": "Images",
+      "index": 141
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/tw-446B.jpg?v=1789390705",
+      "kind": "Image",
+      "width": 292,
+      "height": 292,
+      "alt": "TOWEL SET (04-PCS)",
+      "label": "TOWEL SET (04-PCS)",
+      "category": "Images",
+      "index": 142
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/tw-446A_0fe2bd5e-9c3d-4a81-902e-cdde473bac69.jpg?v=1789390671",
+      "kind": "Image",
+      "width": 292,
+      "height": 292,
+      "alt": "TOWEL SET (04-PCS)",
+      "label": "TOWEL SET (04-PCS)",
+      "category": "Images",
+      "index": 143
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FTL-251.jpg?v=1789369194",
+      "kind": "Image",
+      "width": 292,
+      "height": 292,
+      "alt": "Table Linen",
+      "label": "Table Linen",
+      "category": "Images",
+      "index": 144
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FTL-251runner.jpg?v=1789369195",
+      "kind": "Image",
+      "width": 292,
+      "height": 292,
+      "alt": "Table Linen",
+      "label": "Table Linen",
+      "category": "Images",
+      "index": 145
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FTL-255.jpg?v=1789369024",
+      "kind": "Image",
+      "width": 292,
+      "height": 292,
+      "alt": "Table Linen",
+      "label": "Table Linen",
+      "category": "Images",
+      "index": 146
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FTL-255placemat.jpg?v=1789369024",
+      "kind": "Image",
+      "width": 292,
+      "height": 292,
+      "alt": "Table Linen",
+      "label": "Table Linen",
+      "category": "Images",
+      "index": 147
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FTL-254.jpg?v=1789369003",
+      "kind": "Image",
+      "width": 292,
+      "height": 292,
+      "alt": "Table Linen",
+      "label": "Table Linen",
+      "category": "Images",
+      "index": 148
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FTL-254placemat.jpg?v=1789369003",
+      "kind": "Image",
+      "width": 292,
+      "height": 292,
+      "alt": "Table Linen",
+      "label": "Table Linen",
+      "category": "Images",
+      "index": 149
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FTL-246.jpg?v=1782993588",
+      "kind": "Image",
+      "width": 292,
+      "height": 292,
+      "alt": "Table Linen",
+      "label": "Table Linen",
+      "category": "Images",
+      "index": 150
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FTL-246MATcopy.jpg?v=1782993588",
+      "kind": "Image",
+      "width": 292,
+      "height": 292,
+      "alt": "Table Linen",
+      "label": "Table Linen",
+      "category": "Images",
+      "index": 151
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/ftl-245.jpg?v=1778153992",
+      "kind": "Image",
+      "width": 292,
+      "height": 292,
+      "alt": "TABLE LINEN",
+      "label": "TABLE LINEN",
+      "category": "Images",
+      "index": 152
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/ftl-245tissubox.jpg?v=1778153993",
+      "kind": "Image",
+      "width": 292,
+      "height": 292,
+      "alt": "TABLE LINEN",
+      "label": "TABLE LINEN",
+      "category": "Images",
+      "index": 153
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/qpc-141big.jpg?v=1789711374",
+      "kind": "Image",
+      "width": 292,
+      "height": 292,
+      "alt": "QURAN COVER",
+      "label": "QURAN COVER",
+      "category": "Images",
+      "index": 154
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/qpc-141small.jpg?v=1789711374",
+      "kind": "Image",
+      "width": 292,
+      "height": 292,
+      "alt": "QURAN COVER",
+      "label": "QURAN COVER",
+      "category": "Images",
+      "index": 155
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FTSB-124.jpg?v=1771485512",
+      "kind": "Image",
+      "width": 292,
+      "height": 292,
+      "alt": "TASBEEH BOX",
+      "label": "TASBEEH BOX",
+      "category": "Images",
+      "index": 156
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FTSB-124closeup1.jpg?v=1771485512",
+      "kind": "Image",
+      "width": 292,
+      "height": 292,
+      "alt": "TASBEEH BOX",
+      "label": "TASBEEH BOX",
+      "category": "Images",
+      "index": 157
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FTSB-122.jpg?v=1771485497",
+      "kind": "Image",
+      "width": 292,
+      "height": 292,
+      "alt": "TASBEEH BOX",
+      "label": "TASBEEH BOX",
+      "category": "Images",
+      "index": 158
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FTSB-122closeup1.jpg?v=1771485497",
+      "kind": "Image",
+      "width": 292,
+      "height": 292,
+      "alt": "TASBEEH BOX",
+      "label": "TASBEEH BOX",
+      "category": "Images",
+      "index": 159
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FTP-121.jpg?v=1771485441",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "POUCH",
+      "label": "POUCH",
+      "category": "Images",
+      "index": 160
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FTP-121closeup1.jpg?v=1771485441",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "POUCH",
+      "label": "POUCH",
+      "category": "Images",
+      "index": 161
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FTP-119.jpg?v=1771485438",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "POUCH",
+      "label": "POUCH",
+      "category": "Images",
+      "index": 162
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FTP-119closeup1.jpg?v=1771485438",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "POUCH",
+      "label": "POUCH",
+      "category": "Images",
+      "index": 163
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/BLOSSOM_rotary_bedspread-3_c04aaaf0-ef88-4590-900d-50833d3ed4dd.jpg?v=1769583107",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "BLOSSOM",
+      "label": "BLOSSOM",
+      "category": "Images",
+      "index": 164
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/BLOSSOM_rotary_bedspread-3_closeup-1_7ad96bc9-5245-4233-91f7-d4e72b69fa3c.jpg?v=1769583108",
+      "kind": "Image",
+      "width": 282,
+      "height": 282,
+      "alt": "BLOSSOM",
+      "label": "BLOSSOM",
+      "category": "Images",
+      "index": 165
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FLORET_rotary_bedspread-2_267cbb1b-abed-45a9-8545-394667d57732.jpg?v=1769583106",
+      "kind": "Image",
+      "width": 292,
+      "height": 292,
+      "alt": "FLORET",
+      "label": "FLORET",
+      "category": "Images",
+      "index": 166
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FLORET_rotary_bedspread-2_closeup-1_9e95aad3-ce79-443f-b982-ce4747271334.jpg?v=1769583105",
+      "kind": "Image",
+      "width": 292,
+      "height": 292,
+      "alt": "FLORET",
+      "label": "FLORET",
+      "category": "Images",
+      "index": 167
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FLORALBUNCHrotarybedspread-4.jpg?v=1768897814",
+      "kind": "Image",
+      "width": 292,
+      "height": 292,
+      "alt": "FLORAL BUNCH",
+      "label": "FLORAL BUNCH",
+      "category": "Images",
+      "index": 168
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/FLORALBUNCHrotarybedspread-4closeup-1.jpg?v=1768897814",
+      "kind": "Image",
+      "width": 292,
+      "height": 292,
+      "alt": "FLORAL BUNCH",
+      "label": "FLORAL BUNCH",
+      "category": "Images",
+      "index": 169
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/MUGHALARTrotarybedspread-1.jpg?v=1768897808",
+      "kind": "Image",
+      "width": 292,
+      "height": 292,
+      "alt": "MUGHAL ART",
+      "label": "MUGHAL ART",
+      "category": "Images",
+      "index": 170
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/MUGHALARTrotarybedspread-1closeup-1.jpg?v=1768897808",
+      "kind": "Image",
+      "width": 292,
+      "height": 292,
+      "alt": "MUGHAL ART",
+      "label": "MUGHAL ART",
+      "category": "Images",
+      "index": 171
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/bs-418b_new.jpg?v=1766684037",
+      "kind": "Image",
+      "width": 292,
+      "height": 292,
+      "alt": "QUILT & BED SHEET",
+      "label": "QUILT & BED SHEET",
+      "category": "Images",
+      "index": 172
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/bs-418b_sheet_copy.jpg?v=1766684037",
+      "kind": "Image",
+      "width": 292,
+      "height": 292,
+      "alt": "QUILT & BED SHEET",
+      "label": "QUILT & BED SHEET",
+      "category": "Images",
+      "index": 173
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/preview_images/c7c565ff13944f149a2f721c0765b7af.thumbnail.0000000000_small.jpg?v=1711515164",
+      "kind": "Image",
+      "width": 100,
+      "height": 42,
+      "label": "",
+      "category": "Images",
+      "index": 174
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/sp.jpg?v=1691565699",
+      "kind": "Image",
+      "width": 100,
+      "height": 87,
+      "label": "",
+      "category": "Images",
+      "index": 175
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/secure.jpg?v=1691565800",
+      "kind": "Image",
+      "width": 282,
+      "height": 230,
+      "label": "",
+      "category": "Images",
+      "index": 176
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/favicon-2.jpg?crop=center&height=32&v=1690265802&width=32",
+      "kind": "Icon",
+      "width": 0,
+      "height": 0,
+      "label": "",
+      "category": "Images",
+      "index": 177
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/videos/c/vp/c7c565ff13944f149a2f721c0765b7af/c7c565ff13944f149a2f721c0765b7af.HD-1080p-7.2Mbps-26391516.mp4?v=0",
+      "category": "Videos",
+      "kind": "Video",
+      "mime": "",
+      "width": 2592,
+      "height": 1080,
+      "label": "Video",
+      "poster": "https://bareezehome.com.pk/cdn/shop/files/preview_images/c7c565ff13944f149a2f721c0765b7af.thumbnail.0000000000_small.jpg?v=1711515164",
+      "duration": 33.578667,
+      "stream": false,
+      "index": 178
+    }
+  ],
+  "unavailable": [
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/files/Artboard_8.jpg?v=1778659384",
+      "error": "BodyStreamBuffer was aborted"
+    },
+    {
+      "url": "https://bareezehome.com.pk/cdn/shop/videos/c/vp/c7c565ff13944f149a2f721c0765b7af/c7c565ff13944f149a2f721c0765b7af.HD-1080p-7.2Mbps-26391516.mp4?v=0",
+      "error": "This asset is too large to include in a ZIP. Use its individual download button."
+    }
+  ]
+}

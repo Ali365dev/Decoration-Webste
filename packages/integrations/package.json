@@ -1,0 +1,23 @@
+{
+  "name": "@dec-walls/integrations",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./payments": "./src/payments.ts",
+    "./email": "./src/email.ts",
+    "./search": "./src/search.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@dec-walls/config": "*",
+    "@dec-walls/types": "*"
+  },
+  "devDependencies": {
+    "typescript": "^5"
+  }
+}

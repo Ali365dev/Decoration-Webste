@@ -2,25 +2,31 @@
   "name": "dec-walls",
   "version": "0.1.0",
   "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
-  },
-  "dependencies": {
-    "next": "16.3.6",
-    "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "dev": "turbo run dev",
+    "dev:store": "turbo run dev --filter=@dec-walls/storefront",
+    "dev:ops": "turbo run dev --filter=@dec-walls/ops",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "db:generate": "npm run db:generate -w @dec-walls/db",
+    "db:migrate": "npm run db:migrate -w @dec-walls/db",
+    "db:studio": "npm run db:studio -w @dec-walls/db",
+    "typecheck": "turbo run typecheck"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "16.3.6",
-    "tailwindcss": "^4",
-    "typescript": "^5"
+    "@playwright/test": "^1.56.0",
+    "turbo": "^2.5.8",
+    "typescript": "^5",
+    "vitest": "^3.2.4"
+  },
+  "packageManager": "npm@10.9.2",
+  "engines": {
+    "node": ">=20"
   }
 }
