@@ -1,6 +1,6 @@
 "use client";
 
-import type { NavItemDto, ProductDto } from "@dec-walls/types";
+import type { NavItemDto } from "@dec-walls/types";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -160,45 +160,56 @@ function CountBadge({ count }: { count?: number }) {
   );
 }
 
-function MenuProductCard({ product }: { product: ProductDto }) {
+type MenuImageMap = Record<string, string>;
+
+function buildMenuImageMap(navigation: NavItemDto[]) {
+  const imageNumbers = Array.from({ length: 176 }, (_, index) =>
+    index < 120 ? index + 2 : index + 3,
+  );
+  let imageIndex = 0;
+  const maps: Record<string, MenuImageMap> = {};
+
+  for (const root of navigation) {
+    const rootMap: MenuImageMap = {};
+    const addItem = (item: NavItemDto) => {
+      const imageNumber = imageNumbers[imageIndex++ % imageNumbers.length];
+      rootMap[item.id] = `/bareeze/image-${imageNumber}.jpg`;
+      item.children.forEach(addItem);
+    };
+    root.children.forEach(addItem);
+    maps[root.id] = rootMap;
+  }
+
+  return maps;
+}
+
+function MenuImageCard({
+  item,
+  imageUrl,
+  onNavigate,
+}: {
+  item: NavItemDto;
+  imageUrl: string;
+  onNavigate: () => void;
+}) {
   return (
     <article className="group/card min-w-0">
-      <Link href={`/products/${product.slug}`} className="block">
+      <Link href={item.href} onClick={onNavigate} className="block">
         <div className="relative aspect-square overflow-hidden bg-canvas">
-          {product.primaryImageUrl ? (
-            <Image
-              src={product.primaryImageUrl}
-              alt={product.name}
-              fill
-              sizes="220px"
-              className={`object-cover transition-transform duration-[0.4s] ease-[ease] group-hover/card:scale-[1.03] ${
-                product.hoverImageUrl
-                  ? "group-hover/card:opacity-0"
-                  : ""
-              }`}
-            />
-          ) : null}
-          {product.hoverImageUrl ? (
-            <Image
-              src={product.hoverImageUrl}
-              alt=""
-              fill
-              sizes="220px"
-              className="object-cover opacity-0 transition-opacity duration-[0.4s] group-hover/card:opacity-100"
-            />
-          ) : null}
-          {product.label ? (
-            <span className="pointer-events-none absolute right-3 top-3 rounded-pill border border-white/80 bg-paper px-3 py-1 text-[10px] font-medium uppercase tracking-[0.06em] text-ink shadow-sm">
-              {product.label}
-            </span>
-          ) : null}
+          <Image
+            src={imageUrl}
+            alt={item.label}
+            fill
+            sizes="220px"
+            className="object-cover transition-transform duration-[0.4s] ease-[ease] group-hover/card:scale-[1.03]"
+          />
         </div>
         <div className="pt-3">
           <h3 className="text-[13px] font-semibold uppercase leading-snug tracking-[0.04em] text-ink transition-colors duration-[0.3s] group-hover/card:text-[#f05e2d]">
-            {product.name}
+            {item.label}
           </h3>
-          <p className="mt-1 text-[13px] font-normal text-body">
-            {formatPrice(product.price.amount)}
+          <p className="mt-1 text-[12px] font-normal text-body">
+            Explore collection
           </p>
         </div>
       </Link>
@@ -208,18 +219,30 @@ function MenuProductCard({ product }: { product: ProductDto }) {
 
 function MegaPanel({
   item,
-  products,
+  imageMap,
   onNavigate,
 }: {
   item: NavItemDto;
-  products: ProductDto[];
+  imageMap: MenuImageMap;
   onNavigate: () => void;
 }) {
   const [activeId, setActiveId] = useState(item.children[0]?.id ?? "");
+  const [previewId, setPreviewId] = useState(item.children[0]?.id ?? "");
   const active =
     item.children.find((child) => child.id === activeId) ?? item.children[0];
   const columns = active?.children ?? [];
   const hasNested = columns.some((col) => col.children.length > 0);
+  const previewItems: NavItemDto[] = [];
+  const addPreviewItem = (entry: NavItemDto) => {
+    previewItems.push(entry);
+    entry.children.forEach(addPreviewItem);
+  };
+  item.children.forEach(addPreviewItem);
+  const previewStart = Math.max(
+    0,
+    previewItems.findIndex((entry) => entry.id === previewId),
+  );
+  const visiblePreviews = previewItems.slice(previewStart, previewStart + 2);
 
   return (
     <div className="submenu-enter flex gap-12 bg-paper px-12 pb-10 pt-8 shadow-[0_5px_30px_rgba(0,0,0,0.05)]">
@@ -230,8 +253,14 @@ function MegaPanel({
             <li key={child.id}>
               <Link
                 href={child.href}
-                onMouseEnter={() => setActiveId(child.id)}
-                onFocus={() => setActiveId(child.id)}
+                onMouseEnter={() => {
+                  setActiveId(child.id);
+                  setPreviewId(child.id);
+                }}
+                onFocus={() => {
+                  setActiveId(child.id);
+                  setPreviewId(child.id);
+                }}
                 onClick={onNavigate}
                 className={`mega-link py-3.5 text-[13px] font-semibold uppercase tracking-[0.06em] text-[#111111] transition-colors duration-[0.35s] ease-[ease] hover:text-[#f05e2d] ${
                   selected ? "mega-link-active text-[#f05e2d]" : ""
@@ -247,20 +276,16 @@ function MegaPanel({
       <div className="min-w-0 flex-1">
         {columns.length > 0 ? (
           <div
-            className={`grid gap-x-10 gap-y-8 ${
-              columns.length === 1
-                ? "grid-cols-1"
-                : columns.length === 2
-                  ? "grid-cols-2"
-                  : "grid-cols-2 xl:grid-cols-3"
-            }`}
+            className="grid grid-cols-1 gap-y-5"
           >
             {columns.map((col) => (
               <div key={col.id} className="min-w-0">
                 <Link
                   href={col.href}
+                  onMouseEnter={() => setPreviewId(col.id)}
+                  onFocus={() => setPreviewId(col.id)}
                   onClick={onNavigate}
-                  className="mega-col-title text-[13px] font-semibold uppercase tracking-[0.06em] text-[#111111] transition-colors duration-[0.35s] hover:text-[#f05e2d]"
+                  className="mega-col-title whitespace-nowrap text-[13px] font-semibold uppercase tracking-[0.06em] text-[#111111] transition-colors duration-[0.35s] hover:text-[#f05e2d]"
                 >
                   {col.label}
                 </Link>
@@ -270,8 +295,10 @@ function MegaPanel({
                       <li key={link.id}>
                         <Link
                           href={link.href}
+                          onMouseEnter={() => setPreviewId(link.id)}
+                          onFocus={() => setPreviewId(link.id)}
                           onClick={onNavigate}
-                          className="text-[12px] font-medium uppercase tracking-[0.04em] text-body transition-colors duration-[0.35s] hover:text-[#f05e2d]"
+                          className="whitespace-nowrap text-[11px] font-medium uppercase tracking-[0.025em] text-body transition-colors duration-[0.35s] hover:text-[#f05e2d]"
                         >
                           {link.label}
                         </Link>
@@ -286,8 +313,13 @@ function MegaPanel({
       </div>
 
       <div className="grid w-[440px] shrink-0 grid-cols-2 gap-6">
-        {products.map((product) => (
-          <MenuProductCard key={product.id} product={product} />
+        {visiblePreviews.map((previewItem) => (
+          <MenuImageCard
+            key={previewItem.id}
+            item={previewItem}
+            imageUrl={imageMap[previewItem.id] ?? "/bareeze/image-2.jpg"}
+            onNavigate={onNavigate}
+          />
         ))}
       </div>
     </div>
@@ -366,10 +398,8 @@ function MobileBranch({
 
 export function StoreHeader({
   navigation,
-  products,
 }: {
   navigation: NavItemDto[];
-  products: ProductDto[];
 }) {
   const [openId, setOpenId] = useState<string | null>(null);
   const closeTimer = useRef<number | null>(null);
@@ -378,14 +408,7 @@ export function StoreHeader({
   const [cartOpen, setCartOpen] = useState(false);
   const [compact, setCompact] = useState(false);
 
-  const previewProducts = useMemo(() => {
-    const preferred = products.filter((product) =>
-      ["quilt-bed-sheet", "silk-plain-bed-sheet-set"].includes(product.slug),
-    );
-    const source = preferred.length > 0 ? preferred : products;
-    return source.slice(0, 2);
-  }, [products]);
-
+  const menuImageMaps = useMemo(() => buildMenuImageMap(navigation), [navigation]);
   const openItem = navigation.find((item) => item.id === openId) ?? null;
 
   function showMenu(id: string | null) {
@@ -549,8 +572,8 @@ export function StoreHeader({
               />
             </Link>
           </div>
-          <nav className="flex items-center justify-center" aria-label="Primary">
-            {navigation.map((item, index) => {
+          <nav className="mx-auto flex w-full max-w-[1440px] flex-wrap items-center justify-center gap-x-1 px-3" aria-label="Primary">
+            {navigation.map((item) => {
               const hasMenu = item.children.length > 0;
               const sale = item.label === "SALE";
               const isOpen = openId === item.id;
@@ -567,8 +590,8 @@ export function StoreHeader({
                     href={item.href}
                     aria-expanded={hasMenu ? isOpen : undefined}
                     aria-haspopup={hasMenu ? "true" : undefined}
-                    className={`nav-link inline-flex items-center whitespace-nowrap px-[15px] py-[10px] font-sans text-[14px] leading-[17px] tracking-normal uppercase text-[#111111] transition-colors duration-[0.4s] ease-[ease] hover:text-[#f05e2d] ${
-                      index === 0 ? "font-semibold" : "font-medium"
+                    className={`nav-link inline-flex items-center whitespace-nowrap px-[clamp(7px,0.72vw,15px)] py-[10px] font-sans text-[clamp(11px,0.85vw,14px)] leading-[17px] tracking-normal uppercase text-[#111111] transition-colors duration-[0.4s] ease-[ease] hover:text-[#f05e2d] ${
+                      item.id === "home" ? "font-semibold" : "font-medium"
                     } ${sale ? "text-[#f05e2d]" : ""} ${
                       isOpen ? "text-[#f05e2d]" : ""
                     }`}
@@ -594,7 +617,7 @@ export function StoreHeader({
             <MegaPanel
               key={openItem.id}
               item={openItem}
-              products={previewProducts}
+              imageMap={menuImageMaps[openItem.id] ?? {}}
               onNavigate={() => setOpenId(null)}
             />
           </div>

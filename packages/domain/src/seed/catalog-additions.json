@@ -1,0 +1,302 @@
+[
+  {
+    "id": 1,
+    "name": "The Naqsh Trio – Gold & Black Engraved Nesting Tables (Set of 3)",
+    "category": "Furniture",
+    "price": 16400
+  },
+  {
+    "id": 2,
+    "name": "The Carrara Trio – White Marble-Look Nesting Tables (Set of 3)",
+    "category": "Furniture",
+    "price": 14800
+  },
+  {
+    "id": 3,
+    "name": "The Xandra Trio – Woodgrain Nesting Tables (Set of 3)",
+    "category": "Furniture",
+    "price": 13500
+  },
+  {
+    "id": 4,
+    "name": "Royal Mandala Gold & Black Engraved Nesting Tables (Set of 3)",
+    "category": "Furniture",
+    "price": 14500
+  },
+  {
+    "id": 5,
+    "name": "The Contrast Duo – Woodgrain & Charcoal Nesting Coffee Tables",
+    "category": "Furniture",
+    "price": 23999
+  },
+  {
+    "id": 6,
+    "name": "The Slate Trio – Matte Charcoal Nesting Tables (Set of 3)",
+    "category": "Furniture",
+    "price": 13500
+  },
+  {
+    "id": 7,
+    "name": "Wood & Black Steel Round Nesting Tables (Set of 3)",
+    "category": "Furniture",
+    "price": 13400
+  },
+  {
+    "id": 8,
+    "name": "The Timber Trio – Rustic Woodgrain Nesting Tables (Set of 3)",
+    "category": "Furniture",
+    "price": 14800
+  },
+  {
+    "id": 9,
+    "name": "The Eclipse Duo – Matte Charcoal Nesting Coffee Tables (Set of 2)",
+    "category": "Furniture",
+    "price": 24999
+  },
+  {
+    "id": 10,
+    "name": "The Nordic Trio – Matte Honey-Blonde Nesting Tables (Set of 3)",
+    "category": "Furniture",
+    "price": 13500
+  },
+  {
+    "id": 11,
+    "name": "The Cascade Trio – Modern Wood & Metal Side Tables",
+    "category": "Furniture",
+    "price": 18500
+  },
+  {
+    "id": 12,
+    "name": "The Vertex Duo – Modern Wood & Metal Side Tables",
+    "category": "Furniture",
+    "price": 9500
+  },
+  {
+    "id": 13,
+    "name": "The Crosswood Round Side Table – Wood & Black Steel",
+    "category": "Furniture",
+    "price": 11500
+  },
+  {
+    "id": 14,
+    "name": "3-Tier Wooden & Steel Kitchen Serving Trolley – Large",
+    "category": "Furniture",
+    "price": 14999
+  },
+  {
+    "id": 15,
+    "name": "The LumaLine – Gold Geometric LED Table Lamp (Touch + Type-C)",
+    "category": "LED Lamps",
+    "price": 2490
+  },
+  {
+    "id": 16,
+    "name": "The Aurelia Glow – Luxury Gold Leaf LED Table Lamp",
+    "category": "LED Lamps",
+    "price": 2850
+  },
+  {
+    "id": 17,
+    "name": "The Elara Glow – Luxury Bedside Lamp (Touch + Type-C)",
+    "category": "LED Lamps",
+    "price": 2750
+  },
+  {
+    "id": 18,
+    "name": "The Lumora – Golden Crystal Table Lamp (Touch + Type-C)",
+    "category": "LED Lamps",
+    "price": 2450
+  },
+  {
+    "id": 19,
+    "name": "Crystal Oval LED Table Lamp (Touch + Type-C)",
+    "category": "LED Lamps",
+    "price": 2950
+  },
+  {
+    "id": 20,
+    "name": "Barakah Mirror Acrylic Wall Decor – 3 Piece Set",
+    "category": "Islamic Art",
+    "price": 1999
+  },
+  {
+    "id": 21,
+    "name": "Durood Shareef Acrylic Wall Art 2026",
+    "category": "Islamic Art",
+    "price": 4999
+  },
+  {
+    "id": 22,
+    "name": "Gold Acrylic Ayatul Kursi Wall Art – Luxury Islamic Decor",
+    "category": "Islamic Art",
+    "price": 5999
+  },
+  {
+    "id": 23,
+    "name": "Ayatul Kursi Premium Calligraphy – Rectangle (Black/Gold)",
+    "category": "Islamic Art",
+    "price": 6999
+  },
+  {
+    "id": 24,
+    "name": "Zulfiqar-e-Ali Golden/Black Premium Wall Art",
+    "category": "Islamic Art",
+    "price": 4999
+  },
+  {
+    "id": 25,
+    "name": "Ayat-ul-Kursi Grand Calligraphy Panel (24 × 48 in)",
+    "category": "Islamic Art",
+    "price": 12999
+  },
+  {
+    "id": 26,
+    "name": "Saif-e-Ali Premium Wall Art Decor",
+    "category": "Islamic Art",
+    "price": 4499
+  },
+  {
+    "id": 27,
+    "name": "Makka Kiswah Kaaba Door / Madina Jali Acrylic Wall Decor",
+    "category": "Islamic Art",
+    "price": 6999
+  },
+  {
+    "id": 28,
+    "name": "Divine Gold Asma-ul-Husna Frame Acrylic",
+    "category": "Islamic Art",
+    "price": 4999
+  },
+  {
+    "id": 29,
+    "name": "Start with Bismillah, End with Alhamdulillah – Set of 2",
+    "category": "Islamic Art",
+    "price": 1990
+  },
+  {
+    "id": 30,
+    "name": "Buy 1 Get 2 Free Calligraphies",
+    "category": "Islamic Art",
+    "price": 1699
+  },
+  {
+    "id": 31,
+    "name": "Zeenat-e-Waqt – Islamic Calligraphy Wall Clock (Gold/Black)",
+    "category": "Wall Clocks",
+    "price": 4999
+  },
+  {
+    "id": 32,
+    "name": "Noor-e-Zaman Premium Wall Clock Set – 3 Panel Decor",
+    "category": "Wall Clocks",
+    "price": 3999
+  },
+  {
+    "id": 33,
+    "name": "Surah Ikhlas Wall Clock",
+    "category": "Wall Clocks",
+    "price": 1699
+  },
+  {
+    "id": 34,
+    "name": "Birds on Branches Scenic Pendulum Clock",
+    "category": "Wall Clocks",
+    "price": 1890
+  },
+  {
+    "id": 35,
+    "name": "Modern Acrylic Wall Clock",
+    "category": "Wall Clocks",
+    "price": 1790
+  },
+  {
+    "id": 36,
+    "name": "World Map Wall Clock",
+    "category": "Wall Clocks",
+    "price": 1799
+  },
+  {
+    "id": 37,
+    "name": "Large Size Wooden DIY Clock with 12-Inch Needles",
+    "category": "Wall Clocks",
+    "price": 1499
+  },
+  {
+    "id": 38,
+    "name": "We Are Family Clock with White Dial",
+    "category": "Wall Clocks",
+    "price": 1890
+  },
+  {
+    "id": 39,
+    "name": "Modern Style Neon X Clock Ambient Light",
+    "category": "Wall Clocks",
+    "price": 4799
+  },
+  {
+    "id": 40,
+    "name": "Neon Decorative Wall Art Clock",
+    "category": "Wall Clocks",
+    "price": 3699
+  },
+  {
+    "id": 41,
+    "name": "Acrylic Hexagon Wall Decor Mirror (Gold)",
+    "category": "Mirrors",
+    "price": 890
+  },
+  {
+    "id": 42,
+    "name": "Acrylic Hexagon Wall Decor Mirror (Silver)",
+    "category": "Mirrors",
+    "price": 790
+  },
+  {
+    "id": 43,
+    "name": "Premium Acrylic Leaf Mirror",
+    "category": "Mirrors",
+    "price": 1999
+  },
+  {
+    "id": 44,
+    "name": "Neon Selfie Acrylic Mirror for Room Walls",
+    "category": "Mirrors",
+    "price": 2990
+  },
+  {
+    "id": 45,
+    "name": "Unbreakable Imported Acrylic Mirror (Self-Adhesive)",
+    "category": "Mirrors",
+    "price": 1299
+  },
+  {
+    "id": 46,
+    "name": "DIY Miniature Shelves Wooden",
+    "category": "Home Décor",
+    "price": 499
+  },
+  {
+    "id": 47,
+    "name": "LED Candles for Shelves Decor",
+    "category": "Home Décor",
+    "price": 699
+  },
+  {
+    "id": 48,
+    "name": "Together We Are Family Frames (12 Frames)",
+    "category": "Home Décor",
+    "price": 1890
+  },
+  {
+    "id": 49,
+    "name": "Kids Magic Practice Book Set of 4 + 10 Refill Pens",
+    "category": "Kids Learning",
+    "price": 1299
+  },
+  {
+    "id": 50,
+    "name": "3-in-1 Wooden Montessori Board (Vowels, Numbers, Shapes)",
+    "category": "Kids Learning",
+    "price": 1999
+  }
+]

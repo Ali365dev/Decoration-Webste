@@ -13,6 +13,8 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "*.supabase.co" },
+      { protocol: "https", hostname: "bareezehome.com.pk", pathname: "/cdn/shop/files/**" },
+      { protocol: "https", hostname: "pyariwalls.pk", pathname: "/cdn/shop/**" },
       { protocol: "http", hostname: "127.0.0.1" },
     ],
   },

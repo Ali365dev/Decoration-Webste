@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ProductCard } from "@/components/product/product-card";
 import { Reveal } from "@/components/motion/reveal";
 import { resolveProductGridBlock } from "@dec-walls/domain/cms";
+import { HeroCarousel } from "@/components/cms/hero-carousel";
 
 type Tile = { label: string; href: string; image: string };
 
@@ -119,33 +120,15 @@ export async function CmsBlockRenderer({ block }: { block: CmsBlockDto }) {
       return null;
     case "hero":
       return (
-        <section className="relative min-h-[70vh] w-full overflow-hidden bg-ink md:min-h-[82vh]">
-          <Image
-            src={String(block.data.imageUrl ?? "/home/hero-1.jpg")}
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            className="hero-zoom object-cover"
-          />
-          <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center text-white">
-            <p className="hero-line hero-line-1 text-[length:var(--navigation-font-size)] font-medium uppercase leading-[20.8px] tracking-[0.28em]">
-              {String(block.data.titleLine1 ?? "NEW")}
-            </p>
-            <h1
-              className="hero-line hero-line-2 mt-[var(--space-6)] text-[72px] leading-none text-[#c45c5c] md:text-[104px]"
-              style={{ fontFamily: "var(--font-script), cursive" }}
-            >
-              {String(block.data.titleLine2 ?? "Arrivals")}
-            </h1>
-            <Link
-              href={String(block.data.ctaHref ?? "/collections/new-in")}
-              className="hero-line hero-line-3 mt-8 inline-block rounded-pill border border-white bg-white px-[55px] py-[13.6px] text-xs font-medium uppercase tracking-wide text-ink transition-all duration-[0.4s] hover:bg-transparent hover:text-white"
-            >
-              Shop now
-            </Link>
-          </div>
-        </section>
+        <HeroCarousel
+          images={[
+            String(block.data.imageUrl ?? "/home/hero-1.jpg"),
+            String(block.data.imageUrlAlt ?? "/home/hero-2.jpg"),
+          ]}
+          titleLine1={String(block.data.titleLine1 ?? "NEW")}
+          titleLine2={String(block.data.titleLine2 ?? "Arrivals")}
+          ctaHref={String(block.data.ctaHref ?? "/collections/new-in")}
+        />
       );
     case "banner": {
       const tiles = (block.data.tiles as Tile[]) ?? [];

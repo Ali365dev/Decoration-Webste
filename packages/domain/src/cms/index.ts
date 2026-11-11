@@ -9,15 +9,30 @@ import { mainNav } from "./navigation";
 export { homeProducts, mainNav };
 
 export const categoryTiles = [
-  { label: "Bedding", href: "/categories/bedding", image: "/home/cat-1.jpg" },
-  { label: "Bath", href: "/categories/bath", image: "/home/cat-2.jpg" },
-  { label: "Dining", href: "/categories/dining", image: "/home/cat-3.jpg" },
-  { label: "Living", href: "/categories/living", image: "/home/cat-4.jpg" },
-  { label: "Coverlets", href: "/categories/coverlets", image: "/home/cat-5.jpg" },
   {
-    label: "Accessories",
-    href: "/categories/accessories",
-    image: "/home/cat-6.jpg",
+    label: "Home Decor",
+    href: "/collections/home-decor",
+    image: "/home/banner-a1.jpg",
+  },
+  {
+    label: "Baby & Nursery",
+    href: "/collections/baby-and-nursery",
+    image: "/home/banner-a3.jpg",
+  },
+  {
+    label: "Bedding",
+    href: "/collections/bedding",
+    image: "/home/cat-1.jpg",
+  },
+  {
+    label: "Canvas & Wall Art",
+    href: "/collections/canvas-and-wall-art",
+    image: homeProducts.find((product) => product.slug === "makkah-madinah-scenic-frame-set")?.primaryImageUrl ?? "/home/cat-4.jpg",
+  },
+  {
+    label: "Curtains & Blinds",
+    href: "/collections/curtains-and-blinds",
+    image: "/home/p1.jpg",
   },
 ];
 

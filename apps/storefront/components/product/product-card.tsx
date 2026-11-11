@@ -1,70 +1,111 @@
+"use client";
+
 import type { ProductDto } from "@dec-walls/types";
+import { Eye, Heart, Layers, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
+import styles from "@/components/product/product-card.module.css";
 
 function formatPrice(amount: number, currency: string) {
-  return new Intl.NumberFormat("en-PK", {
-    style: "currency",
-    currency,
-    maximumFractionDigits: 0,
-  }).format(amount);
+  const formatted = amount.toLocaleString("en-PK", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+  return currency === "PKR" ? `Rs.${formatted}` : `${currency} ${formatted}`;
 }
 
-export function ProductCard({ product }: { product: ProductDto }) {
+export function ProductCard({
+  product,
+  href = `/products/${product.slug}`,
+  listView = false,
+}: {
+  product: ProductDto;
+  href?: string;
+  listView?: boolean;
+}) {
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [isCompared, setIsCompared] = useState(false);
+  const [isAdded, setIsAdded] = useState(false);
+
   return (
-    <article className="group">
-      <Link href={`/products/${product.slug}`} className="block">
-        <div className="relative aspect-square overflow-hidden bg-canvas">
-          {product.primaryImageUrl ? (
-            <Image
-              src={product.primaryImageUrl}
-              alt={product.name}
-              fill
-              sizes="(min-width:1260px) 282px, (min-width:750px) 33vw, 50vw"
-              className="object-cover transition-transform duration-[0.4s] ease-[ease] group-hover:scale-[1.05]"
-            />
-          ) : null}
-          {product.hoverImageUrl ? (
-            <Image
-              src={product.hoverImageUrl}
-              alt=""
-              fill
-              sizes="(min-width:1260px) 282px, (min-width:750px) 33vw, 50vw"
-              className="object-cover opacity-0 transition-opacity duration-[0.4s] group-hover:opacity-100"
-            />
-          ) : null}
-          {product.label ? (
-            <span
-              className={`absolute left-[var(--space-10)] top-[var(--space-10)] text-[length:var(--btn-font-size)] font-medium uppercase leading-[21px] ${
-                product.label.startsWith("-")
-                  ? "flex size-10 items-center justify-center rounded-full bg-[var(--primary-color)] text-white"
-                  : "text-ink"
-              }`}
-            >
-              {product.label}
-            </span>
-          ) : null}
-        </div>
-        <div className="pt-[var(--space-15)] text-center">
-          <h3 className="text-[length:var(--bls__product-name-size)] font-normal capitalize leading-[28px] text-ink">
-            {product.name}
-          </h3>
-          <div className="mt-[var(--space-6)] flex flex-wrap items-center justify-center gap-2 text-[14px] font-medium text-body">
-            <span>
-              {formatPrice(product.price.amount, product.price.currency)}
-            </span>
-            {product.compareAtPrice ? (
-              <span className="text-sale line-through">
-                {formatPrice(
-                  product.compareAtPrice.amount,
-                  product.compareAtPrice.currency,
-                )}
-              </span>
+    <article className={`product-card ${styles.card} ${listView ? `list-view ${styles.listView}` : ""}`}>
+      <div className={styles.media}>
+        <Link href={href} className={styles.imageLink} aria-label={`View ${product.name}`}>
+          <div className={`product-card-image ${styles.image}`}>
+            {product.primaryImageUrl ? (
+              <Image
+                src={product.primaryImageUrl}
+                alt={product.name}
+                fill
+                sizes="(min-width:1260px) 282px, (min-width:750px) 33vw, 50vw"
+                className={`${styles.photo} ${styles.primaryPhoto}`}
+              />
+            ) : null}
+            {product.hoverImageUrl ? (
+              <Image
+                src={product.hoverImageUrl}
+                alt=""
+                fill
+                sizes="(min-width:1260px) 282px, (min-width:750px) 33vw, 50vw"
+                className={`${styles.photo} ${styles.hoverPhoto}`}
+              />
             ) : null}
           </div>
-          <span className="mt-[var(--space-15)] inline-block translate-y-1 rounded-pill border border-line bg-paper px-[var(--space-30)] py-[var(--space-10)] text-[length:var(--btn-font-size)] font-medium uppercase leading-[21px] text-ink opacity-90 transition-all duration-[0.4s] ease-[ease] group-hover:translate-y-0 group-hover:border-ink group-hover:bg-ink group-hover:text-white group-hover:opacity-100">
-            Shop now
+        </Link>
+
+        {product.label ? (
+          <span className={`${styles.badge} ${product.label.startsWith("-") ? styles.saleBadge : ""}`}>
+            {product.label}
           </span>
+        ) : null}
+
+        <div className={styles.actions} aria-label={`${product.name} actions`}>
+          <button
+            className={styles.actionButton}
+            type="button"
+            aria-label={isAdded ? "Added to bag" : "Add to bag"}
+            data-tooltip={isAdded ? "Added to bag" : "Add to bag"}
+            aria-pressed={isAdded}
+            onClick={() => setIsAdded((value) => !value)}
+          >
+            <ShoppingCart size={17} strokeWidth={1.7} />
+          </button>
+          <button
+            className={`${styles.actionButton} ${isFavorite ? styles.selectedAction : ""}`}
+            type="button"
+            aria-label={isFavorite ? "Remove from wishlist" : "Add to wishlist"}
+            data-tooltip={isFavorite ? "Remove from wishlist" : "Add to wishlist"}
+            aria-pressed={isFavorite}
+            onClick={() => setIsFavorite((value) => !value)}
+          >
+            <Heart size={18} strokeWidth={1.65} fill={isFavorite ? "currentColor" : "none"} />
+          </button>
+          <button
+            className={`${styles.actionButton} ${isCompared ? styles.selectedAction : ""}`}
+            type="button"
+            aria-label={isCompared ? "Remove from compare" : "Compare product"}
+            data-tooltip={isCompared ? "Remove from compare" : "Compare"}
+            aria-pressed={isCompared}
+            onClick={() => setIsCompared((value) => !value)}
+          >
+            <Layers size={18} strokeWidth={1.7} />
+          </button>
+          <Link className={styles.actionButton} href={href} aria-label={`Quick view ${product.name}`} data-tooltip="Quick view">
+            <Eye size={18} strokeWidth={1.65} />
+          </Link>
+        </div>
+      </div>
+
+      <Link href={href} className={styles.details}>
+        <h3 className={styles.name}>{product.name}</h3>
+        <div className={styles.priceRow}>
+          <span>{formatPrice(product.price.amount, product.price.currency)}</span>
+          {product.compareAtPrice ? (
+            <span className={styles.comparePrice}>
+              {formatPrice(product.compareAtPrice.amount, product.compareAtPrice.currency)}
+            </span>
+          ) : null}
         </div>
       </Link>
     </article>

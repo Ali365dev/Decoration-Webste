@@ -43,7 +43,10 @@ export type ProductDto = {
   compareAtPrice: Money | null;
   primaryImageUrl: string | null;
   hoverImageUrl: string | null;
+  galleryImageUrls?: string[];
   label: string | null;
+  categorySlug?: string;
+  collectionSlugs?: string[];
 };
 
 export type ProductVariantDto = {

@@ -1,10 +1,10 @@
 import { StoreFooter } from "@/components/layout/store-footer";
 import { StoreHeader } from "@/components/layout/store-header";
+import { ScrollToTop } from "@/components/motion/scroll-to-top";
 import {
   getFooterLinks,
   getMainNavigation,
   getPublishedPageBySlug,
-  homeProducts,
 } from "@dec-walls/domain/cms";
 
 export default async function StoreLayout({
@@ -29,7 +29,7 @@ export default async function StoreLayout({
     <>
       {messages.length > 0 ? (
         <div className="overflow-hidden bg-[var(--announcement-bar-bg)] text-[var(--announcement-bar-color)]">
-          <div className="announcement-ticker flex whitespace-nowrap py-2 text-[length:var(--announcement-bar-font-size)] font-medium uppercase tracking-[0.08em]">
+          <div className="announcement-ticker flex whitespace-nowrap py-[5px] text-[length:var(--announcement-bar-font-size)] font-medium uppercase leading-[17px] tracking-[0.08em]">
             {[...messages, ...messages].map((msg, i) => (
               <span key={i} className="mx-8 inline-block">
                 {msg}
@@ -38,9 +38,10 @@ export default async function StoreLayout({
           </div>
         </div>
       ) : null}
-      <StoreHeader navigation={nav} products={homeProducts} />
+      <StoreHeader navigation={nav} />
       <main className="flex-1">{children}</main>
       <StoreFooter links={footer} />
+      <ScrollToTop />
     </>
   );
 }
