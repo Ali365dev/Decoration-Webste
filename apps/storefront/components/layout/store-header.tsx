@@ -434,6 +434,14 @@ export function StoreHeader({
   }, []);
 
   useEffect(() => {
+    return () => {
+      if (closeTimer.current !== null) {
+        window.clearTimeout(closeTimer.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
     function onScroll() {
       setCompact(window.scrollY > 48);
     }

@@ -48,25 +48,30 @@ function ImageGrid({
   return (
     <section className="grid grid-cols-1 gap-[5px] p-[5px] sm:grid-cols-2 lg:grid-cols-3">
       {tiles.map((tile) => (
-        <Link
+        <Reveal
           key={tile.href + tile.label}
-          href={tile.href}
-          className="category-tile-enter group relative aspect-[627/731] overflow-hidden bg-canvas"
+          as="div"
+          className="min-w-0"
         >
-          <Image
-            src={tile.image}
-            alt={tile.label}
-            fill
-            sizes="(min-width:1024px) 33vw, 50vw"
-            className="object-cover transition-transform duration-[0.5s] ease-[ease] group-hover:scale-[1.05]"
-          />
-          <span className="absolute inset-0 bg-black/0 transition-colors duration-[0.4s] ease-[ease] group-hover:bg-black/10" />
-          <span className="absolute inset-x-0 bottom-[var(--space-20)] flex translate-y-2 justify-center opacity-95 transition-all duration-[0.4s] ease-[ease] group-hover:translate-y-0 group-hover:opacity-100">
-            <span className="rounded-pill border border-line bg-paper px-[var(--space-30)] py-[var(--space-10)] text-[length:var(--btn-font-size)] font-medium uppercase leading-[21px] text-ink transition-colors duration-[0.4s] ease-[ease] group-hover:border-ink group-hover:bg-ink group-hover:text-white">
-              {tile.label}
+          <Link
+            href={tile.href}
+            className="group relative block aspect-[627/731] overflow-hidden bg-canvas"
+          >
+            <Image
+              src={tile.image}
+              alt={tile.label}
+              fill
+              sizes="(min-width:1024px) 33vw, 50vw"
+              className="object-cover transition-transform duration-[0.5s] ease-[ease] group-hover:scale-[1.05]"
+            />
+            <span className="absolute inset-0 bg-black/0 transition-colors duration-[0.4s] ease-[ease] group-hover:bg-black/10" />
+            <span className="absolute inset-x-0 bottom-[var(--space-20)] flex translate-y-2 justify-center opacity-95 transition-all duration-[0.4s] ease-[ease] group-hover:translate-y-0 group-hover:opacity-100">
+              <span className="rounded-pill border border-line bg-paper px-[var(--space-30)] py-[var(--space-10)] text-[length:var(--btn-font-size)] font-medium uppercase leading-[21px] text-ink transition-colors duration-[0.4s] ease-[ease] group-hover:border-ink group-hover:bg-ink group-hover:text-white">
+                {tile.label}
+              </span>
             </span>
-          </span>
-        </Link>
+          </Link>
+        </Reveal>
       ))}
     </section>
   );

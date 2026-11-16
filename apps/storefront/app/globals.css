@@ -1,6 +1,215 @@
 @import "tailwindcss";
 @import "@dec-walls/design-system/theme.css";
 
+.hero-snap {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+}
+
+html.hero-snap-enabled {
+  scroll-snap-type: y mandatory;
+}
+
+.hero-snap-slide {
+  position: relative;
+  display: grid;
+  width: 100%;
+  height: 100vh;
+  height: 100svh;
+  min-height: 100vh;
+  min-height: 100svh;
+  overflow: hidden;
+  place-items: center;
+  isolation: isolate;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.hero-snap-image,
+.hero-snap-shade {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+}
+
+.hero-snap-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-snap-shade {
+  z-index: 0;
+  background: linear-gradient(180deg, rgb(0 0 0 / 14%), rgb(0 0 0 / 28%));
+}
+
+.hero-snap-copy {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: min(100% - 40px, 1100px);
+  flex-direction: column;
+  align-items: center;
+  padding: 48px 0;
+  color: #fff;
+  text-align: center;
+}
+
+.hero-snap-heading {
+  max-width: 100%;
+  margin: 0;
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: clamp(3.5rem, 14vw, 12rem);
+  font-weight: 600;
+  line-height: 0.88;
+  letter-spacing: -0.075em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.hero-snap-support {
+  margin: 24px 0 0;
+  font-size: clamp(0.7rem, 1.2vw, 0.875rem);
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  line-height: 1.6;
+  text-transform: uppercase;
+}
+
+.hero-snap-cta {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 32px;
+  padding: 0 36px;
+  border: 1px solid #fff;
+  border-radius: 999px;
+  background: #fff;
+  color: #111;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 180ms ease, background-color 180ms ease;
+}
+
+.hero-snap-cta:hover {
+  background: transparent;
+  color: #fff;
+}
+
+.hero-snap-cta:focus-visible,
+.hero-snap-arrow:focus-visible,
+.hero-snap-dot:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+}
+
+.hero-snap-arrow {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  transform: translateY(-50%);
+  border: 1px solid rgb(255 255 255 / 80%);
+  border-radius: 50%;
+  background: rgb(255 255 255 / 88%);
+  color: #111;
+  cursor: pointer;
+  transition: background-color 180ms ease, transform 180ms ease;
+}
+
+.hero-snap-arrow:hover {
+  transform: translateY(-50%) scale(1.05);
+  background: #fff;
+}
+
+.hero-snap-arrow-previous { left: clamp(16px, 4vw, 48px); }
+.hero-snap-arrow-next { right: clamp(16px, 4vw, 48px); }
+
+.hero-snap-pagination {
+  position: absolute;
+  z-index: 2;
+  right: 0;
+  bottom: 24px;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.hero-snap-dot {
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 40%);
+  cursor: pointer;
+}
+
+.hero-snap-dot.is-current { background: #fff; }
+
+.hero-snap-exit {
+  width: 100%;
+  height: 1px;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.hero-snap-slide .hero-line {
+  opacity: 0;
+  transform: translateY(22px);
+  animation: none;
+}
+
+.hero-snap-slide.is-active .hero-snap-heading {
+  animation: hero-snap-enter 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero-snap-slide.is-active .hero-snap-support {
+  animation: hero-snap-enter 600ms cubic-bezier(0.22, 1, 0.36, 1) 110ms both;
+}
+
+.hero-snap-slide.is-active .hero-snap-cta {
+  animation: hero-snap-enter 550ms cubic-bezier(0.22, 1, 0.36, 1) 220ms both;
+}
+
+.hero-snap.is-offscreen .hero-line {
+  animation-play-state: paused !important;
+}
+
+@keyframes hero-snap-enter {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.announcement-ticker.is-offscreen {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.hero-snap-enabled {
+    scroll-snap-type: none;
+  }
+
+  .hero-snap-slide .hero-line {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .announcement-ticker {
+    animation: none;
+  }
+}
+
 .collection-banner {
   position: relative;
   display: grid;
