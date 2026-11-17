@@ -111,7 +111,9 @@ export type CmsBlockType =
   | "banner"
   | "product_grid"
   | "newsletter"
-  | "rich_text";
+  | "rich_text"
+  | "category_showcase"
+  | "video_showcase";
 
 export type CmsBlockDto = {
   id: string;

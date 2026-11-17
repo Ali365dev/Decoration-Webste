@@ -1,6 +1,5 @@
 import { StoreFooter } from "@/components/layout/store-footer";
-import { StoreHeader } from "@/components/layout/store-header";
-import { AnnouncementTicker } from "@/components/layout/announcement-ticker";
+import { StickyHeader } from "@/components/layout/sticky-header";
 import { ScrollToTop } from "@/components/motion/scroll-to-top";
 import {
   getFooterLinks,
@@ -28,10 +27,7 @@ export default async function StoreLayout({
 
   return (
     <>
-      {messages.length > 0 ? (
-        <AnnouncementTicker messages={messages} />
-      ) : null}
-      <StoreHeader navigation={nav} />
+      <StickyHeader messages={messages} navigation={nav} />
       <main className="flex-1">{children}</main>
       <StoreFooter links={footer} />
       <ScrollToTop />

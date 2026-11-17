@@ -1,7 +1,7 @@
 "use client";
 
 import type { ProductDto } from "@dec-walls/types";
-import { Eye, Heart, Layers, ShoppingCart } from "lucide-react";
+import { Eye, Heart, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -19,17 +19,20 @@ export function ProductCard({
   product,
   href = `/products/${product.slug}`,
   listView = false,
+  centered = false,
+  compact = false,
 }: {
   product: ProductDto;
   href?: string;
   listView?: boolean;
+  centered?: boolean;
+  compact?: boolean;
 }) {
   const [isFavorite, setIsFavorite] = useState(false);
-  const [isCompared, setIsCompared] = useState(false);
   const [isAdded, setIsAdded] = useState(false);
 
   return (
-    <article className={`product-card ${styles.card} ${listView ? `list-view ${styles.listView}` : ""}`}>
+    <article className={`product-card ${styles.card} ${listView ? `list-view ${styles.listView}` : ""} ${centered ? styles.centered : ""} ${compact ? styles.compact : ""}`}>
       <div className={styles.media}>
         <Link href={href} className={styles.imageLink} aria-label={`View ${product.name}`}>
           <div className={`product-card-image ${styles.image}`}>
@@ -69,7 +72,7 @@ export function ProductCard({
             aria-pressed={isAdded}
             onClick={() => setIsAdded((value) => !value)}
           >
-            <ShoppingCart size={17} strokeWidth={1.7} />
+            <ShoppingCart size={17} strokeWidth={1.6} />
           </button>
           <button
             className={`${styles.actionButton} ${isFavorite ? styles.selectedAction : ""}`}
@@ -79,20 +82,10 @@ export function ProductCard({
             aria-pressed={isFavorite}
             onClick={() => setIsFavorite((value) => !value)}
           >
-            <Heart size={18} strokeWidth={1.65} fill={isFavorite ? "currentColor" : "none"} />
+            <Heart size={18} strokeWidth={1.6} fill={isFavorite ? "currentColor" : "none"} />
           </button>
-          <button
-            className={`${styles.actionButton} ${isCompared ? styles.selectedAction : ""}`}
-            type="button"
-            aria-label={isCompared ? "Remove from compare" : "Compare product"}
-            data-tooltip={isCompared ? "Remove from compare" : "Compare"}
-            aria-pressed={isCompared}
-            onClick={() => setIsCompared((value) => !value)}
-          >
-            <Layers size={18} strokeWidth={1.7} />
-          </button>
-          <Link className={styles.actionButton} href={href} aria-label={`Quick view ${product.name}`} data-tooltip="Quick view">
-            <Eye size={18} strokeWidth={1.65} />
+<Link className={styles.actionButton} href={href} aria-label={`Quick view ${product.name}`} data-tooltip="Quick view">
+            <Eye size={18} strokeWidth={1.6} />
           </Link>
         </div>
       </div>

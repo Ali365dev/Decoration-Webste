@@ -34,6 +34,11 @@ export const categoryTiles = [
     href: "/collections/curtains-and-blinds",
     image: "/home/p1.jpg",
   },
+  {
+    label: "Cushions & Throws",
+    href: "/collections/new-in",
+    image: "/home/banner-a2.jpg",
+  },
 ];
 
 export const lifestyleTiles = [
@@ -103,16 +108,33 @@ const homePage: CmsPageDto = {
       },
     },
     {
-      id: "b-categories",
-      type: "banner",
-      sortOrder: 2,
-      data: { variant: "category_grid", tiles: categoryTiles },
+      id: "b-showcase",
+      type: "category_showcase",
+      sortOrder: 5,
+      data: {
+        bannerImage: "/home/hero-1.jpg",
+        heading: "Home Decor",
+        ctaHref: "/collections/home-decor",
+        ctaLabel: "Shop Now",
+        categoryTitle: "Decor",
+        categoryNav: [
+          { label: "Sale", href: "/collections/sale" },
+          { label: "Canvas & Wall Art", href: "/collections/canvas-and-wall-art" },
+          { label: "Cushions & Throws", href: "/collections/new-in" },
+          { label: "Bedding", href: "/collections/bedding" },
+          { label: "Curtains & Blinds", href: "/collections/curtains-and-blinds" },
+          { label: "Prayer Mats", href: "/collections/new-in" },
+          { label: "Table Linen", href: "/collections/new-in" },
+          { label: "Accessories", href: "/collections/new-in" },
+        ],
+        collectionSlug: "new-in",
+      },
     },
     {
-      id: "b-lifestyle",
+      id: "b-categories",
       type: "banner",
       sortOrder: 3,
-      data: { variant: "lifestyle_grid", tiles: lifestyleTiles },
+      data: { variant: "category_grid", tiles: categoryTiles },
     },
     {
       id: "b-new-in",
@@ -125,9 +147,22 @@ const homePage: CmsPageDto = {
       },
     },
     {
+      id: "b-video-showcase",
+      type: "video_showcase",
+      sortOrder: 6,
+      data: {
+        videoSrc: "/videos/showcase.mp4",
+        posterSrc: "/home/video-poster.jpg",
+        heading: "Give Your Walls a Story.",
+        description:
+          "Discover thoughtfully curated wall art that transforms ordinary spaces into extraordinary homes.",
+        cta: { label: "Read More", href: "/pages/about" },
+      },
+    },
+    {
       id: "b-tabs",
       type: "collection_tabs",
-      sortOrder: 5,
+      sortOrder: 7,
       data: {
         tabs: [
           { label: "BEDDING", collectionSlug: "new-in" },
@@ -140,7 +175,7 @@ const homePage: CmsPageDto = {
     {
       id: "b-sale",
       type: "product_grid",
-      sortOrder: 6,
+      sortOrder: 8,
       data: {
         title: "SALE",
         collectionSlug: "sale",
@@ -149,7 +184,7 @@ const homePage: CmsPageDto = {
     {
       id: "b-video",
       type: "video",
-      sortOrder: 7,
+      sortOrder: 9,
       data: {
         posterUrl: "/home/video-poster.jpg",
       },

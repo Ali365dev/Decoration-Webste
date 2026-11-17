@@ -407,6 +407,7 @@ export function StoreHeader({
   const [searchOpen, setSearchOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
   const [compact, setCompact] = useState(false);
+  const [atTop, setAtTop] = useState(true);
 
   const menuImageMaps = useMemo(() => buildMenuImageMap(navigation), [navigation]);
   const openItem = navigation.find((item) => item.id === openId) ?? null;
@@ -444,11 +445,14 @@ export function StoreHeader({
   useEffect(() => {
     function onScroll() {
       setCompact(window.scrollY > 48);
+      setAtTop(window.scrollY < 80);
     }
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const transparent = atTop && !openId && !menuOpen && !searchOpen && !cartOpen;
 
   function closeOverlays() {
     setOpenId(null);
@@ -469,21 +473,21 @@ export function StoreHeader({
           setCartOpen(false);
           setMenuOpen(false);
         }}
-        className="nav-icon inline-flex size-[22px] items-center justify-center text-[#111111]"
+        className={`nav-icon inline-flex size-[22px] items-center justify-center transition-colors duration-300 ${transparent ? "text-white" : "text-[#111111]"}`}
       >
         <IconSearch />
       </button>
       <Link
         href="/account"
         aria-label="Log in"
-        className="nav-icon inline-flex size-[22px] items-center justify-center text-[#111111]"
+        className={`nav-icon inline-flex size-[22px] items-center justify-center transition-colors duration-300 ${transparent ? "text-white" : "text-[#111111]"}`}
       >
         <IconAccount />
       </Link>
       <Link
         href="/wishlist"
         aria-label="Wishlist"
-        className="nav-icon relative inline-flex size-[22px] items-center justify-center text-[#111111]"
+        className={`nav-icon relative inline-flex size-[22px] items-center justify-center transition-colors duration-300 ${transparent ? "text-white" : "text-[#111111]"}`}
       >
         <IconWishlist />
         <CountBadge count={0} />
@@ -498,7 +502,7 @@ export function StoreHeader({
           setOpenId(null);
           setMenuOpen(false);
         }}
-        className="nav-icon relative inline-flex size-[22px] items-center justify-center text-[#111111]"
+        className={`nav-icon relative inline-flex size-[22px] items-center justify-center transition-colors duration-300 ${transparent ? "text-white" : "text-[#111111]"}`}
       >
         <IconCart />
         <CountBadge count={0} />
@@ -508,9 +512,9 @@ export function StoreHeader({
 
   return (
     <header
-      className={`sticky top-0 z-50 bg-paper transition-[box-shadow,padding] duration-[0.35s] ease-[ease] ${
-        compact ? "header-compact" : ""
-      }`}
+      className={`transition-[background-color,box-shadow,padding] duration-300 ease-[ease] ${
+        transparent ? "bg-transparent" : "bg-paper"
+      } ${compact ? "header-compact" : ""}`}
     >
       <div className="relative">
         <div
@@ -527,7 +531,7 @@ export function StoreHeader({
               setSearchOpen(false);
               setCartOpen(false);
             }}
-            className="nav-icon inline-flex size-10 items-center justify-center text-ink"
+            className={`nav-icon inline-flex size-10 items-center justify-center transition-colors duration-300 ${transparent ? "text-white" : "text-ink"}`}
           >
             <IconMenu />
           </button>
@@ -541,9 +545,9 @@ export function StoreHeader({
               alt="Dec Walls"
               width={140}
               height={38}
-              className={`h-auto transition-[width] duration-[0.35s] ease-[ease] ${
+              className={`h-auto transition-[width,filter] duration-300 ease-[ease] ${
                 compact ? "w-[120px]" : "w-[140px]"
-              }`}
+              } ${transparent ? "brightness-0 invert" : ""}`}
               priority
             />
           </Link>
@@ -573,9 +577,9 @@ export function StoreHeader({
                 alt="Dec Walls"
                 width={200}
                 height={54}
-                className={`header-logo h-auto transition-[width] duration-[0.35s] ease-[ease] ${
+                className={`header-logo h-auto transition-[width,filter] duration-300 ease-[ease] ${
                   compact ? "w-[140px]" : "w-[200px]"
-                }`}
+                } ${transparent ? "brightness-0 invert" : ""}`}
                 priority
               />
             </Link>
@@ -598,11 +602,15 @@ export function StoreHeader({
                     href={item.href}
                     aria-expanded={hasMenu ? isOpen : undefined}
                     aria-haspopup={hasMenu ? "true" : undefined}
-                    className={`nav-link inline-flex items-center whitespace-nowrap px-[clamp(7px,0.72vw,15px)] py-[10px] font-sans text-[clamp(11px,0.85vw,14px)] leading-[17px] tracking-normal uppercase text-[#111111] transition-colors duration-[0.4s] ease-[ease] hover:text-[#f05e2d] ${
+                    className={`nav-link inline-flex items-center whitespace-nowrap px-[clamp(7px,0.72vw,15px)] py-[10px] font-sans text-[clamp(11px,0.85vw,14px)] leading-[17px] tracking-normal uppercase transition-colors duration-300 ease-[ease] ${
                       item.id === "home" ? "font-semibold" : "font-medium"
-                    } ${sale ? "text-[#f05e2d]" : ""} ${
-                      isOpen ? "text-[#f05e2d]" : ""
-                    }`}
+                    } ${
+                      sale
+                        ? "text-[#f05e2d] hover:text-[#d94e20]"
+                        : transparent
+                        ? "text-white hover:text-white/75"
+                        : "text-[#111111] hover:text-[#f05e2d]"
+                    } ${isOpen ? "text-[#f05e2d]" : ""}`}
                     onClick={() => showMenu(null)}
                   >
                     {item.label}

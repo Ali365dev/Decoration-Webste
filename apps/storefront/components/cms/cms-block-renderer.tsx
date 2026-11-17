@@ -4,7 +4,9 @@ import Link from "next/link";
 import { ProductCard } from "@/components/product/product-card";
 import { Reveal } from "@/components/motion/reveal";
 import { resolveProductGridBlock } from "@dec-walls/domain/cms";
-import { HeroCarousel } from "@/components/cms/hero-carousel";
+import { HeroCarousel, type HeroSlide } from "@/components/cms/hero-carousel";
+import { CategoryShowcase } from "@/components/cms/category-showcase";
+import { VideoShowcase } from "@/components/cms/video-showcase";
 
 type Tile = { label: string; href: string; image: string };
 
@@ -15,36 +17,6 @@ function ImageGrid({
   tiles: Tile[];
   variant?: string;
 }) {
-  if (variant === "lifestyle_grid") {
-    return (
-      <Reveal as="section" className="bg-paper px-[var(--space-15)] py-[var(--space-30)] md:px-[var(--full-width-padding)] md:py-[60px]">
-        <h2 className="mb-[var(--space-30)] text-center text-[length:var(--btn-font-size)] font-medium uppercase tracking-[0.14em] text-ink">
-          Shop by type
-        </h2>
-        <div className="mx-auto grid max-w-[1410px] grid-cols-2 gap-[var(--space-15)] sm:grid-cols-3 lg:grid-cols-6 lg:gap-[var(--space-20)]">
-          {tiles.map((tile, index) => (
-            <Reveal key={tile.href + tile.label} delayMs={index * 70} className="group text-center">
-              <Link href={tile.href} className="block">
-                <span className="relative block aspect-square overflow-hidden bg-canvas">
-                  <Image
-                    src={tile.image}
-                    alt={tile.label}
-                    fill
-                    sizes="(min-width:1024px) 16vw, 33vw"
-                    className="object-cover transition-transform duration-[0.4s] ease-[ease] group-hover:scale-[1.05]"
-                  />
-                </span>
-                <span className="mt-[var(--space-10)] block text-[length:var(--btn-font-size)] font-medium uppercase tracking-[0.06em] text-ink transition-colors duration-[0.4s] group-hover:text-[#f05e2d]">
-                  {tile.label}
-                </span>
-              </Link>
-            </Reveal>
-          ))}
-        </div>
-      </Reveal>
-    );
-  }
-
   return (
     <section className="grid grid-cols-1 gap-[5px] p-[5px] sm:grid-cols-2 lg:grid-cols-3">
       {tiles.map((tile) => (
@@ -100,7 +72,7 @@ async function ProductGrid({
         ) : null}
       </div>
       <div className="mx-auto grid max-w-[1410px] grid-cols-2 gap-x-[var(--space-15)] gap-y-[var(--space-30)] md:grid-cols-4 md:gap-x-[var(--space-30)]">
-        {products.map((product: ProductDto, index) => (
+        {products.slice(0, 8).map((product: ProductDto, index) => (
           <Reveal key={product.id} delayMs={index * 70}>
             <ProductCard product={product} />
           </Reveal>
@@ -123,18 +95,32 @@ export async function CmsBlockRenderer({ block }: { block: CmsBlockDto }) {
     case "announcement":
       // Rendered in store layout above the header (Bareeze / Figma Page 2).
       return null;
-    case "hero":
-      return (
-        <HeroCarousel
-          images={[
-            String(block.data.imageUrl ?? "/home/hero-1.jpg"),
-            String(block.data.imageUrlAlt ?? "/home/hero-2.jpg"),
-          ]}
-          titleLine1={String(block.data.titleLine1 ?? "NEW")}
-          titleLine2={String(block.data.titleLine2 ?? "Arrivals")}
-          ctaHref={String(block.data.ctaHref ?? "/collections/new-in")}
-        />
-      );
+    case "hero": {
+      const heroSlides: HeroSlide[] = [
+        {
+          image: "/home/hero-3.jpg",
+          label: "New Collection",
+          heading: "Wall Art",
+          ctaHref: "/collections/new-in",
+          ctaLabel: "Shop Now",
+        },
+        {
+          image: "/home/hero-bedding.jpg",
+          label: "Premium Quality",
+          heading: "Bedding",
+          ctaHref: "/collections/new-in",
+          ctaLabel: "Shop Now",
+        },
+        {
+          image: "/home/hero-decor.jpg",
+          label: "Complete Your Home",
+          heading: "Home Decor",
+          ctaHref: "/collections/new-in",
+          ctaLabel: "Explore All",
+        },
+      ];
+      return <HeroCarousel slides={heroSlides} />;
+    }
     case "banner": {
       const tiles = (block.data.tiles as Tile[]) ?? [];
       return (
@@ -228,6 +214,43 @@ export async function CmsBlockRenderer({ block }: { block: CmsBlockDto }) {
       return null;
     case "newsletter":
       return null;
+    case "video_showcase":
+      return (
+        <VideoShowcase
+          videoSrc={String(block.data.videoSrc ?? "/videos/wall-art-showcase.mp4")}
+          videoSrcMobile={block.data.videoSrcMobile ? String(block.data.videoSrcMobile) : undefined}
+          posterSrc={String(block.data.posterSrc ?? "/home/video-poster.jpg")}
+          heading={block.data.heading ? String(block.data.heading) : undefined}
+          description={block.data.description ? String(block.data.description) : undefined}
+          cta={block.data.cta ? (block.data.cta as { label: string; href: string }) : undefined}
+        />
+      );
+    case "category_showcase": {
+      const collectionSlug = String(block.data.collectionSlug ?? "new-in");
+      const nav = (block.data.categoryNav as { label: string; href: string }[]) ?? [];
+      // Pre-fetch products for every nav category so the client can switch without a network call
+      const slugs = Array.from(
+        new Set([
+          collectionSlug,
+          ...nav.map((item) => item.href.split("/").pop() ?? ""),
+        ]).values(),
+      ).filter(Boolean);
+      const allProductSets = await Promise.all(slugs.map((s) => resolveProductGridBlock(s)));
+      const productsBySlug: Record<string, ProductDto[]> = {};
+      slugs.forEach((s, i) => { productsBySlug[s] = allProductSets[i] ?? []; });
+      return (
+        <CategoryShowcase
+          bannerImage={String(block.data.bannerImage ?? "/home/hero-1.jpg")}
+          heading={String(block.data.heading ?? "Collection")}
+          ctaHref={String(block.data.ctaHref ?? `/collections/${collectionSlug}`)}
+          ctaLabel={block.data.ctaLabel ? String(block.data.ctaLabel) : undefined}
+          categoryTitle={String(block.data.categoryTitle ?? block.data.heading ?? "Shop")}
+          categoryNav={nav}
+          defaultSlug={collectionSlug}
+          productsBySlug={productsBySlug}
+        />
+      );
+    }
     default:
       return null;
   }
