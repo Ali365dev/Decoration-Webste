@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Great_Vibes, Montserrat } from "next/font/google";
+import { Great_Vibes, Montserrat, Playfair_Display } from "next/font/google";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -14,6 +14,12 @@ const script = Great_Vibes({
   weight: "400",
 });
 
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+});
+
 export const metadata: Metadata = {
   title: {
     default: "Dec Walls",
@@ -26,7 +32,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${montserrat.variable} ${script.variable} h-full antialiased`}
+      className={`${montserrat.variable} ${script.variable} ${playfair.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col font-sans text-ink">
         {children}

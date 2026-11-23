@@ -1,8 +1,12 @@
 "use client";
 
+import gsap from "gsap";
+import { Observer } from "gsap/Observer";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export type HeroSlide = {
   image: string;
@@ -20,16 +24,12 @@ type Direction = "down" | "up";
 
 /** Must cover the longest transition in globals.css (panel wipe + copy roll-in). */
 const TRANSITION_MS = 1150;
-/** Trackpad inertia keeps emitting wheel events; a new gesture starts after this gap. */
-const WHEEL_QUIET_MS = 120;
-/** Accumulated wheel distance (px) needed before a gesture counts as a slide change. */
-const WHEEL_THRESHOLD = 15;
-const SWIPE_THRESHOLD = 32;
 
 /**
- * Full-page style hero (modelled on fullPage.js): while the hero fills the
- * viewport, one wheel / swipe / key gesture moves exactly one slide. The next
- * panel wipes over the current one and the copy rolls through line masks.
+ * Full-page style hero (modelled on fullPage.js): while the hero is pinned,
+ * one wheel / swipe / key gesture moves exactly one slide — the browser's own
+ * scroll position is the single source of truth (via a real ScrollTrigger
+ * pin), so there's no rect-polling heuristic that can drift out of sync.
  * Scrolling past the last (or before the first) slide releases to the page.
  */
 export function HeroCarousel({ slides }: HeroCarouselProps) {
@@ -41,149 +41,92 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
 
   const sectionRef = useRef<HTMLElement>(null);
   const activeRef = useRef(0);
-  const lockedRef = useRef(false);
-  const lastWheelRef = useRef(0);
-  const timerRef = useRef<number | undefined>(undefined);
-
-  const goTo = useCallback(
-    (target: number) => {
-      const from = activeRef.current;
-      if (lockedRef.current || target === from || target < 0 || target >= slideCount) {
-        return;
-      }
-      lockedRef.current = true;
-      activeRef.current = target;
-      setDirection(target > from ? "down" : "up");
-      setLeaving(from);
-      setActive(target);
-      setHasMoved(true);
-
-      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      window.clearTimeout(timerRef.current);
-      timerRef.current = window.setTimeout(
-        () => {
-          setLeaving(null);
-          lockedRef.current = false;
-        },
-        reduce ? 0 : TRANSITION_MS,
-      );
-    },
-    [slideCount],
-  );
+  const animatingRef = useRef(false);
+  const goToRef = useRef<(target: number) => void>(() => {});
 
   useEffect(() => {
     const section = sectionRef.current;
     if (!section || slideCount < 2) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    /** True while the hero fills the viewport (accounting for overlay header). */
-    const heroInView = () => {
-      const r = section.getBoundingClientRect();
-      const headerH = parseFloat(
-        getComputedStyle(document.documentElement).getPropertyValue("--header-h") || "0",
-      );
-      // top may be slightly negative due to the negative-margin overlay technique
-      return (
-        r.top >= -(headerH + 2) && r.top < window.innerHeight * 0.3 && r.bottom >= window.innerHeight - 2
-      );
-    };
+    gsap.registerPlugin(ScrollTrigger, Observer, ScrollToPlugin);
 
-    /** Whether a gesture in this direction belongs to the hero rather than the page. */
-    const claims = (dir: Direction) => {
-      if (!heroInView()) return false;
-      if (lockedRef.current) return true;
-      const i = activeRef.current;
-      return dir === "down" ? i < slideCount - 1 : i > 0;
-    };
+    const ctx = gsap.context(() => {
+      const st = ScrollTrigger.create({
+        trigger: section,
+        start: "top top",
+        end: () => `+=${(slideCount - 1) * window.innerHeight}`,
+        pin: true,
+        anticipatePin: 1,
+      });
 
-    const step = (dir: Direction) => goTo(activeRef.current + (dir === "down" ? 1 : -1));
+      const goTo = (target: number) => {
+        if (animatingRef.current) return;
+        target = gsap.utils.clamp(0, slideCount - 1, target);
+        const from = activeRef.current;
+        if (target === from) return;
 
-    // Trackpads stream many small deltas per swipe (starting at 1–3px) followed by
-    // momentum, so treat a stream as one gesture: accumulate until it crosses the
-    // threshold, step once, then swallow the rest of that stream.
-    let accum = 0;
-    let consumed = false;
-    let lastAbs = 0;
+        animatingRef.current = true;
+        activeRef.current = target;
+        setDirection(target > from ? "down" : "up");
+        setLeaving(from);
+        setActive(target);
+        setHasMoved(true);
 
-    const onWheel = (e: WheelEvent) => {
-      if (e.ctrlKey || Math.abs(e.deltaY) < Math.abs(e.deltaX)) return;
-      const dy = e.deltaMode === 1 ? e.deltaY * 16 : e.deltaMode === 2 ? e.deltaY * window.innerHeight : e.deltaY;
-      if (dy === 0) return;
-      const dir: Direction = dy > 0 ? "down" : "up";
-      if (!claims(dir)) return;
-      e.preventDefault();
+        const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        gsap.to(window, {
+          scrollTo: { y: st.start + target * window.innerHeight },
+          duration: reduce ? 0 : TRANSITION_MS / 1000,
+          ease: "power2.inOut",
+          onComplete: () => {
+            setLeaving(null);
+            animatingRef.current = false;
+          },
+        });
+      };
 
-      const now = performance.now();
-      const abs = Math.abs(dy);
-      const quiet = now - lastWheelRef.current > WHEEL_QUIET_MS;
-      // A sharp rise in delta while momentum is decaying means a fresh swipe.
-      const reSwipe = consumed && !lockedRef.current && abs > 20 && abs > lastAbs * 2;
-      if (quiet || reSwipe) {
-        accum = 0;
-        consumed = false;
-      }
-      lastWheelRef.current = now;
-      lastAbs = abs;
+      goToRef.current = goTo;
 
-      if (lockedRef.current || consumed) return;
-      if (accum !== 0 && Math.sign(accum) !== Math.sign(dy)) accum = 0;
-      accum += dy;
-      if (Math.abs(accum) >= WHEEL_THRESHOLD) {
-        consumed = true;
-        accum = 0;
-        step(dir);
-      }
-    };
+      // Only wheel/touch — "pointer" would also fire on ordinary mouse
+      // drags/clicks (e.g. the CTA link), which isn't a scroll gesture.
+      Observer.create({
+        target: window,
+        type: "wheel,touch",
+        tolerance: 10,
+        preventDefault: false,
+        onDown: (self) => {
+          if (!st.isActive || activeRef.current >= slideCount - 1) return;
+          self.event.preventDefault();
+          goTo(activeRef.current + 1);
+        },
+        onUp: (self) => {
+          if (!st.isActive || activeRef.current <= 0) return;
+          self.event.preventDefault();
+          goTo(activeRef.current - 1);
+        },
+      });
 
-    let touchY: number | null = null;
-    const onTouchStart = (e: TouchEvent) => {
-      touchY = e.touches[0]?.clientY ?? null;
-    };
-    const onTouchMove = (e: TouchEvent) => {
-      if (touchY === null) return;
-      const dy = touchY - (e.touches[0]?.clientY ?? touchY);
-      if (Math.abs(dy) < 6) return;
-      const dir: Direction = dy > 0 ? "down" : "up";
-      if (!claims(dir)) {
-        touchY = null;
-        return;
-      }
-      e.preventDefault();
-      if (Math.abs(dy) >= SWIPE_THRESHOLD) {
-        step(dir);
-        touchY = null;
-      }
-    };
-    const onTouchEnd = () => {
-      touchY = null;
-    };
+      const onKey = (e: KeyboardEvent) => {
+        if (!st.isActive) return;
+        const t = e.target as HTMLElement | null;
+        if (t?.closest("input, textarea, select, button, a, [contenteditable='true']")) return;
+        const down = e.key === "ArrowDown" || e.key === "PageDown" || (e.key === " " && !e.shiftKey);
+        const up = e.key === "ArrowUp" || e.key === "PageUp" || (e.key === " " && e.shiftKey);
+        if (down && activeRef.current < slideCount - 1) {
+          e.preventDefault();
+          goTo(activeRef.current + 1);
+        } else if (up && activeRef.current > 0) {
+          e.preventDefault();
+          goTo(activeRef.current - 1);
+        }
+      };
+      window.addEventListener("keydown", onKey);
 
-    const onKey = (e: KeyboardEvent) => {
-      const t = e.target as HTMLElement | null;
-      if (t?.closest("input, textarea, select, button, a, [contenteditable='true']")) return;
-      const down = e.key === "ArrowDown" || e.key === "PageDown" || (e.key === " " && !e.shiftKey);
-      const up = e.key === "ArrowUp" || e.key === "PageUp" || (e.key === " " && e.shiftKey);
-      if (!down && !up) return;
-      const dir: Direction = down ? "down" : "up";
-      if (!claims(dir)) return;
-      e.preventDefault();
-      step(dir);
-    };
+      return () => window.removeEventListener("keydown", onKey);
+    }, section);
 
-    section.addEventListener("wheel", onWheel, { passive: false });
-    section.addEventListener("touchstart", onTouchStart, { passive: true });
-    section.addEventListener("touchmove", onTouchMove, { passive: false });
-    section.addEventListener("touchend", onTouchEnd);
-    window.addEventListener("keydown", onKey);
-
-    return () => {
-      section.removeEventListener("wheel", onWheel);
-      section.removeEventListener("touchstart", onTouchStart);
-      section.removeEventListener("touchmove", onTouchMove);
-      section.removeEventListener("touchend", onTouchEnd);
-      window.removeEventListener("keydown", onKey);
-      window.clearTimeout(timerRef.current);
-    };
-  }, [goTo, slideCount]);
+    return () => ctx.revert();
+  }, [slideCount]);
 
   const pad = (n: number) => String(n).padStart(2, "0");
 
@@ -273,7 +216,7 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
                 type="button"
                 aria-label={`Go to slide ${i + 1}`}
                 aria-current={i === active}
-                onClick={() => goTo(i)}
+                onClick={() => goToRef.current(i)}
                 className={`hero-fp-dot ${i === active ? "is-current" : ""}`}
               />
             ))}

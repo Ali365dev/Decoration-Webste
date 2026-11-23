@@ -14,6 +14,7 @@ export const homeProducts: ProductDto[] = [
     primaryImageUrl: "/bareeze/image-17.jpg",
     hoverImageUrl: null,
     label: "NEW IN",
+    collectionSlugs: ["living"],
   },
   {
     id: "p-bs-433a",
@@ -32,6 +33,7 @@ export const homeProducts: ProductDto[] = [
       "https://bareezehome.com.pk/cdn/shop/files/CAPP-169-QF-RPcloseup3.jpg?v=1793964555&width=1206",
     ],
     label: "NEW IN",
+    collectionSlugs: ["bedding"],
   },
   {
     id: "p-quran-cover",
@@ -44,6 +46,7 @@ export const homeProducts: ProductDto[] = [
     primaryImageUrl: "/bareeze/image-18.jpg",
     hoverImageUrl: "/bareeze/image-19.jpg",
     label: "NEW IN",
+    collectionSlugs: ["living"],
   },
   {
     id: "p-table-linen",
@@ -56,6 +59,7 @@ export const homeProducts: ProductDto[] = [
     primaryImageUrl: "/bareeze/image-11.jpg",
     hoverImageUrl: "/bareeze/image-12.jpg",
     label: "NEW IN",
+    collectionSlugs: ["dining"],
   },
   {
     id: "p-towel",
@@ -68,6 +72,7 @@ export const homeProducts: ProductDto[] = [
     primaryImageUrl: "/bareeze/image-5.jpg",
     hoverImageUrl: null,
     label: "NEW IN",
+    collectionSlugs: ["bath"],
   },
   {
     id: "p-silk-sheet",
@@ -81,6 +86,7 @@ export const homeProducts: ProductDto[] = [
     hoverImageUrl: "/bareeze/image-5.jpg",
     galleryImageUrls: ["/bareeze/image-6.jpg"],
     label: "NEW IN",
+    collectionSlugs: ["bedding"],
   },
   {
     id: "p-fkh-137",
@@ -94,6 +100,7 @@ export const homeProducts: ProductDto[] = [
     hoverImageUrl: "/bareeze/image-26.jpg",
     galleryImageUrls: ["/bareeze/image-27.jpg"],
     label: "NEW IN",
+    collectionSlugs: ["bedding"],
   },
   {
     id: "p-sale-1",
@@ -106,6 +113,7 @@ export const homeProducts: ProductDto[] = [
     primaryImageUrl: "/home/sale-1.jpg",
     hoverImageUrl: "/home/sale-2.jpg",
     label: "-10%",
+    collectionSlugs: ["bedding"],
   },
   {
     id: "p-sale-2",
@@ -118,6 +126,7 @@ export const homeProducts: ProductDto[] = [
     primaryImageUrl: "/home/sale-3.jpg",
     hoverImageUrl: "/home/sale-4.jpg",
     label: "-10%",
+    collectionSlugs: ["bedding"],
   },
   ...wallArtProducts,
   ...csvProducts,

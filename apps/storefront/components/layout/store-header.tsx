@@ -3,6 +3,7 @@
 import type { NavItemDto } from "@dec-walls/types";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 function formatPrice(amount: number) {
@@ -408,6 +409,9 @@ export function StoreHeader({
   const [cartOpen, setCartOpen] = useState(false);
   const [compact, setCompact] = useState(false);
   const [atTop, setAtTop] = useState(true);
+  const [hovered, setHovered] = useState(false);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
 
   const menuImageMaps = useMemo(() => buildMenuImageMap(navigation), [navigation]);
   const openItem = navigation.find((item) => item.id === openId) ?? null;
@@ -452,7 +456,8 @@ export function StoreHeader({
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const transparent = atTop && !openId && !menuOpen && !searchOpen && !cartOpen;
+  const transparent =
+    isHome && atTop && !openId && !menuOpen && !searchOpen && !cartOpen && !hovered;
 
   function closeOverlays() {
     setOpenId(null);
@@ -461,26 +466,30 @@ export function StoreHeader({
     setMenuOpen(false);
   }
 
+  // Phones put search beside the menu button (and account inside the menu) so
+  // the centered logo never collides with the right-hand icons.
+  const toggleSearch = () => {
+    setSearchOpen((value) => !value);
+    setOpenId(null);
+    setCartOpen(false);
+    setMenuOpen(false);
+  };
+
   const utility = (
     <div className="flex shrink-0 items-center gap-3 xl:gap-[12px]">
       <button
         type="button"
         aria-label="Search"
         aria-expanded={searchOpen}
-        onClick={() => {
-          setSearchOpen((value) => !value);
-          setOpenId(null);
-          setCartOpen(false);
-          setMenuOpen(false);
-        }}
-        className={`nav-icon inline-flex size-[22px] items-center justify-center transition-colors duration-300 ${transparent ? "text-white" : "text-[#111111]"}`}
+        onClick={toggleSearch}
+        className={`nav-icon inline-flex size-[22px] items-center justify-center transition-colors duration-300 max-sm:hidden ${transparent ? "text-white" : "text-[#111111]"}`}
       >
         <IconSearch />
       </button>
       <Link
         href="/account"
         aria-label="Log in"
-        className={`nav-icon inline-flex size-[22px] items-center justify-center transition-colors duration-300 ${transparent ? "text-white" : "text-[#111111]"}`}
+        className={`nav-icon inline-flex size-[22px] max-sm:hidden items-center justify-center transition-colors duration-300 ${transparent ? "text-white" : "text-[#111111]"}`}
       >
         <IconAccount />
       </Link>
@@ -512,6 +521,8 @@ export function StoreHeader({
 
   return (
     <header
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
       className={`transition-[background-color,box-shadow,padding] duration-300 ease-[ease] ${
         transparent ? "bg-transparent" : "bg-paper"
       } ${compact ? "header-compact" : ""}`}
@@ -535,6 +546,15 @@ export function StoreHeader({
           >
             <IconMenu />
           </button>
+          <button
+            type="button"
+            aria-label="Search"
+            aria-expanded={searchOpen}
+            onClick={toggleSearch}
+            className={`nav-icon ml-1 inline-flex size-10 items-center justify-center transition-colors duration-300 sm:hidden ${transparent ? "text-white" : "text-ink"}`}
+          >
+            <IconSearch />
+          </button>
           <Link
             href="/"
             className="absolute left-1/2 -translate-x-1/2"
@@ -547,7 +567,7 @@ export function StoreHeader({
               height={38}
               className={`h-auto transition-[width,filter] duration-300 ease-[ease] ${
                 compact ? "w-[120px]" : "w-[140px]"
-              } ${transparent ? "brightness-0 invert" : ""}`}
+              } max-[359px]:w-[110px] ${transparent ? "brightness-0 invert" : ""}`}
               priority
             />
           </Link>
@@ -678,6 +698,14 @@ export function StoreHeader({
               />
             ))}
           </ul>
+          <Link
+            href="/account"
+            onClick={() => setMenuOpen(false)}
+            className="flex items-center gap-3 border-t border-line-soft px-[15px] py-4 text-sm font-medium uppercase tracking-[0.04em] text-ink sm:hidden"
+          >
+            <IconAccount />
+            Log in / Account
+          </Link>
         </div>
       ) : null}
 

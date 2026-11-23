@@ -37,16 +37,11 @@ export function VideoShowcase({
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
-  /* Autoplay on mount + pause/resume on visibility */
+  /* Autoplay when scrolled into view, pause when out */
   useEffect(() => {
     const section = sectionRef.current;
     const video = videoRef.current;
     if (!section || !video) return;
-
-    // Attempt immediate autoplay
-    if (!reducedMotion) {
-      video.play().then(() => { setPlaying(true); setTextVisible(true); }).catch(() => {});
-    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -61,7 +56,7 @@ export function VideoShowcase({
           setPlaying(false);
         }
       },
-      { threshold: 0.1 },
+      { threshold: 0.3 },
     );
 
     observer.observe(section);

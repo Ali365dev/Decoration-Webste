@@ -1,50 +1,141 @@
 import type { CmsBlockDto, ProductDto } from "@dec-walls/types";
 import Image from "next/image";
 import Link from "next/link";
+import { Award, BadgeCheck, ShieldCheck, Star, Truck, type LucideIcon } from "lucide-react";
+import { AnnouncementTicker } from "@/components/layout/announcement-ticker";
 import { ProductCard } from "@/components/product/product-card";
 import { Reveal } from "@/components/motion/reveal";
 import { resolveProductGridBlock } from "@dec-walls/domain/cms";
 import { HeroCarousel, type HeroSlide } from "@/components/cms/hero-carousel";
 import { CategoryShowcase } from "@/components/cms/category-showcase";
+import { CategoryScrollGallery } from "@/components/cms/category-scroll-gallery";
 import { VideoShowcase } from "@/components/cms/video-showcase";
+import { CollectionTabs } from "@/components/cms/collection-tabs";
+import { NewsletterSignup } from "@/components/cms/newsletter-signup";
 
-type Tile = { label: string; href: string; image: string };
+type Review = { name: string; location?: string; rating: number; quote: string };
 
-function ImageGrid({
-  tiles,
-  variant,
+type Tile = { label: string; href: string; image: string; badge?: string; ctaLabel?: string };
+
+/**
+ * Centered eyebrow + heading, then a row of category cards that pins and
+ * pans horizontally as the page scrolls (desktop/tablet) — see
+ * CategoryScrollGallery for the ScrollTrigger mechanics.
+ */
+function CategorySection({ tiles }: { tiles: Tile[] }) {
+  return (
+    <section className="bg-paper">
+      <CategoryScrollGallery
+        eyebrow="Explore Our Collections"
+        tiles={tiles}
+      />
+    </section>
+  );
+}
+
+type TrustBadgeItem = { icon: string; label: string };
+
+const TRUST_BADGE_ICONS: Record<string, LucideIcon> = {
+  truck: Truck,
+  "shield-check": ShieldCheck,
+  award: Award,
+  "badge-check": BadgeCheck,
+};
+
+function TrustBadges({ items }: { items: TrustBadgeItem[] }) {
+  return (
+    <section className="bg-paper px-4 py-10 sm:px-6 md:px-8 lg:px-12">
+      <div className="mx-auto grid max-w-[1410px] grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
+        {items.map((item) => {
+          const Icon = TRUST_BADGE_ICONS[item.icon] ?? ShieldCheck;
+          return (
+            <Reveal
+              key={item.label}
+              as="div"
+              className="flex flex-col items-center gap-3 rounded-xl bg-canvas px-6 py-10 text-center"
+            >
+              <Icon size={24} strokeWidth={1.75} className="text-[#f05e2d]" />
+              <span className="whitespace-nowrap text-sm font-medium text-ink">{item.label}</span>
+            </Reveal>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+function CustomerReviews({
+  eyebrow,
+  heading,
+  subtitle,
+  reviews,
 }: {
-  tiles: Tile[];
-  variant?: string;
+  eyebrow?: string;
+  heading: string;
+  subtitle?: string;
+  reviews: Review[];
 }) {
   return (
-    <section className="grid grid-cols-1 gap-[5px] p-[5px] sm:grid-cols-2 lg:grid-cols-3">
-      {tiles.map((tile) => (
-        <Reveal
-          key={tile.href + tile.label}
-          as="div"
-          className="min-w-0"
-        >
-          <Link
-            href={tile.href}
-            className="group relative block aspect-[627/731] overflow-hidden bg-canvas"
-          >
-            <Image
-              src={tile.image}
-              alt={tile.label}
-              fill
-              sizes="(min-width:1024px) 33vw, 50vw"
-              className="object-cover transition-transform duration-[0.5s] ease-[ease] group-hover:scale-[1.05]"
-            />
-            <span className="absolute inset-0 bg-black/0 transition-colors duration-[0.4s] ease-[ease] group-hover:bg-black/10" />
-            <span className="absolute inset-x-0 bottom-[var(--space-20)] flex translate-y-2 justify-center opacity-95 transition-all duration-[0.4s] ease-[ease] group-hover:translate-y-0 group-hover:opacity-100">
-              <span className="rounded-pill border border-line bg-paper px-[var(--space-30)] py-[var(--space-10)] text-[length:var(--btn-font-size)] font-medium uppercase leading-[21px] text-ink transition-colors duration-[0.4s] ease-[ease] group-hover:border-ink group-hover:bg-ink group-hover:text-white">
-                {tile.label}
-              </span>
-            </span>
-          </Link>
-        </Reveal>
-      ))}
+    <section className="bg-canvas px-4 py-16 sm:px-6 md:px-8 md:py-20 lg:px-12">
+      <div className="mx-auto max-w-[1410px]">
+        <div className="mx-auto mb-12 max-w-2xl text-center md:mb-14">
+          {eyebrow ? (
+            <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.25em] text-[#f05e2d]">
+              {eyebrow}
+            </p>
+          ) : null}
+          <h2 className="text-[length:var(--page-title-size)] font-medium leading-[1.3] tracking-[var(--heading-letter-spacing)] text-ink">
+            {heading}
+          </h2>
+          {subtitle ? (
+            <p className="mx-auto mt-3 text-[length:var(--base-font-size)] leading-[28px] text-body">
+              {subtitle}
+            </p>
+          ) : null}
+        </div>
+
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {reviews.map((review, index) => (
+            <Reveal
+              key={review.name}
+              as="div"
+              delayMs={Math.min(index, 5) * 70}
+              className="flex h-full flex-col rounded-lg border border-line-soft bg-paper p-6 shadow-[0_1px_2px_rgba(17,17,17,0.04)]"
+            >
+              <div className="mb-3 flex gap-1 text-[#f05e2d]">
+                {Array.from({ length: 5 }).map((_, starIndex) => (
+                  <Star
+                    key={starIndex}
+                    size={15}
+                    strokeWidth={1.5}
+                    fill={starIndex < review.rating ? "currentColor" : "none"}
+                  />
+                ))}
+              </div>
+              <p className="flex-1 text-[14px] leading-[24px] text-body">
+                &ldquo;{review.quote}&rdquo;
+              </p>
+              <div className="mt-5 flex items-center gap-3 border-t border-line-soft pt-4">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-ink text-[12px] font-semibold uppercase text-white">
+                  {review.name
+                    .split(" ")
+                    .map((part) => part[0])
+                    .slice(0, 2)
+                    .join("")}
+                </span>
+                <div>
+                  <p className="text-[13px] font-semibold uppercase tracking-[0.04em] text-ink">
+                    {review.name}
+                  </p>
+                  {review.location ? (
+                    <p className="text-[12px] text-body">{review.location}</p>
+                  ) : null}
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }
@@ -92,9 +183,12 @@ async function ProductGrid({
 
 export async function CmsBlockRenderer({ block }: { block: CmsBlockDto }) {
   switch (block.type) {
-    case "announcement":
-      // Rendered in store layout above the header (Bareeze / Figma Page 2).
-      return null;
+    case "announcement": {
+      const msgs =
+        (block.data.messages as string[] | undefined) ??
+        (block.data.text ? [String(block.data.text)] : []);
+      return msgs.length > 0 ? <AnnouncementTicker messages={msgs} /> : null;
+    }
     case "hero": {
       const heroSlides: HeroSlide[] = [
         {
@@ -123,38 +217,22 @@ export async function CmsBlockRenderer({ block }: { block: CmsBlockDto }) {
     }
     case "banner": {
       const tiles = (block.data.tiles as Tile[]) ?? [];
-      return (
-        <ImageGrid tiles={tiles} variant={String(block.data.variant ?? "")} />
-      );
+      return <CategorySection tiles={tiles} />;
     }
     case "collection_tabs": {
       const tabs =
         (block.data.tabs as { label: string; collectionSlug: string }[]) ?? [];
-      const products = await resolveProductGridBlock(
-        tabs[0]?.collectionSlug ?? "new-in",
+      // Pre-fetch every tab so switching is instant on the client.
+      const sets = await Promise.all(
+        tabs.map((tab) => resolveProductGridBlock(tab.collectionSlug)),
       );
+      const productsBySlug: Record<string, ProductDto[]> = {};
+      tabs.forEach((tab, i) => {
+        productsBySlug[tab.collectionSlug] = sets[i] ?? [];
+      });
       return (
-        <Reveal as="section" className="bg-canvas py-12 md:py-16">
-          <div className="container-page">
-            <div className="mb-8 flex flex-wrap justify-center gap-2 md:gap-3">
-              {tabs.map((tab) => (
-                <Link
-                  key={tab.label}
-                  href={`/collections/${tab.collectionSlug}`}
-                  className="rounded-pill border border-line bg-paper px-7 py-3 text-xs font-medium uppercase tracking-wide text-ink transition-all duration-[0.4s] hover:border-ink hover:bg-ink hover:text-white"
-                >
-                  {tab.label}
-                </Link>
-              ))}
-            </div>
-            <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
-              {products.slice(0, 4).map((product, index) => (
-                <Reveal key={product.id} delayMs={index * 70}>
-                  <ProductCard product={product} />
-                </Reveal>
-              ))}
-            </div>
-          </div>
+        <Reveal as="div">
+          <CollectionTabs tabs={tabs} productsBySlug={productsBySlug} />
         </Reveal>
       );
     }
@@ -181,39 +259,28 @@ export async function CmsBlockRenderer({ block }: { block: CmsBlockDto }) {
         </Reveal>
       );
     case "rich_text":
-      if (block.data.variant === "support") {
-        return (
-          <Reveal as="section" className="border-y border-line-soft bg-paper py-14">
-            <div className="container-page grid items-center gap-8 md:grid-cols-2">
-              <div className="relative aspect-[4/3] overflow-hidden bg-[#eee]">
-                {block.data.imageUrl ? (
-                  <Image
-                    src={String(block.data.imageUrl)}
-                    alt=""
-                    fill
-                    className="object-cover transition-transform duration-[0.6s] ease-[ease] hover:scale-[1.04]"
-                    sizes="(min-width:768px) 50vw, 100vw"
-                  />
-                ) : null}
-              </div>
-              <div>
-                <h2 className="text-[28px] font-medium text-ink md:text-[36px]">
-                  {String(block.data.title ?? "Support")}
-                </h2>
-                <p className="mt-3 text-base leading-7 text-body">
-                  {String(block.data.body ?? "")}
-                </p>
-                <p className="mt-4 text-sm font-medium text-ink">
-                  Cell # {String(block.data.phone ?? "")}
-                </p>
-              </div>
-            </div>
-          </Reveal>
-        );
-      }
       return null;
     case "newsletter":
-      return null;
+      return (
+        <NewsletterSignup
+          eyebrow={block.data.eyebrow ? String(block.data.eyebrow) : undefined}
+          heading={String(block.data.heading ?? "Join our newsletter")}
+          subtitle={block.data.subtitle ? String(block.data.subtitle) : undefined}
+          placeholder={block.data.placeholder ? String(block.data.placeholder) : undefined}
+          ctaLabel={block.data.ctaLabel ? String(block.data.ctaLabel) : undefined}
+        />
+      );
+    case "customer_reviews":
+      return (
+        <CustomerReviews
+          eyebrow={block.data.eyebrow ? String(block.data.eyebrow) : undefined}
+          heading={String(block.data.heading ?? "What Our Customers Say")}
+          subtitle={block.data.subtitle ? String(block.data.subtitle) : undefined}
+          reviews={(block.data.reviews as Review[]) ?? []}
+        />
+      );
+    case "trust_badges":
+      return <TrustBadges items={(block.data.items as TrustBadgeItem[]) ?? []} />;
     case "video_showcase":
       return (
         <VideoShowcase

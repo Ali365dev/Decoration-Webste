@@ -2,14 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { NavItemDto } from "@dec-walls/types";
-import { AnnouncementTicker } from "@/components/layout/announcement-ticker";
 import { StoreHeader } from "@/components/layout/store-header";
 
 export function StickyHeader({
-  messages,
   navigation,
 }: {
-  messages: string[];
   navigation: NavItemDto[];
 }) {
   const [hidden, setHidden] = useState(false);
@@ -53,7 +50,6 @@ export function StickyHeader({
       className="sticky top-0 z-50 transition-transform duration-300 ease-[ease]"
       style={{ transform: hidden ? "translateY(-100%)" : "translateY(0)" }}
     >
-      {messages.length > 0 && <AnnouncementTicker messages={messages} />}
       <StoreHeader navigation={navigation} />
     </div>
   );

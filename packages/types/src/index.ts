@@ -113,7 +113,9 @@ export type CmsBlockType =
   | "newsletter"
   | "rich_text"
   | "category_showcase"
-  | "video_showcase";
+  | "video_showcase"
+  | "customer_reviews"
+  | "trust_badges";
 
 export type CmsBlockDto = {
   id: string;

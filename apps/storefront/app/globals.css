@@ -432,7 +432,8 @@
   z-index: -1;
   content: "";
   inset: 0;
-  background: linear-gradient(90deg, rgb(20 17 16 / 24%), rgb(20 17 16 / 8%) 50%, rgb(20 17 16 / 20%));
+  background:
+    radial-gradient(ellipse at center, rgb(20 17 16 / 42%) 0%, rgb(20 17 16 / 26%) 60%, rgb(20 17 16 / 18%) 100%);
 }
 
 .collection-banner::after {
@@ -457,7 +458,7 @@
   line-height: 1.2;
   text-transform: uppercase;
   letter-spacing: 0.035em;
-  text-shadow: 0 1px 12px rgb(0 0 0 / 20%);
+  text-shadow: 0 1px 14px rgb(0 0 0 / 35%);
 }
 
 .collection-breadcrumb,
@@ -818,4 +819,49 @@
   .collection-layout,
   .collection-column-button,
   .product-detail-tabs button::after { transition-duration: 0.01ms !important; }
+}
+
+/* ── Collection tabs (home "shop by room") ─────────────────── */
+
+.collection-tab {
+  background: transparent;
+  transition: background-color 300ms ease, color 300ms ease;
+}
+
+.collection-tab:hover,
+.collection-tab.is-active {
+  background: #efefef;
+}
+
+.collection-tab:focus-visible {
+  outline: 2px solid var(--color-ink, #111);
+  outline-offset: 2px;
+}
+
+.collection-tabs-grid {
+  transition: opacity 320ms ease, transform 320ms ease;
+}
+
+/* Outgoing grid drops down and fades out before the swap. */
+.collection-tabs-grid.is-out {
+  opacity: 0;
+  transform: translateY(56px);
+}
+
+/* Incoming cards rise up from below and fade in, one after another (delay set inline per card). */
+.collection-tabs-item {
+  animation: collection-tabs-in 560ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes collection-tabs-in {
+  from { opacity: 0; transform: translateY(56px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .collection-tabs-grid,
+  .collection-tabs-item {
+    transition: none;
+    animation: none;
+  }
 }
