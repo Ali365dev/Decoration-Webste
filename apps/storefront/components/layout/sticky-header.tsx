@@ -31,8 +31,13 @@ export function StickyHeader({
   useEffect(() => {
     const onScroll = () => {
       const y = window.scrollY;
+      // While the pinned hero still covers the top of the viewport, keep the
+      // header shown. Otherwise the programmatic scroll during slide snaps
+      // reads as "scrolling down" and hides/re-shows the bar — the flicker.
+      const hero = document.querySelector<HTMLElement>(".hero-fp");
+      const overHero = hero ? hero.getBoundingClientRect().bottom > 80 : false;
       // Don't hide until past 80px so it doesn't flicker at the top
-      if (y > 80) {
+      if (y > 80 && !overHero) {
         setHidden(y > lastY.current);
       } else {
         setHidden(false);

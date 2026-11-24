@@ -5,6 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useCart } from "@/app/cart-context";
+import { CartDrawer } from "@/components/layout/cart-drawer";
 
 function formatPrice(amount: number) {
   return `Rs.${amount.toLocaleString("en-US", {
@@ -402,6 +404,7 @@ export function StoreHeader({
 }: {
   navigation: NavItemDto[];
 }) {
+  const { totalItems } = useCart();
   const [openId, setOpenId] = useState<string | null>(null);
   const closeTimer = useRef<number | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -448,13 +451,23 @@ export function StoreHeader({
 
   useEffect(() => {
     function onScroll() {
-      setCompact(window.scrollY > 48);
-      setAtTop(window.scrollY < 80);
+      const y = window.scrollY;
+      // The hero is GSAP-pinned, so window.scrollY climbs past 80 while you're
+      // still visually on the hero. Treat "the hero still covers the top of the
+      // viewport" as being at the top, so the header stays transparent and
+      // full-size across the whole hero instead of flipping solid mid-slide.
+      let overHero = false;
+      if (isHome) {
+        const hero = document.querySelector<HTMLElement>(".hero-fp");
+        if (hero) overHero = hero.getBoundingClientRect().bottom > 80;
+      }
+      setCompact(y > 48 && !overHero);
+      setAtTop(y < 80 || overHero);
     }
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [isHome]);
 
   const transparent =
     isHome && atTop && !openId && !menuOpen && !searchOpen && !cartOpen && !hovered;
@@ -514,7 +527,7 @@ export function StoreHeader({
         className={`nav-icon relative inline-flex size-[22px] items-center justify-center transition-colors duration-300 ${transparent ? "text-white" : "text-[#111111]"}`}
       >
         <IconCart />
-        <CountBadge count={0} />
+        {totalItems > 0 ? <CountBadge count={totalItems} /> : null}
       </button>
     </div>
   );
@@ -709,54 +722,7 @@ export function StoreHeader({
         </div>
       ) : null}
 
-      {cartOpen ? (
-        <div className="fixed inset-0 z-[60]">
-          <button
-            type="button"
-            aria-label="Close cart"
-            className="absolute inset-0 bg-black/50"
-            onClick={() => setCartOpen(false)}
-          />
-          <aside className="absolute inset-y-0 right-0 flex w-full max-w-[420px] flex-col bg-paper shadow-[0_5px_30px_rgba(0,0,0,0.05)]">
-            <div className="flex items-center justify-between border-b border-line-soft px-6 py-5">
-              <h2 className="text-base font-medium uppercase tracking-[0.04em]">
-                Cart
-              </h2>
-              <button
-                type="button"
-                aria-label="Close cart"
-                onClick={() => setCartOpen(false)}
-                className="inline-flex size-10 items-center justify-center text-ink"
-              >
-                <IconClose />
-              </button>
-            </div>
-            <div className="flex flex-1 items-center justify-center px-6 text-center text-sm text-body">
-              Your cart is empty
-            </div>
-            <div className="border-t border-line-soft px-6 py-5">
-              <div className="mb-4 flex items-center justify-between text-sm">
-                <span className="font-medium uppercase text-ink">Subtotal</span>
-                <span className="text-body">{formatPrice(0)}</span>
-              </div>
-              <Link
-                href="/cart"
-                onClick={closeOverlays}
-                className="mb-3 flex h-12 items-center justify-center rounded-pill border border-line text-[12px] font-medium uppercase tracking-[0.04em] text-ink"
-              >
-                View cart
-              </Link>
-              <Link
-                href="/checkout"
-                onClick={closeOverlays}
-                className="flex h-12 items-center justify-center rounded-pill bg-ink text-[12px] font-medium uppercase tracking-[0.04em] text-white"
-              >
-                Checkout
-              </Link>
-            </div>
-          </aside>
-        </div>
-      ) : null}
+      <CartDrawer isOpen={cartOpen} onClose={() => setCartOpen(false)} />
     </header>
   );
 }

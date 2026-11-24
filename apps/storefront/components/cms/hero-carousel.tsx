@@ -22,8 +22,14 @@ type HeroCarouselProps = {
 
 type Direction = "down" | "up";
 
-/** Must cover the longest transition in globals.css (panel wipe + copy roll-in). */
-const TRANSITION_MS = 1150;
+/**
+ * Duration of the window scroll tween between slides. Kept close to the 900ms
+ * CSS panel wipe so a slide feels like one quick snap rather than a long lock;
+ * the copy roll-in continues on its own after input is released.
+ */
+const TRANSITION_MS = 820;
+/** Short lock after a snap so leftover trackpad momentum can't over-advance. */
+const MOMENTUM_COOLDOWN_MS = 140;
 
 /**
  * Full-page style hero (modelled on fullPage.js): while the hero is pinned,
@@ -51,6 +57,8 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
 
     gsap.registerPlugin(ScrollTrigger, Observer, ScrollToPlugin);
 
+    let pinnedST: ScrollTrigger | undefined;
+
     const ctx = gsap.context(() => {
       const st = ScrollTrigger.create({
         trigger: section,
@@ -59,6 +67,7 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
         pin: true,
         anticipatePin: 1,
       });
+      pinnedST = st;
 
       const goTo = (target: number) => {
         if (animatingRef.current) return;
@@ -80,7 +89,11 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
           ease: "power2.inOut",
           onComplete: () => {
             setLeaving(null);
-            animatingRef.current = false;
+            // Hold the input lock a beat longer so residual trackpad momentum
+            // right after the snap doesn't immediately fire the next slide.
+            gsap.delayedCall(reduce ? 0 : MOMENTUM_COOLDOWN_MS / 1000, () => {
+              animatingRef.current = false;
+            });
           },
         });
       };
@@ -125,7 +138,10 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
       return () => window.removeEventListener("keydown", onKey);
     }, section);
 
-    return () => ctx.revert();
+    return () => {
+      pinnedST?.kill(); // removes pin spacer before ctx.revert touches the DOM
+      ctx.revert();
+    };
   }, [slideCount]);
 
   const pad = (n: number) => String(n).padStart(2, "0");

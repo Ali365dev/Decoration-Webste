@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Great_Vibes, Montserrat, Playfair_Display } from "next/font/google";
 import "./globals.css";
+import { CartProvider } from "./cart-context";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -35,7 +36,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${montserrat.variable} ${script.variable} ${playfair.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col font-sans text-ink">
-        {children}
+        <CartProvider>{children}</CartProvider>
       </body>
     </html>
   );

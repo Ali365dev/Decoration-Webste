@@ -1,0 +1,61 @@
+/* Bareeze Home tokens: Montserrat, #111 / #555, #ebebeb borders, 30px pill controls, #f05e2d accent */
+:global(body):has(.page) { background: #fff; }
+
+.page { padding-bottom: 100px; color: #555; font-size: 16px; line-height: 28px; }
+
+.breadcrumb { display: flex; gap: 6px; padding: 15px 0; font-size: 14px; line-height: 1.75; }
+.breadcrumb a { color: #111; }
+.breadcrumb a:hover { color: #555; }
+
+.layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 30px; max-width: 1000px; margin: 30px auto 0; align-items: start; }
+
+.card { padding: 40px; border: 1px solid #ebebeb; border-radius: 12px; background: #fff; }
+.title { margin: 0 0 20px; color: #111; font-size: 24px; font-weight: 500; line-height: 1.4; }
+.lead { margin: -8px 0 20px; font-size: 14px; }
+
+.form { display: grid; gap: 18px; }
+.field { display: grid; gap: 8px; }
+.field label { color: #111; font-size: 14px; line-height: 1.75; }
+.field input { width: 100%; height: 45px; padding: 0 20px; border: 1px solid #dedede; border-radius: 30px; background: #fff; color: #111; font: inherit; font-size: 14px; transition: border-color 400ms ease; }
+.field input::placeholder { color: #999; }
+.field input:focus { border-color: #111; outline: none; }
+.field input:focus-visible { outline: 2px solid #111; outline-offset: 2px; }
+.field input[aria-invalid="true"] { border-color: #f05e2d; }
+
+.passwordWrap { position: relative; }
+.passwordWrap input { padding-right: 50px; }
+.passwordWrap button { position: absolute; top: 0; right: 6px; display: grid; width: 40px; height: 45px; place-items: center; color: #555; }
+.passwordWrap button:hover { color: #111; }
+
+.error { margin: 0; color: #f05e2d; font-size: 13px; line-height: 1.5; }
+
+.link, .switch button { color: #111; font-size: 14px; text-decoration: underline; text-underline-offset: 3px; transition: color 400ms ease; }
+.link { justify-self: start; }
+.link:hover, .switch button:hover { color: #555; }
+
+.submit { min-height: 50px; padding: 13px 55px; border: 1px solid #111; border-radius: 30px; background: #111; color: #fff; font-size: 12px; font-weight: 500; text-transform: uppercase; transition: color 400ms ease, background-color 400ms ease; }
+.submit:hover { background: #fff; color: #111; }
+.submit:focus-visible { outline: 2px solid #111; outline-offset: 2px; }
+
+.notice { margin: 0; padding: 12px 16px; border-radius: 12px; background: #f5f5f5; color: #111; font-size: 14px; line-height: 1.6; }
+
+.switch { margin: 24px 0 0; padding-top: 20px; border-top: 1px solid #ebebeb; font-size: 14px; text-align: center; }
+
+.aside { padding: 40px; border-radius: 12px; background: #f5f5f5; }
+.aside h2 { margin: 0 0 20px; color: #111; font-size: 18px; font-weight: 500; line-height: 1.4; }
+.aside ul { display: grid; gap: 20px; margin: 0; padding: 0; list-style: none; }
+.aside li { display: flex; align-items: flex-start; gap: 14px; font-size: 14px; line-height: 1.75; }
+.aside li svg { flex: 0 0 auto; margin-top: 3px; color: #111; }
+.aside li strong { display: block; color: #111; font-weight: 500; }
+.asideLink { display: inline-flex; align-items: center; min-height: 45px; margin-top: 28px; padding: 0 30px; border: 1px solid #111; border-radius: 30px; color: #111; font-size: 12px; font-weight: 500; text-transform: uppercase; transition: color 400ms ease, background-color 400ms ease; }
+.asideLink:hover { background: #111; color: #fff; }
+
+@media (max-width: 767px) {
+  .layout { grid-template-columns: 1fr; margin-top: 10px; }
+  .card, .aside { padding: 24px 20px; }
+  .submit { padding-inline: 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .field input, .submit, .asideLink, .link { transition-duration: 0.01ms; }
+}

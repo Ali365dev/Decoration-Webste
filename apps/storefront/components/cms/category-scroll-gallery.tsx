@@ -35,21 +35,20 @@ export function CategoryScrollGallery({
 
     gsap.registerPlugin(ScrollTrigger);
 
+    let pinnedST: ScrollTrigger | undefined;
+
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
 
       mm.add("(min-width: 1024px)", () => {
-        // Scroll by exactly one "page" of 3 cards.
         const getDistance = () => Math.max(0, track.scrollWidth - section.clientWidth);
-
-        const getStart = () => "top top";
 
         const tween = gsap.to(track, {
           x: () => -getDistance(),
           ease: "none",
           scrollTrigger: {
             trigger: section,
-            start: getStart,
+            start: "top top",
             end: () => `+=${getDistance()}`,
             scrub: true,
             pin: true,
@@ -58,14 +57,20 @@ export function CategoryScrollGallery({
           },
         });
 
+        pinnedST = tween.scrollTrigger ?? undefined;
+
         return () => {
-          tween.scrollTrigger?.kill();
+          pinnedST?.kill();
           tween.kill();
+          pinnedST = undefined;
         };
       });
     }, section);
 
-    return () => ctx.revert();
+    return () => {
+      pinnedST?.kill(); // removes pin spacer before ctx.revert touches the DOM
+      ctx.revert();
+    };
   }, [tiles.length]);
 
   return (

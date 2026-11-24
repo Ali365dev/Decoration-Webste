@@ -66,64 +66,91 @@
   display: none;
 }
 
+/* Reference product page sits on a white canvas */
+:global(body):has(.page) { background: #fff; }
+
+/* ---- Bareeze-style product details (Montserrat, #111 / #555, pill controls) ---- */
+.page :global(.product-breadcrumb) { justify-content: flex-start; gap: 6px; margin: 0; padding: 15px 0; color: #555; font-size: 14px; line-height: 1.75; text-transform: none; }
+.page :global(.product-breadcrumb a) { color: #111; }
+.page :global(.product-breadcrumb a:hover) { color: #555; }
+.page :global(.product-breadcrumb span:last-child) { color: #555; }
+
 .page :global(.product-detail-layout) {
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 30px;
-  padding-top: 0;
+  padding-top: 20px;
   padding-bottom: 100px;
 }
 
 .page :global(.product-gallery) {
-  position: relative;
-  top: auto;
+  position: sticky;
+  top: 20px;
   grid-template-columns: 50px minmax(0, 1fr);
   gap: 10px;
 }
 
-.page :global(.product-main-image) { aspect-ratio: 3 / 4; }
-.page :global(.product-main-image img) { transition: none; }
+.page :global(.product-main-image) { aspect-ratio: 1 / 1; background: #fff; }
+.page :global(.product-main-image img) { object-fit: contain; transition: none; }
 .page :global(.product-main-image:hover img) { transform: none; }
+.page :global(.gallery-zoom) { top: 16px; right: 16px; width: 32px; height: 32px; background: transparent; color: #111; }
+.page :global(.gallery-zoom:hover) { background: transparent; transform: none; color: #555; }
+.page :global(.gallery-arrow) { width: 38px; height: 38px; background: #fff; box-shadow: 0 5px 30px rgb(0 0 0 / 8%); }
 .page :global(.product-gallery-pagination) { display: none; }
-.page :global(.product-thumbnails button) { width: 50px; aspect-ratio: 3 / 4; }
-.page :global(.product-information) { position: sticky; top: 80px; padding-top: 0; }
-.page :global(.product-title-row h1) { font-size: 20px; line-height: 1.4; letter-spacing: 0; }
-.page :global(.product-price) { margin: 20px 0; font-size: 18px; }
+.page :global(.product-thumbnails) { gap: 10px; }
+.page :global(.product-thumbnails button) { width: 50px; aspect-ratio: 3 / 4; border: 1px solid transparent; background: #fff; }
+.page :global(.product-thumbnails button.thumbnail-active) { border-color: #111; }
+
+/* Info column: no sticky (it is taller than the viewport once options + delivery notes render) */
+.page :global(.product-information) { position: static; padding-top: 0; color: #555; font-size: 16px; line-height: 28px; }
+
+.page :global(.product-sale-label) { display: inline-block; margin-bottom: 20px; padding: 6px 12px; border-radius: 12px; background: #f05e2d; color: #fff; font-size: 13px; font-weight: 400; line-height: 13px; }
+.page :global(.product-title-row h1) { margin: 0 0 5px; font-family: inherit; font-size: 24px; font-weight: 500; line-height: 1.4; letter-spacing: 0; text-transform: none; color: #111; }
+.page :global(.product-price) { margin: 20px 0 25px; color: #111; font-size: 20px; font-weight: 500; line-height: 25px; letter-spacing: 0; }
+.page :global(.product-price .price-sale) { color: #f05e2d; }
+.page :global(.product-compare-price) { padding-left: 5px; color: #757575; font-weight: 400; text-decoration: line-through; }
+
 .page :global(.product-options) { margin-bottom: 17px; }
 .page :global(.variant-option) { margin-bottom: 20px; }
-.page :global(.variant-chip) { border-radius: 3px; }
+.page :global(.product-option-heading) { gap: 4px; margin-bottom: 8px; color: #555; font-size: 14px; line-height: 1.75; }
+.page :global(.product-option-heading span:first-child) { font-weight: 400; }
+.page :global(.product-option-heading span:last-child) { color: #111; font-weight: 500; }
+.page :global(.variant-choices) { gap: 0; }
+.page :global(.variant-chip) { min-height: 33px; margin: 0 10px 10px 0; padding: 3px 22px; border: 1px solid #ebebeb; border-radius: 3px; background: #fff; color: #111; font-size: 14px; line-height: 1.75; }
+.page :global(.variant-chip:hover) { border-color: #111; color: #111; }
+.page :global(.variant-chip.selected) { border-color: #111; background: #111; color: #fff; }
+.page :global(.variant-chip.selected::after) { display: none; }
 
-.page :global(.product-addons) {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 26px;
-  margin: 0 0 20px;
-  padding: 0 0 17px;
-  border-bottom: 1px solid #e8e8e8;
-}
+.page :global(.product-addons) { display: flex; flex-wrap: wrap; align-items: center; gap: 30px; margin: 0 0 25px; padding: 0 0 10px; border-bottom: 1px solid #ebebeb; }
+.page :global(.product-addons a),
+.page :global(.product-addons button) { display: inline-flex; align-items: center; gap: 10px; color: #111; font-size: 16px; line-height: 28px; transition: color 400ms ease; }
+.page :global(.product-addons a:hover),
+.page :global(.product-addons button:hover) { color: #555; }
+.page :global(.product-addons svg) { flex-shrink: 0; color: #111; }
 
-.page :global(.product-addons a) { display: inline-flex; align-items: center; gap: 8px; color: #555; font-size: 12px; }
-.page :global(.product-addons a:hover) { color: #111; }
-.page :global(.product-addons a > span) { display: grid; width: 19px; height: 19px; place-items: center; font-size: 16px; }
-.page :global(.product-purchase-row) { grid-template-columns: 130px minmax(0, 1fr) 48px 48px; gap: 10px; }
-.page :global(.product-action-button) { display: grid; min-height: 50px; place-items: center; border: 1px solid #dedede; border-radius: 30px; color: #333; transition: border-color 180ms ease, color 180ms ease; }
-.page :global(.product-action-button:hover) { border-color: #111; color: #111; }
-.page :global(.product-meta-row) { justify-content: flex-start; gap: 0; padding: 10px 0; }
-.page :global(.product-meta-row:first-of-type) { margin-top: 20px; }
-.page :global(.product-meta-row span:first-child) { flex: 0 0 128px; }
-.page :global(.product-meta-row span:last-child) { color: #111; }
-.page :global(.product-delivery-note) { display: grid; gap: 10px; margin-top: 22px; }
-.page :global(.product-delivery-note p) { display: flex; align-items: flex-start; gap: 12px; margin: 0; color: #555; line-height: 1.65; }
-.page :global(.product-delivery-note p > svg) { flex: 0 0 auto; margin-top: 1px; }
-.page :global(.product-delivery-note strong) { font-weight: 500; }
-.page :global(.product-utility-links) { padding: 20px 0 16px; }
+.page :global(.product-purchase-row) { grid-template-columns: 138px minmax(0, 1fr) 50px 50px; gap: 10px; margin-bottom: 15px; }
+.page :global(.quantity-stepper) { min-height: 50px; padding: 0 8px; border: 1px solid #ebebeb; border-radius: 30px; background: #f5f5f5; }
+.page :global(.quantity-stepper button) { width: 35px; color: #111; }
+.page :global(.quantity-stepper span) { font-size: 16px; color: #111; }
+.page :global(.product-add-button) { min-height: 50px; padding: 13px 20px; border: 1px solid #111; border-radius: 30px; background: #111; color: #fff; font-size: 12px; font-weight: 500; letter-spacing: 0; text-transform: uppercase; transition: color 400ms ease, background-color 400ms ease; }
+.page :global(.product-add-button:hover) { background: #fff; color: #111; }
+.page :global(.product-action-button) { display: grid; width: 50px; height: 50px; min-height: 50px; place-items: center; border: 1px solid #ebebeb; border-radius: 50%; background: transparent; color: #111; transition: border-color 400ms ease, background-color 400ms ease, color 400ms ease; }
+.page :global(.product-action-button:hover) { border-color: #111; background: #111; color: #fff; }
 
-/* The Bed In A Bag reference uses a square hero and compact bundle cards. */
+.page :global(.product-meta-row) { justify-content: flex-start; gap: 0; padding: 4px 0; border: 0; color: #555; font-size: 14px; line-height: 1.75; }
+.page :global(.product-meta-row:first-of-type) { margin-top: 20px; border-top: 0; }
+.page :global(.product-meta-row span:first-child) { flex: 0 0 90px; color: #111; font-weight: 500; }
+.page :global(.product-meta-row span:last-child) { color: #555; }
+.page :global(.product-delivery-note) { display: grid; gap: 10px; margin-top: 22px; padding-top: 20px; border-top: 1px solid #ebebeb; font-size: 14px; }
+.page :global(.product-delivery-note p) { display: flex; align-items: flex-start; gap: 12px; margin: 0; color: #555; line-height: 1.75; }
+.page :global(.product-delivery-note p > svg) { flex: 0 0 auto; margin-top: 3px; color: #111; }
+.page :global(.product-delivery-note strong) { color: #111; font-weight: 500; }
+
+/* Bed In A Bag keeps its own bundle layout */
 .page :global(.bed-in-a-bag-page .product-main-image) { aspect-ratio: 1 / 1; }
-.page :global(.bed-in-a-bag-page .product-thumbnails button) { width: 64px; }
-.page :global(.bed-in-a-bag-page .product-title-row h1) { font-size: 24px; line-height: 1.25; }
-.page :global(.bed-in-a-bag-page .product-price) { margin: 18px 0 24px; font-size: 21px; }
-.page :global(.bed-in-a-bag-page .variant-chip.selected) { min-width: 100px; border-color: #111; background: #111; color: #fff; }
-.page :global(.bed-in-a-bag-page .product-purchase-row) { grid-template-columns: 172px minmax(0, 1fr) 54px 54px; gap: 16px; }
+.page :global(.bed-in-a-bag-page .product-title-row h1) { font-size: 24px; }
+.page :global(.bed-in-a-bag-page .product-price) { margin: 20px 0 25px; font-size: 20px; }
+.page :global(.bed-in-a-bag-page .variant-chip.selected) { min-width: 0; }
+.page :global(.bed-in-a-bag-page .product-purchase-row) { grid-template-columns: 138px minmax(0, 1fr) 50px 50px; gap: 10px; }
 
 .bundle {
   margin: 52px 0 22px;
@@ -173,23 +200,27 @@
 .bundleFooter button { min-height: 42px; padding: 0 22px; border-radius: 24px; background: #111; color: #fff; font-size: 12px; text-transform: uppercase; }
 
 @media (max-width: 1023px) {
-  .page :global(.bed-in-a-bag-page .product-purchase-row) { grid-template-columns: 120px minmax(0, 1fr) 46px 46px; gap: 9px; }
+  .page :global(.product-purchase-row),
+  .page :global(.bed-in-a-bag-page .product-purchase-row) { grid-template-columns: 120px minmax(0, 1fr) 46px 46px; gap: 8px; }
+  .page :global(.product-action-button) { width: 46px; height: 46px; }
 }
 
 @media (max-width: 767px) {
   .page :global(.product-detail-layout) { gap: 22px; padding-bottom: 70px; }
   .page :global(.product-gallery) { position: relative; display: block; width: calc(100% + 30px); margin-inline: -15px; }
-  .page :global(.product-main-image) { aspect-ratio: 3 / 4; }
+  .page :global(.product-gallery) { position: relative; top: auto; }
+  .page :global(.product-main-image) { aspect-ratio: 1 / 1; }
   .page :global(.product-thumbnails) { display: none; }
   .page :global(.product-gallery-pagination) { display: flex; justify-content: center; gap: 7px; padding: 12px 0 0; }
   .page :global(.product-gallery-pagination button) { width: 6px; height: 6px; border-radius: 50%; background: #c9c9c9; transition: background-color 180ms ease, transform 180ms ease; }
   .page :global(.product-gallery-pagination button[aria-current="true"]) { transform: scale(1.15); background: #111; }
   .page :global(.product-information) { position: relative; top: auto; }
-  .page :global(.product-purchase-row) { grid-template-columns: 108px minmax(0, 1fr) 42px 42px; gap: 7px; }
-  .page :global(.product-action-button) { min-height: 46px; }
+  .page :global(.product-purchase-row),
+  .page :global(.bed-in-a-bag-page .product-purchase-row) { grid-template-columns: 108px minmax(0, 1fr) 42px 42px; gap: 6px; }
+  .page :global(.product-action-button) { width: 42px; height: 42px; min-height: 42px; }
+  .page :global(.product-addons) { gap: 20px; }
   .page :global(.product-meta-row span:first-child) { flex-basis: 90px; }
   .page :global(.bed-in-a-bag-page .product-main-image) { aspect-ratio: 1 / 1; }
-  .page :global(.bed-in-a-bag-page .product-purchase-row) { grid-template-columns: 100px minmax(0, 1fr) 40px 40px; gap: 6px; }
   .bundle { margin-top: 36px; }
   .bundleItem { min-height: 86px; grid-template-columns: 19px 64px minmax(0, 1fr); gap: 10px; padding: 10px; }
   .bundleItem img { width: 64px; height: 64px; }
@@ -248,5 +279,4 @@
   .page :global(.product-detail-layout) { gap: 24px; }
   .page :global(.product-gallery) { grid-template-columns: 45px minmax(0, 1fr); gap: 8px; }
   .page :global(.product-thumbnails button) { width: 45px; }
-  .page :global(.product-purchase-row) { grid-template-columns: 105px minmax(0, 1fr) 42px 42px; gap: 6px; }
 }

@@ -1,15 +1,16 @@
 "use client";
 
 import type { ProductDto } from "@dec-walls/types";
-import { Heart, Minus, Plus, RefreshCw, Scale, Share2, Truck } from "lucide-react";
+import { ArrowUpRight, Heart, HelpCircle, Layers, Minus, Plus, RefreshCw, Share2, Star, Truck } from "lucide-react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ProductCard } from "@/components/product/product-card";
 import { ProductGallery } from "@/components/product/product-gallery";
 import { Reveal } from "@/components/motion/reveal";
 import productStyles from "@/components/product/product-detail.module.css";
+import { useCart } from "@/app/cart-context";
 
 function formatPrice(amount: number, currency: string) {
   return `${currency === "PKR" ? "Rs." : `${currency} `}${amount.toLocaleString("en-PK", {
@@ -76,6 +77,7 @@ export function ProductExperience({
     bedInBagBundle.map((item) => item.id),
   );
   const [added, setAdded] = useState(false);
+  const { addItem } = useCart();
   const [zoomed, setZoomed] = useState(false);
   const [activeTab, setActiveTab] = useState<"description" | "reviews" | "shipping" | "returns">("description");
   const [mobilePanel, setMobilePanel] = useState<string | null>("description");
@@ -83,19 +85,59 @@ export function ProductExperience({
   const [showDesktopSticky, setShowDesktopSticky] = useState(false);
   const galleryRef = useRef<HTMLDivElement>(null);
   const currentPrice = isKhaise && selectedSize.startsWith("DOUBLE") ? 18000 : product.price.amount;
+  // Only show a strike-through price when it is really higher than the price being sold
+  // (Khaise "Double" overrides the price, so the catalog compare-at price no longer applies).
+  const compareAmount = product.compareAtPrice && !(isKhaise && selectedSize.startsWith("DOUBLE")) && product.compareAtPrice.amount > currentPrice
+    ? product.compareAtPrice.amount
+    : null;
+  const discountPercent = compareAmount ? Math.round((1 - currentPrice / compareAmount) * 100) : 0;
   const bundleTotal = bedInBagBundle
     .filter((item) => selectedBundleIds.includes(item.id))
     .reduce((total, item) => total + item.amount, 0);
 
+  const addTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Single add-to-bag handler shared by the main, sticky and bundle buttons
+  // (the sticky buttons previously only flipped the "Added" label without adding anything).
+  const handleAdd = useCallback(() => {
+    addItem({
+      id: selectedSize ? `${product.slug}-${selectedSize}` : product.slug,
+      slug: product.slug,
+      name: product.name,
+      price: currentPrice,
+      currency: product.price.currency,
+      quantity,
+      size: selectedSize || undefined,
+      imageUrl: galleryPhotos[0],
+    });
+    setAdded(true);
+    if (addTimer.current) clearTimeout(addTimer.current);
+    addTimer.current = setTimeout(() => setAdded(false), 2000);
+  }, [addItem, currentPrice, galleryPhotos, product.name, product.price.currency, product.slug, quantity, selectedSize]);
+
+  useEffect(() => () => { if (addTimer.current) clearTimeout(addTimer.current); }, []);
+
+  useEffect(() => {
+    if (!zoomed) return;
+    const onKey = (event: KeyboardEvent) => { if (event.key === "Escape") setZoomed(false); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [zoomed]);
+
   useEffect(() => {
     const storageKey = "dec-walls-recently-viewed";
-    const viewedSlugs = JSON.parse(window.localStorage.getItem(storageKey) ?? "[]") as string[];
+    let viewedSlugs: string[] = [];
+    try {
+      const parsed = JSON.parse(window.localStorage.getItem(storageKey) ?? "[]");
+      if (Array.isArray(parsed)) viewedSlugs = parsed.filter((slug): slug is string => typeof slug === "string");
+    } catch {}
     const recent = viewedSlugs
       .filter((slug) => slug !== product.slug)
       .map((slug) => recommendedProducts.find((item) => item.slug === slug))
       .filter((item): item is ProductDto => Boolean(item));
     setRecentlyViewed(recent);
-    window.localStorage.setItem(storageKey, JSON.stringify([product.slug, ...viewedSlugs.filter((slug) => slug !== product.slug)].slice(0, 8)));
+    try {
+      window.localStorage.setItem(storageKey, JSON.stringify([product.slug, ...viewedSlugs.filter((slug) => slug !== product.slug)].slice(0, 8)));
+    } catch {}
   }, [product.slug, recommendedProducts]);
 
   useEffect(() => {
@@ -121,16 +163,19 @@ export function ProductExperience({
         />
 
         <div className="product-information">
+          {discountPercent > 0 ? <span className="product-sale-label">-{discountPercent}%</span> : null}
           <div className="product-title-row">
             <h1>{product.name}</h1>
           </div>
-          <p className="product-price">{formatPrice(currentPrice, product.price.currency)}</p>
-          {product.compareAtPrice ? <p className="product-compare-price">{formatPrice(product.compareAtPrice.amount, product.compareAtPrice.currency)}</p> : null}
+          <p className="product-price">
+            <span className={compareAmount ? "price-sale" : undefined}>{formatPrice(currentPrice, product.price.currency)}</span>
+            {compareAmount && product.compareAtPrice ? <s className="product-compare-price">{formatPrice(compareAmount, product.compareAtPrice.currency)}</s> : null}
+          </p>
 
           <div className="product-options">
             <div className="variant-option">
               <div className="product-option-heading"><span>Option:</span><span>{optionName}</span></div>
-              <button className="variant-chip selected" type="button" aria-pressed="true">{isBedInBag ? "Bed In a Bag" : isKhaise ? "KHAISE" : product.name.toUpperCase()}</button>
+              <button className="variant-chip selected" type="button" aria-pressed="true">{isBedInBag ? "Bed In a Bag" : isKhaise ? "Khaise" : product.name}</button>
             </div>
             {sizeOptions.length ? (
               <div className="variant-option">
@@ -143,9 +188,16 @@ export function ProductExperience({
           </div>
 
           <div className="product-addons">
-            {!isBedInBag ? <a href="#size-guide"><span aria-hidden="true">↗</span> Size guide</a> : null}
-            <a href="mailto:hello@decwalls.pk?subject=Product%20question"><span aria-hidden="true">?</span> Ask a Question</a>
-            {isBedInBag ? <a href="#share"><Share2 size={14} /> Share</a> : null}
+            {!isBedInBag ? <a href="#size-guide"><ArrowUpRight size={16} strokeWidth={1.5} aria-hidden="true" /> Size guide</a> : null}
+            <a href="mailto:hello@decwalls.pk?subject=Product%20question"><HelpCircle size={16} strokeWidth={1.5} aria-hidden="true" /> Ask a Question</a>
+            <button
+              type="button"
+              onClick={() => {
+                const url = window.location.href;
+                if (navigator.share) navigator.share({ title: product.name, url }).catch(() => {});
+                else navigator.clipboard?.writeText(url).catch(() => {});
+              }}
+            ><Share2 size={16} strokeWidth={1.5} aria-hidden="true" /> Share</button>
           </div>
 
           <div className="product-purchase-row">
@@ -154,9 +206,9 @@ export function ProductExperience({
               <span aria-live="polite">{quantity}</span>
               <button type="button" aria-label="Increase quantity" onClick={() => setQuantity((value) => value + 1)}><Plus size={14} /></button>
             </div>
-            <button type="button" className="product-add-button" onClick={() => setAdded(true)}>{added ? "Added to bag" : "Add to bag"}</button>
-            <button type="button" className="product-action-button" aria-label="Add to wishlist"><Heart size={17} strokeWidth={1.5} /></button>
-            <button type="button" className="product-action-button" aria-label="Compare product"><Scale size={17} strokeWidth={1.5} /></button>
+            <button type="button" className="product-add-button" onClick={handleAdd}>{added ? "Added to bag" : "Add to bag"}</button>
+            <Link href="/wishlist" className="product-action-button" aria-label="Wishlist"><Heart size={16} strokeWidth={1.5} /></Link>
+            <button type="button" className="product-action-button" aria-label="Compare product"><Layers size={16} strokeWidth={1.5} /></button>
           </div>
           {isBedInBag ? (
             <section className={productStyles.bundle} aria-label="Frequently bought together">
@@ -184,7 +236,7 @@ export function ProductExperience({
               </div>
               <div className={productStyles.bundleFooter}>
                 <span>Total: <strong>{formatPrice(bundleTotal, product.price.currency)}</strong></span>
-                <button type="button" onClick={() => setAdded(true)}>
+                <button type="button" onClick={handleAdd}>
                   {added ? "Added to bag" : "Add selected to bag"}
                 </button>
               </div>
@@ -192,12 +244,11 @@ export function ProductExperience({
           ) : null}
           <div className="product-meta-row"><span>Sku:</span><span>{isBedInBag ? `CAPP-169-QF-RP-Bed In a Bag-${selectedSize}` : isSilkSheet ? "FPBS-199-SILK PLAIN BED SHEET SET-KING (100X100 IN.)" : isKhaise ? `FKH-137-KHAISE-${selectedSize}` : product.slug.toUpperCase()}</span></div>
           {(isSilkSheet || isKhaise || isBedInBag) ? <div className="product-meta-row"><span>Color:</span><span>{isSilkSheet ? "PEACH" : isKhaise ? "O-WHITE" : "GREY"}</span></div> : null}
-          <div className="product-meta-row"><span>Available:</span><span>instock</span></div>
+          <div className="product-meta-row"><span>Available:</span><span>In stock</span></div>
           <div className="product-delivery-note">
             <p><Truck size={18} strokeWidth={1.4} /><span><strong>Estimate delivery times:</strong> 3-4 days</span></p>
             <p><RefreshCw size={18} strokeWidth={1.4} /><span><strong>Disclaimer:</strong> Actual colors may vary due to variations on screen</span></p>
           </div>
-          {!isBedInBag ? <div className="product-utility-links"><button type="button"><Share2 size={14} /> Share</button></div> : null}
 
         </div>
       </div>
@@ -250,7 +301,7 @@ export function ProductExperience({
           <span aria-live="polite">{quantity}</span>
           <button type="button" aria-label="Increase quantity" onClick={() => setQuantity((value) => value + 1)}><Plus size={14} /></button>
         </div>
-        <button type="button" onClick={() => setAdded(true)}>{added ? "Added to bag" : "Add to bag"}</button>
+        <button type="button" onClick={handleAdd}>{added ? "Added to bag" : "Add to bag"}</button>
       </div>
 
       <motion.div
@@ -263,7 +314,7 @@ export function ProductExperience({
       >
         <div className="desktop-sticky-product">
           {product.primaryImageUrl ? <Image src={product.primaryImageUrl} alt="" width={60} height={60} className="object-cover" /> : null}
-          <div><strong>{product.name}</strong><span>{formatPrice(product.price.amount, product.price.currency)}</span></div>
+          <div><strong>{product.name}</strong><span>{formatPrice(currentPrice, product.price.currency)}</span></div>
         </div>
         <div className="desktop-sticky-actions">
           <select aria-label="Product size" value={selectedSize || product.name} onChange={(event) => setSelectedSize(event.target.value === product.name ? "" : event.target.value)}>
@@ -274,7 +325,7 @@ export function ProductExperience({
             <span>{quantity}</span>
             <button type="button" aria-label="Increase quantity" onClick={() => setQuantity((value) => value + 1)}><Plus size={14} /></button>
           </div>
-          <button type="button" className="product-add-button" onClick={() => setAdded(true)}>{added ? "Added to bag" : "Add to bag"}</button>
+          <button type="button" className="product-add-button" onClick={handleAdd}>{added ? "Added to bag" : "Add to bag"}</button>
         </div>
       </motion.div>
 
@@ -299,7 +350,7 @@ function ProductShelf({ title, products }: { title: string; products: ProductDto
 
 function ProductTabContent({ tab, product }: { tab: "description" | "reviews" | "shipping" | "returns"; product: ProductDto }) {
   if (tab === "description") return <p>{product.description ?? `${product.name} from our carefully selected home collection. Actual colours may vary slightly due to screen settings.`}</p>;
-  if (tab === "reviews") return <div className="product-review-empty"><div aria-label="No ratings yet">☆☆☆☆☆</div><h2>Customer reviews</h2><p>There are no reviews yet for this product.</p></div>;
+  if (tab === "reviews") return <div className="product-review-empty"><div className="product-review-stars" aria-label="No ratings yet">{Array.from({ length: 5 }).map((_, i) => <Star key={i} size={16} strokeWidth={1.5} />)}</div><h2>Customer reviews</h2><p>There are no reviews yet for this product.</p></div>;
   if (tab === "shipping") return <p>Shipping rates depend on the destination and order weight. In-stock items are sent after payment and order checks are complete. Delivery times can vary with processing, customs, and transit. Customs duties and clearance charges are payable by the customer.</p>;
   return <p>Returns are accepted within 10 days for eligible unworn items. Contact customer care before returning an item. Products must be returned safely packed in their original packaging.</p>;
 }

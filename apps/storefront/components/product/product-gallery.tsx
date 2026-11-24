@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
+import { ChevronLeft, ChevronRight, Maximize2 } from "lucide-react";
 import Image from "next/image";
 import { useRef, type RefObject } from "react";
 
@@ -59,7 +59,7 @@ export function ProductGallery({
           </>
         ) : null}
         <button className="gallery-zoom" type="button" aria-label="Zoom image" onClick={onZoom}>
-          <ZoomIn size={18} />
+          <Maximize2 size={18} strokeWidth={1.5} />
         </button>
       </div>
       {photos.length > 1 ? (

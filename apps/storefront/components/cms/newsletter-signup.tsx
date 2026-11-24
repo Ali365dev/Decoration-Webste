@@ -69,6 +69,7 @@ export function NewsletterSignup({
                 onChange={(event) => setEmail(event.target.value)}
                 placeholder={placeholder ?? "Enter your email address"}
                 className="h-12 w-full rounded-pill border border-white/20 bg-white/5 pl-11 pr-4 text-sm text-white outline-none placeholder:text-white/40 focus:border-white/50"
+                suppressHydrationWarning
               />
             </div>
             <button
