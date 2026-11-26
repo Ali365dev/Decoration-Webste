@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Check } from "lucide-react";
+import { mapOrderStatus } from "@/app/api/track/_track-helpers";
 
 const STEPS = [
   { label: "Order placed", note: "We have your order and payment" },
@@ -14,19 +15,38 @@ const STEPS = [
 const fieldClass =
   "w-full rounded-[10px] border border-line bg-paper px-4 py-3 text-[14px] text-ink outline-none transition-colors placeholder:text-placeholder focus:border-ink";
 
-/**
- * Order tracking. No order service is wired up yet, so a valid-looking lookup
- * returns an illustrative timeline (currently "Shipped") rather than a real
- * status. The form and validation are real; the result is a placeholder.
- */
-export function TrackOrderForm() {
-  const [tracked, setTracked] = useState<string | null>(null);
-  const currentStep = 2; // "Shipped"
+interface TrackedOrder {
+  number: string;
+  status: string;
+  total: { amount: number; currency: string };
+  createdAt: string;
+}
 
-  function onSubmit(event: React.FormEvent<HTMLFormElement>) {
+export function TrackOrderForm() {
+  const [tracked, setTracked] = useState<TrackedOrder | null>(null);
+  const [notFound, setNotFound] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const currentStep = tracked ? mapOrderStatus(tracked.status) : 0;
+
+  async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    setTracked(String(data.get("order") || "").trim() || "DW-00000");
+    const order = String(data.get("order") || "").trim();
+    const email = String(data.get("email") || "").trim();
+    if (!order || !email) return;
+    setLoading(true);
+    setNotFound(false);
+    setTracked(null);
+    try {
+      const res = await fetch(`/api/track?order=${encodeURIComponent(order)}&email=${encodeURIComponent(email)}`);
+      if (res.status === 404) { setNotFound(true); return; }
+      if (!res.ok) return;
+      const json = await res.json();
+      setTracked(json.order);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -53,10 +73,14 @@ export function TrackOrderForm() {
         </div>
         <button
           type="submit"
-          className="rounded-pill bg-ink px-8 py-3 text-[12px] font-medium uppercase tracking-wide text-white transition-colors hover:bg-[#f05e2d]"
+          disabled={loading}
+          className="rounded-pill bg-ink px-8 py-3 text-[12px] font-medium uppercase tracking-wide text-white transition-colors hover:bg-[#f05e2d] disabled:opacity-50"
         >
-          Track order
+          {loading ? "Looking up…" : "Track order"}
         </button>
+        {notFound && (
+          <p className="text-[13px] text-red-600">No order found with those details. Check your order number and email.</p>
+        )}
         <p className="text-[12px] leading-relaxed text-grey">
           Your order number is in the confirmation email and SMS we sent when you ordered.
         </p>
@@ -67,7 +91,7 @@ export function TrackOrderForm() {
           <>
             <div className="mb-7 flex items-baseline justify-between gap-4">
               <p className="text-[13px] uppercase tracking-[0.12em] text-grey">Order</p>
-              <p className="font-mono text-[14px] text-ink">{tracked}</p>
+              <p className="font-mono text-[14px] text-ink">{tracked.number}</p>
             </div>
             <ol className="relative">
               {STEPS.map((step, index) => {

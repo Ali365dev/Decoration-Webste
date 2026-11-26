@@ -236,11 +236,28 @@ export function CheckoutClient() {
     const e = validate();
     if (Object.keys(e).length) { setErrors(e); return; }
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 1200));
-    const id = generateOrderId();
-    clearCart();
-    setConfirmed(id);
-    setLoading(false);
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contact,
+          shipping,
+          paymentMethod,
+          items: items.map((i) => ({ id: i.id, name: i.name, price: i.price, quantity: i.quantity, imageUrl: i.imageUrl ?? null, size: i.size })),
+          couponCode: couponApplied ? coupon.trim().toUpperCase() : "",
+          discount,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) { setErrors((p) => ({ ...p, _api: data?.error ?? "Failed to place order" })); return; }
+      clearCart();
+      setConfirmed(data.orderNumber);
+    } catch {
+      setErrors((p) => ({ ...p, _api: "Network error — please try again" }));
+    } finally {
+      setLoading(false);
+    }
   };
 
   const applyCoupon = () => {
@@ -394,6 +411,11 @@ export function CheckoutClient() {
           </div>
 
           {/* CTA */}
+          {(errors as Record<string, string>)._api && (
+            <p style={{ fontSize: 13, color: "#c0392b", marginBottom: 12, padding: "10px 14px", background: "#fef2f2", borderRadius: 8, border: "1px solid #fecaca" }}>
+              {(errors as Record<string, string>)._api}
+            </p>
+          )}
           <button type="button" className={s.placeOrderBtn} onClick={handleSubmit} disabled={loading || items.length === 0}>
             {loading ? <span className={s.spinner} /> : <><Lock size={13} />Place order — {fmt(total)}</>}
           </button>

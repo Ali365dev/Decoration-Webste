@@ -47,6 +47,7 @@ export type ProductDto = {
   label: string | null;
   categorySlug?: string;
   collectionSlugs?: string[];
+  variants?: ProductVariantDto[];
 };
 
 export type ProductVariantDto = {
@@ -55,7 +56,10 @@ export type ProductVariantDto = {
   sku: string;
   title: string;
   price: Money;
+  compareAtPrice: Money | null;
   inventoryQuantity: number;
+  isActive: boolean;
+  sortOrder: number;
 };
 
 export type CategoryDto = {

@@ -4,6 +4,7 @@ import type {
   CollectionDto,
   Paginated,
   ProductDto,
+  ProductVariantDto,
 } from "@dec-walls/types";
 import type { PaginationInput } from "@dec-walls/validation";
 import { mainNav } from "../cms/navigation";
@@ -12,6 +13,7 @@ import { eq, inArray, and } from "drizzle-orm";
 import {
   products as productsTable,
   productImages,
+  productVariants as productVariantsTable,
   collectionProducts as collectionProductsTable,
   collections as collectionsTable,
   categoryProducts as categoryProductsTable,
@@ -210,7 +212,7 @@ export async function getProductBySlug(slug: string): Promise<ProductDto | null>
 
   if (!row) return null;
 
-  const [images, colLinks, catLinks] = await Promise.all([
+  const [images, colLinks, catLinks, variants] = await Promise.all([
     db.select().from(productImages).where(eq(productImages.productId, row.id)),
     db
       .select({ slug: collectionsTable.slug })
@@ -222,14 +224,30 @@ export async function getProductBySlug(slug: string): Promise<ProductDto | null>
       .from(categoryProductsTable)
       .innerJoin(categoriesTable, eq(categoriesTable.id, categoryProductsTable.categoryId))
       .where(eq(categoryProductsTable.productId, row.id)),
+    db
+      .select()
+      .from(productVariantsTable)
+      .where(eq(productVariantsTable.productId, row.id)),
   ]);
 
-  return mapProduct(
-    row,
-    images,
-    colLinks.map((c) => c.slug),
-    catLinks[0]?.slug,
-  );
+  const variantDtos: ProductVariantDto[] = variants
+    .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0))
+    .map((v) => ({
+      id: v.id,
+      productId: v.productId,
+      sku: v.sku,
+      title: v.title,
+      price: { amount: Number(v.priceAmount), currency: v.priceCurrency },
+      compareAtPrice: v.compareAtAmount ? { amount: Number(v.compareAtAmount), currency: v.priceCurrency } : null,
+      inventoryQuantity: v.inventoryQuantity,
+      isActive: v.isActive,
+      sortOrder: v.sortOrder ?? 0,
+    }));
+
+  return {
+    ...mapProduct(row, images, colLinks.map((c) => c.slug), catLinks[0]?.slug),
+    variants: variantDtos,
+  };
 }
 
 export async function listCategories(): Promise<CategoryDto[]> {

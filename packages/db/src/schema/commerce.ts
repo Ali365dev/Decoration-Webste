@@ -84,6 +84,14 @@ export const orders = pgTable(
       .notNull()
       .default("0"),
     totalAmount: numeric("total_amount", { precision: 12, scale: 2 }).notNull(),
+    contactName: text("contact_name").notNull().default(""),
+    contactPhone: text("contact_phone").notNull().default(""),
+    whatsapp: text("whatsapp"),
+    discountAmount: numeric("discount_amount", { precision: 12, scale: 2 }).notNull().default("0"),
+    couponCode: text("coupon_code"),
+    shippingZoneName: text("shipping_zone_name"),
+    estimatedDays: integer("estimated_days"),
+    idempotencyKey: text("idempotency_key").notNull().default(""),
     createdAt: timestamp("created_at", { withTimezone: true })
       .defaultNow()
       .notNull(),
@@ -97,12 +105,16 @@ export const orderItems = pgTable("order_items", {
     .notNull()
     .references(() => orders.id, { onDelete: "cascade" }),
   variantId: uuid("variant_id").references(() => productVariants.id),
+  productId: uuid("product_id").references(() => products.id),
   title: text("title").notNull(),
+  variantTitle: text("variant_title").notNull().default(""),
+  sku: text("sku").notNull().default(""),
   quantity: integer("quantity").notNull(),
   unitPriceAmount: numeric("unit_price_amount", {
     precision: 12,
     scale: 2,
   }).notNull(),
+  imageUrl: text("image_url"),
 });
 
 export const orderAddresses = pgTable("order_addresses", {
@@ -119,6 +131,8 @@ export const orderAddresses = pgTable("order_addresses", {
   postalCode: text("postal_code"),
   country: text("country").notNull(),
   phone: text("phone"),
+  area: text("area"),
+  instructions: text("instructions"),
 });
 
 export const payments = pgTable("payments", {
@@ -126,14 +140,52 @@ export const payments = pgTable("payments", {
   orderId: uuid("order_id")
     .notNull()
     .references(() => orders.id, { onDelete: "cascade" }),
-  provider: text("provider").notNull(),
+  provider: text("provider").notNull().default("manual"),
   providerRef: text("provider_ref"),
-  status: text("status").notNull(),
+  status: text("status").notNull().default("pending"),
+  method: text("method").notNull().default("cod"),
   amount: numeric("amount", { precision: 12, scale: 2 }).notNull(),
   currency: text("currency").notNull().default("PKR"),
+  receiptPath: text("receipt_path"),
   createdAt: timestamp("created_at", { withTimezone: true })
     .defaultNow()
     .notNull(),
+});
+
+export const orderStatusHistory = pgTable("order_status_history", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  orderId: uuid("order_id").notNull().references(() => orders.id, { onDelete: "cascade" }),
+  kind: text("kind").notNull(),
+  fromStatus: text("from_status"),
+  toStatus: text("to_status").notNull(),
+  note: text("note"),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+});
+
+export const shippingZones = pgTable("shipping_zones", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  name: text("name").notNull(),
+  deliveryCharge: numeric("delivery_charge", { precision: 12, scale: 2 }).notNull(),
+  estimatedDays: integer("estimated_days").notNull(),
+  isActive: integer("is_active").notNull().default(1),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+});
+
+export const contactMessages = pgTable("contact_messages", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  name: text("name").notNull(),
+  email: text("email").notNull(),
+  subject: text("subject"),
+  message: text("message").notNull(),
+  status: text("status").notNull().default("new"),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+});
+
+export const newsletterSubscribers = pgTable("newsletter_subscribers", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  email: text("email").notNull(),
+  source: text("source").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
 });
 
 export const refunds = pgTable("refunds", {

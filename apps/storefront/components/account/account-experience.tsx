@@ -4,6 +4,7 @@ import { Eye, EyeOff, Heart, Package, ShoppingBag } from "lucide-react";
 import Link from "next/link";
 import { useId, useState, type FormEvent } from "react";
 import styles from "@/components/account/account.module.css";
+import { createSupabaseBrowserClient } from "@dec-walls/auth/supabase";
 
 type Mode = "signin" | "register" | "recover";
 type Errors = Partial<Record<"name" | "email" | "password", string>>;
@@ -30,7 +31,7 @@ export function AccountExperience() {
     setShowPassword(false);
   };
 
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const name = String(data.get("name") ?? "").trim();
@@ -41,16 +42,29 @@ export function AccountExperience() {
     if (!emailPattern.test(email)) next.email = "Enter a valid email address.";
     if (mode !== "recover" && password.length < 8) next.password = "Password must be at least 8 characters.";
     setErrors(next);
-    if (Object.keys(next).length) {
-      setNotice(null);
+    if (Object.keys(next).length) { setNotice(null); return; }
+
+    let supabase: ReturnType<typeof createSupabaseBrowserClient> | null = null;
+    try { supabase = createSupabaseBrowserClient(); } catch { /* env not configured */ }
+
+    if (!supabase) {
+      setNotice("Account service is not available right now. Please try again later.");
       return;
     }
-    // No customer-account backend is connected yet, so be upfront instead of faking a session.
-    setNotice(
-      mode === "recover"
-        ? "Password reset is not available yet. Please contact customer care and we will help you."
-        : "Customer accounts are coming soon. You can still shop and check out as a guest.",
-    );
+
+    if (mode === "signin") {
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) { setErrors({ email: error.message }); return; }
+      setNotice("Signed in successfully.");
+    } else if (mode === "register") {
+      const { error } = await supabase.auth.signUp({ email, password, options: { data: { full_name: name } } });
+      if (error) { setErrors({ email: error.message }); return; }
+      setNotice("Check your email for a confirmation link.");
+    } else if (mode === "recover") {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: `${window.location.origin}/account` });
+      if (error) { setErrors({ email: error.message }); return; }
+      setNotice("Password reset email sent — check your inbox.");
+    }
   };
 
   const field = (key: keyof Errors) => ({

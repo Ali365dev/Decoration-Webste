@@ -52,6 +52,10 @@ export const productVariants = pgTable(
     priceCurrency: text("price_currency").notNull().default("PKR"),
     inventoryQuantity: integer("inventory_quantity").notNull().default(0),
     isDefault: boolean("is_default").default(false).notNull(),
+    compareAtAmount: numeric("compare_at_amount", { precision: 12, scale: 2 }),
+    reorderLevel: integer("reorder_level").notNull().default(10),
+    isActive: boolean("is_active").notNull().default(true),
+    sortOrder: integer("sort_order").notNull().default(0),
   },
   (t) => [uniqueIndex("product_variants_sku_uq").on(t.sku)],
 );
