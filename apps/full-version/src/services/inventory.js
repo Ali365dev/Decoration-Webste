@@ -4,21 +4,20 @@
 import axios from 'axios'
 
 export const getInventoryOverview = async () => {
-  const response = await axios.get('/apps/inventory/overview')
-
-  return response.data
+  const response = await axios.get('/api/admin/inventory')
+  return response.data?.summary ?? {}
 }
 
 export const getStock = async (params = {}) => {
-  const response = await axios.get('/apps/inventory/stock', { params })
+  const response = await axios.get('/api/admin/inventory', { params })
+  const rows = response.data?.data ?? []
 
-  return response.data
+  return { stock: rows, allData: rows, total: response.data?.total ?? rows.length }
 }
 
 export const getLowStock = async () => {
-  const response = await axios.get('/apps/inventory/low-stock')
-
-  return response.data
+  const response = await axios.get('/api/admin/inventory', { params: { lowStock: true } })
+  return { stock: response.data?.data ?? [], total: response.data?.total ?? 0 }
 }
 
 export const getStockHistory = async (params = {}) => {
@@ -33,8 +32,9 @@ export const getStockHistory = async (params = {}) => {
  * @param {'restock'|'sale'|'adjustment'|'return'} [type]
  * @param {string} [reason]
  */
-export const adjustStock = async (productId, quantity, type = 'adjustment', reason = 'Manual adjustment') => {
-  const response = await axios.post('/apps/inventory/adjust-stock', { data: { productId, quantity, type, reason } })
+// variantId is the UUID from product_variants; quantity is the NEW absolute value
+export const adjustStock = async (variantId, quantity, type = 'adjustment', reason = 'Manual adjustment') => {
+  const response = await axios.put('/api/admin/inventory', { variantId, quantity })
 
   return response.data
 }

@@ -16,9 +16,10 @@ import axios from 'axios'
  * @returns {Promise<{orders: import('./types').Order[], allData: import('./types').Order[], total: number}>}
  */
 export const getOrders = async (params = {}) => {
-  const response = await axios.get('/apps/orders/list', { params })
+  const response = await axios.get('/api/admin/orders', { params })
+  const rows = response.data?.data ?? []
 
-  return response.data
+  return { orders: rows, allData: rows, total: response.data?.total ?? rows.length }
 }
 
 /**
@@ -36,9 +37,8 @@ export const getOrderById = async id => {
  * @returns {Promise<import('./types').Order[]>}
  */
 export const getOrdersByCustomer = async customerId => {
-  const response = await axios.get('/apps/orders/by-customer', { params: { customerId } })
-
-  return response.data.orders
+  const response = await axios.get('/api/admin/orders', { params: { customerId } })
+  return response.data?.data ?? []
 }
 
 /**

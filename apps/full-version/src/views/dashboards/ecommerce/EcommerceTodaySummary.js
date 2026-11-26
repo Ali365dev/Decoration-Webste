@@ -1,3 +1,6 @@
+// ** React Imports
+import { useState, useEffect } from 'react'
+
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
@@ -5,7 +8,7 @@ import Grid from '@mui/material/Grid'
 import Divider from '@mui/material/Divider'
 import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
-import { useTheme, alpha } from '@mui/material/styles'
+import { useTheme } from '@mui/material/styles'
 
 // ** Icon Imports
 import Icon from 'src/@core/components/icon'
@@ -16,33 +19,8 @@ import CustomAvatar from 'src/@core/components/mui/avatar'
 // ** Utils
 import { formatPKR } from 'src/@core/utils/format'
 
-// ── Seed from orders fake-db — when real backend lands, swap to an API call ──
-import { data as ordersData } from 'src/@fake-db/apps/orders'
-
-const getTodayKarachi = () => {
-  return new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Karachi' }) // YYYY-MM-DD
-}
-
-const computeSummary = orders => {
-  const today = getTodayKarachi()
-
-  const todayOrders = orders.filter(o => o.createdAt.slice(0, 10) === today)
-
-  const codOrders = todayOrders.filter(o => o.paymentMethod === 'COD')
-  const codTotal = codOrders.reduce((s, o) => s + o.total, 0)
-
-  const pendingCount = orders.filter(o => o.status === 'pending').length
-  const processingCount = orders.filter(o => o.status === 'processing').length
-
-  return {
-    todayCount: todayOrders.length,
-    todayRevenue: todayOrders.reduce((s, o) => s + o.total, 0),
-    codCount: codOrders.length,
-    codTotal,
-    pendingCount,
-    processingCount
-  }
-}
+// ** Axios
+import axios from 'axios'
 
 const StatTile = ({ icon, color, label, value, sub }) => {
   const theme = useTheme()
@@ -65,8 +43,26 @@ const StatTile = ({ icon, color, label, value, sub }) => {
   )
 }
 
+const defaultSummary = { todayCount: 0, todayRevenue: 0, codCount: 0, codTotal: 0, pendingCount: 0, processingCount: 0 }
+
 const EcommerceTodaySummary = () => {
-  const summary = computeSummary(ordersData.orders)
+  const [summary, setSummary] = useState(defaultSummary)
+
+  useEffect(() => {
+    axios.get('/api/admin/stats')
+      .then(res => {
+        const t = res.data?.today ?? {}
+        setSummary({
+          todayCount: t.count ?? 0,
+          todayRevenue: t.revenue ?? 0,
+          codCount: 0,
+          codTotal: 0,
+          pendingCount: t.pendingCount ?? 0,
+          processingCount: t.processingCount ?? 0,
+        })
+      })
+      .catch(() => { /* keep defaults if API unavailable */ })
+  }, [])
 
   return (
     <Card>

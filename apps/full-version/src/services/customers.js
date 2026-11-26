@@ -15,9 +15,10 @@ import axios from 'axios'
  * @returns {Promise<{customers: import('./types').Customer[], allData: import('./types').Customer[], total: number}>}
  */
 export const getCustomers = async (params = {}) => {
-  const response = await axios.get('/apps/customers/list', { params })
+  const response = await axios.get('/api/admin/customers', { params })
+  const rows = response.data?.data ?? []
 
-  return response.data
+  return { customers: rows, allData: rows, total: response.data?.total ?? rows.length }
 }
 
 /**
