@@ -8,32 +8,7 @@ import {
   customers,
 } from "@dec-walls/db/schema";
 import { eq } from "drizzle-orm";
-import { z } from "zod/v4";
-import { buildOrderNumber, calcOrderTotals, type CheckoutInput } from "./_checkout-helpers";
-
-const checkoutSchema = z.object({
-  contact: z.object({ email: z.string().email(), phone: z.string().min(1), whatsapp: z.string() }),
-  shipping: z.object({
-    fullName: z.string().min(1),
-    province: z.string().min(1),
-    city: z.string().min(1),
-    area: z.string(),
-    address: z.string().min(1),
-    instructions: z.string(),
-    phone: z.string(),
-  }),
-  paymentMethod: z.enum(["cod", "bank", "jazzcash", "easypaisa"]),
-  items: z.array(z.object({
-    id: z.string(),
-    name: z.string(),
-    price: z.number().positive(),
-    quantity: z.number().int().min(1).max(100),
-    imageUrl: z.string().nullable(),
-    size: z.string().optional(),
-  })).min(1).max(50),
-  couponCode: z.string(),
-  discount: z.number().min(0),
-});
+import { buildOrderNumber, calcOrderTotals, checkoutSchema, type CheckoutInput } from "./_checkout-helpers";
 
 export async function POST(req: NextRequest) {
   const db = getDb();

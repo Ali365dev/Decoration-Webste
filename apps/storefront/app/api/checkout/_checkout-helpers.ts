@@ -1,20 +1,31 @@
-export interface CheckoutItem {
-  id: string;
-  name: string;
-  price: number;
-  quantity: number;
-  imageUrl: string | null;
-  size?: string;
-}
+import { z } from "zod/v4";
 
-export interface CheckoutInput {
-  contact: { email: string; phone: string; whatsapp: string };
-  shipping: { fullName: string; province: string; city: string; area: string; address: string; instructions: string; phone: string };
-  paymentMethod: "cod" | "bank" | "jazzcash" | "easypaisa";
-  items: CheckoutItem[];
-  couponCode: string;
-  discount: number;
-}
+export const checkoutSchema = z.object({
+  contact: z.object({ email: z.string().email(), phone: z.string().min(1), whatsapp: z.string() }),
+  shipping: z.object({
+    fullName: z.string().min(1),
+    province: z.string().min(1),
+    city: z.string().min(1),
+    area: z.string(),
+    address: z.string().min(1),
+    instructions: z.string(),
+    phone: z.string(),
+  }),
+  paymentMethod: z.enum(["cod", "bank", "jazzcash", "easypaisa"]),
+  items: z.array(z.object({
+    id: z.string(),
+    name: z.string(),
+    price: z.number().positive(),
+    quantity: z.number().int().min(1).max(100),
+    imageUrl: z.string().nullable(),
+    size: z.string().optional(),
+  })).min(1).max(50),
+  couponCode: z.string(),
+  discount: z.number().min(0),
+});
+
+export type CheckoutInput = z.infer<typeof checkoutSchema>;
+export type CheckoutItem = CheckoutInput["items"][number];
 
 const SHIPPING_FEE = 200;
 const FREE_SHIPPING_THRESHOLD = 5000;
@@ -31,7 +42,7 @@ export function calcOrderTotals(subtotal: number, rawDiscount: number): { subtot
 
 export function mapCheckoutToOrder(input: CheckoutInput) {
   const subtotal = input.items.reduce((sum, i) => sum + i.price * i.quantity, 0);
-  const { shipping, total } = calcOrderTotals(subtotal, input.discount);
+  const { shipping, total, discount } = calcOrderTotals(subtotal, input.discount);
 
   return {
     email: input.contact.email,
@@ -42,7 +53,7 @@ export function mapCheckoutToOrder(input: CheckoutInput) {
     currency: "PKR",
     subtotalAmount: subtotal,
     shippingAmount: shipping,
-    discountAmount: input.discount,
+    discountAmount: discount,
     totalAmount: total,
     couponCode: input.couponCode || null,
     shippingZoneName: "Standard",
