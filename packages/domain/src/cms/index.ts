@@ -197,6 +197,12 @@ const homePage: CmsPageDto = {
       },
     },
     {
+      id: "b-product-grid",
+      type: "product_grid",
+      sortOrder: 4.9,
+      data: { collectionSlug: "new-in", limit: 8 },
+    },
+    {
       id: "b-tabs",
       type: "collection_tabs",
       sortOrder: 5,

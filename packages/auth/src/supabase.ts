@@ -2,14 +2,22 @@ import { createBrowserClient, createServerClient } from "@supabase/ssr";
 import { createClient } from "@supabase/supabase-js";
 import { getEnv, hasSupabase } from "@dec-walls/config";
 
+export function resolveSupabaseAnonKey(env: {
+  NEXT_PUBLIC_SUPABASE_ANON_KEY?: string;
+  NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY?: string;
+}): string | undefined {
+  return env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+}
+
 export function createSupabaseBrowserClient() {
   const env = getEnv();
-  if (!env.NEXT_PUBLIC_SUPABASE_URL || !env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+  const anonKey = resolveSupabaseAnonKey(env);
+  if (!env.NEXT_PUBLIC_SUPABASE_URL || !anonKey) {
     throw new Error("Supabase public credentials are not configured");
   }
   return createBrowserClient(
     env.NEXT_PUBLIC_SUPABASE_URL,
-    env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    anonKey,
   );
 }
 
@@ -20,12 +28,13 @@ export function createSupabaseServerClient(cookieStore: {
   ) => void;
 }) {
   const env = getEnv();
-  if (!env.NEXT_PUBLIC_SUPABASE_URL || !env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+  const anonKey = resolveSupabaseAnonKey(env);
+  if (!env.NEXT_PUBLIC_SUPABASE_URL || !anonKey) {
     throw new Error("Supabase public credentials are not configured");
   }
   return createServerClient(
     env.NEXT_PUBLIC_SUPABASE_URL,
-    env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    anonKey,
     {
       cookies: {
         getAll: () => cookieStore.getAll(),

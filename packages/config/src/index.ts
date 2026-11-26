@@ -1,14 +1,24 @@
 import { z } from "zod";
 
+// Empty strings in .env files should be treated as absent, not as invalid values.
+const optUrl = z.preprocess(
+  (v) => (v === "" ? undefined : v),
+  z.string().url().optional(),
+);
+const optStr = z.preprocess(
+  (v) => (v === "" ? undefined : v),
+  z.string().min(1).optional(),
+);
+
 const envSchema = z.object({
   NODE_ENV: z
     .enum(["development", "test", "production"])
     .default("development"),
-  NEXT_PUBLIC_SUPABASE_URL: z.string().url().optional(),
-  NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().min(1).optional(),
-  NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: z.string().min(1).optional(),
-  SUPABASE_SERVICE_ROLE_KEY: z.string().min(1).optional(),
-  DATABASE_URL: z.string().min(1).optional(),
+  NEXT_PUBLIC_SUPABASE_URL: optUrl,
+  NEXT_PUBLIC_SUPABASE_ANON_KEY: optStr,
+  NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: optStr,
+  SUPABASE_SERVICE_ROLE_KEY: optStr,
+  DATABASE_URL: optStr,
   NEXT_PUBLIC_STOREFRONT_URL: z
     .string()
     .url()

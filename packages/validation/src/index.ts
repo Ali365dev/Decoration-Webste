@@ -74,8 +74,53 @@ export const cmsPageUpsertSchema = z.object({
     .default([]),
 });
 
+export const phoneSchema = z
+  .string()
+  .min(7)
+  .max(20)
+  .regex(/^\+?[0-9]{7,20}$/);
+
+export const addressSchema = z.object({
+  fullName: z.string().min(1).max(200),
+  line1: z.string().min(1).max(300),
+  line2: z.string().max(300).optional(),
+  city: z.string().min(1).max(100),
+  region: z.string().max(100).optional(),
+  postalCode: z.string().max(20).optional(),
+  country: z.string().length(2).default("PK"),
+  phone: phoneSchema.optional(),
+});
+
+export const contactMessageSchema = z.object({
+  name: z.string().min(1).max(200),
+  email: z.string().email(),
+  subject: z.string().min(1).max(200),
+  message: z.string().min(10).max(5000),
+  orderId: z.string().uuid().optional(),
+});
+
+export const newsletterSchema = z.object({
+  email: z.string().email(),
+  source: z.string().max(100).optional(),
+});
+
+export const sizeSkuSchema = z
+  .string()
+  .min(1)
+  .max(50)
+  .regex(/^[A-Z0-9]+(?:-[A-Z0-9]+)*$/);
+
+export const couponCodeSchema = z
+  .string()
+  .min(1)
+  .max(32)
+  .regex(/^[A-Z0-9]+$/);
+
 export type PaginationInput = z.infer<typeof paginationSchema>;
 export type ProductCreateInput = z.infer<typeof productCreateSchema>;
 export type AddToCartInput = z.infer<typeof addToCartSchema>;
 export type CheckoutInput = z.infer<typeof checkoutSchema>;
 export type CmsPageUpsertInput = z.infer<typeof cmsPageUpsertSchema>;
+export type AddressInput = z.infer<typeof addressSchema>;
+export type ContactMessageInput = z.infer<typeof contactMessageSchema>;
+export type NewsletterInput = z.infer<typeof newsletterSchema>;
