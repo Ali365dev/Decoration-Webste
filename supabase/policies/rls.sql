@@ -1,3 +1,6 @@
+-- REPLACED, do not run. Access rules now live in supabase/migrations/20261127000700_policies_storage.sql.
+-- (This file was never applied: PostgreSQL rejects `create policy if not exists`.)
+
 -- RLS baselines for Dec Walls (apply in Supabase SQL editor / migrations).
 -- Enable RLS on public commerce tables; policies are permissive for published reads
 -- and ownership-scoped for customer writes. Staff writes use service role or

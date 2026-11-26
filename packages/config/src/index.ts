@@ -6,6 +6,7 @@ const envSchema = z.object({
     .default("development"),
   NEXT_PUBLIC_SUPABASE_URL: z.string().url().optional(),
   NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().min(1).optional(),
+  NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: z.string().min(1).optional(),
   SUPABASE_SERVICE_ROLE_KEY: z.string().min(1).optional(),
   DATABASE_URL: z.string().min(1).optional(),
   NEXT_PUBLIC_STOREFRONT_URL: z
@@ -40,7 +41,8 @@ export function getEnv(overrides?: Record<string, string | undefined>): AppEnv {
 export function hasSupabase(): boolean {
   const env = getEnv();
   return Boolean(
-    env.NEXT_PUBLIC_SUPABASE_URL && env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    env.NEXT_PUBLIC_SUPABASE_URL &&
+      (env.NEXT_PUBLIC_SUPABASE_ANON_KEY || env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY),
   );
 }
 

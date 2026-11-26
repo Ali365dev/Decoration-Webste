@@ -5,7 +5,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ShoppingBag } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
+import { useIsomorphicLayoutEffect } from "@/hooks/use-isomorphic-layout-effect";
 
 type Tile = { label: string; href: string; image: string; badge?: string; ctaLabel?: string };
 
@@ -27,7 +28,7 @@ export function CategoryScrollGallery({
   const trackRef   = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useState(0);
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const section = sectionRef.current;
     const track   = trackRef.current;
     if (!section || !track || tiles.length === 0) return;

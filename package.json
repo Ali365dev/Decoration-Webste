@@ -3,17 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "workspaces": [
-    "apps/*",
+    "apps/storefront",
     "packages/*"
   ],
   "scripts": {
     "dev": "turbo run dev",
     "dev:store": "turbo run dev --filter=@dec-walls/storefront",
-    "dev:ops": "turbo run dev --filter=@dec-walls/ops",
+    "dev:dashboard": "npm --prefix apps/full-version run dev --",
+    "build:dashboard": "npm --prefix apps/full-version run build",
     "build": "turbo run build",
     "lint": "turbo run lint",
     "test": "vitest run",
     "test:e2e": "playwright test",
+    "test:db": "vitest run --config vitest.db.config.ts",
+    "db:rehearse": "bash scripts/db/rehearse.sh",
     "db:generate": "npm run db:generate -w @dec-walls/db",
     "db:migrate": "npm run db:migrate -w @dec-walls/db",
     "db:studio": "npm run db:studio -w @dec-walls/db",

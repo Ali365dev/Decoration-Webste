@@ -6,7 +6,8 @@ import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
+import { useIsomorphicLayoutEffect } from "@/hooks/use-isomorphic-layout-effect";
 
 export type HeroSlide = {
   image: string;
@@ -50,7 +51,7 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
   const animatingRef = useRef(false);
   const goToRef = useRef<(target: number) => void>(() => {});
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const section = sectionRef.current;
     if (!section || slideCount < 2) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;

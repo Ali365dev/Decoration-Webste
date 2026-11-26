@@ -6,11 +6,15 @@
   "exports": {
     ".": "./src/index.ts",
     "./schema": "./src/schema/index.ts",
-    "./client": "./src/client.ts"
+    "./client": "./src/client.ts",
+    "./with-customer": "./src/with-customer.ts"
   },
   "scripts": {
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
+    "db:push": "drizzle-kit push",
+    "db:seed": "tsx src/seed.ts",
+    "upload-images": "tsx src/upload-images.ts",
     "db:studio": "drizzle-kit studio",
     "typecheck": "tsc --noEmit",
     "test": "vitest run --passWithNoTests"
@@ -18,11 +22,13 @@
   "dependencies": {
     "@dec-walls/config": "*",
     "@dec-walls/types": "*",
+    "cloudinary": "^2.11.0",
     "drizzle-orm": "^0.44.5",
     "postgres": "^3.4.7"
   },
   "devDependencies": {
     "drizzle-kit": "^0.31.4",
+    "tsx": "^4",
     "typescript": "^5"
   }
 }

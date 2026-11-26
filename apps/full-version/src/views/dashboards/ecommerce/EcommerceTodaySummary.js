@@ -1,0 +1,134 @@
+// ** MUI Imports
+import Box from '@mui/material/Box'
+import Card from '@mui/material/Card'
+import Grid from '@mui/material/Grid'
+import Divider from '@mui/material/Divider'
+import Typography from '@mui/material/Typography'
+import CardContent from '@mui/material/CardContent'
+import { useTheme, alpha } from '@mui/material/styles'
+
+// ** Icon Imports
+import Icon from 'src/@core/components/icon'
+
+// ** Custom Components
+import CustomAvatar from 'src/@core/components/mui/avatar'
+
+// ** Utils
+import { formatPKR } from 'src/@core/utils/format'
+
+// ── Seed from orders fake-db — when real backend lands, swap to an API call ──
+import { data as ordersData } from 'src/@fake-db/apps/orders'
+
+const getTodayKarachi = () => {
+  return new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Karachi' }) // YYYY-MM-DD
+}
+
+const computeSummary = orders => {
+  const today = getTodayKarachi()
+
+  const todayOrders = orders.filter(o => o.createdAt.slice(0, 10) === today)
+
+  const codOrders = todayOrders.filter(o => o.paymentMethod === 'COD')
+  const codTotal = codOrders.reduce((s, o) => s + o.total, 0)
+
+  const pendingCount = orders.filter(o => o.status === 'pending').length
+  const processingCount = orders.filter(o => o.status === 'processing').length
+
+  return {
+    todayCount: todayOrders.length,
+    todayRevenue: todayOrders.reduce((s, o) => s + o.total, 0),
+    codCount: codOrders.length,
+    codTotal,
+    pendingCount,
+    processingCount
+  }
+}
+
+const StatTile = ({ icon, color, label, value, sub }) => {
+  const theme = useTheme()
+
+  return (
+    <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
+      <CustomAvatar skin='light' color={color} variant='rounded' sx={{ width: 46, height: 46 }}>
+        <Icon icon={icon} fontSize={22} />
+      </CustomAvatar>
+      <Box>
+        <Typography variant='h6' sx={{ fontWeight: 700, lineHeight: 1.2 }}>{value}</Typography>
+        <Typography variant='caption' sx={{ color: 'text.secondary' }}>{label}</Typography>
+        {sub && (
+          <Typography variant='caption' sx={{ display: 'block', color: theme.palette[color]?.main ?? 'primary.main', fontWeight: 600 }}>
+            {sub}
+          </Typography>
+        )}
+      </Box>
+    </Box>
+  )
+}
+
+const EcommerceTodaySummary = () => {
+  const summary = computeSummary(ordersData.orders)
+
+  return (
+    <Card>
+      <CardContent sx={{ pb: '16px !important' }}>
+        <Box sx={{ mb: 3, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <Box>
+            <Typography variant='h6' sx={{ fontWeight: 700 }}>Today&apos;s Summary</Typography>
+            <Typography variant='caption' sx={{ color: 'text.secondary' }}>
+              {new Date().toLocaleDateString('en-PK', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'Asia/Karachi' })}
+            </Typography>
+          </Box>
+          <CustomAvatar skin='light' color='primary' variant='rounded'>
+            <Icon icon='mdi:calendar-today' />
+          </CustomAvatar>
+        </Box>
+
+        <Grid container spacing={4}>
+          <Grid item xs={6}>
+            <StatTile
+              icon='mdi:shopping-outline'
+              color='primary'
+              label="Today's Orders"
+              value={summary.todayCount}
+              sub={summary.todayCount > 0 ? formatPKR(summary.todayRevenue) : 'No orders yet'}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <StatTile
+              icon='mdi:cash'
+              color='success'
+              label='COD Today'
+              value={summary.codCount}
+              sub={summary.codCount > 0 ? `Collect ${formatPKR(summary.codTotal)}` : 'No COD today'}
+            />
+          </Grid>
+        </Grid>
+
+        <Divider sx={{ my: 3 }} />
+
+        <Grid container spacing={4}>
+          <Grid item xs={6}>
+            <StatTile
+              icon='mdi:clock-outline'
+              color='warning'
+              label='Pending Orders'
+              value={summary.pendingCount}
+              sub='Need attention'
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <StatTile
+              icon='mdi:cog-outline'
+              color='info'
+              label='Processing'
+              value={summary.processingCount}
+              sub='Being prepared'
+            />
+          </Grid>
+        </Grid>
+      </CardContent>
+    </Card>
+  )
+}
+
+export default EcommerceTodaySummary
