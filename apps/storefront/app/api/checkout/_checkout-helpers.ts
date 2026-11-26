@@ -23,8 +23,9 @@ export function buildOrderNumber(): string {
   return `DW-${Date.now().toString(36).toUpperCase()}-${Math.random().toString(36).slice(2, 5).toUpperCase()}`;
 }
 
-export function calcOrderTotals(subtotal: number, discount: number): { subtotal: number; discount: number; shipping: number; total: number } {
+export function calcOrderTotals(subtotal: number, rawDiscount: number): { subtotal: number; discount: number; shipping: number; total: number } {
   const shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_FEE;
+  const discount = Math.min(rawDiscount, subtotal);
   return { subtotal, discount, shipping, total: subtotal + shipping - discount };
 }
 

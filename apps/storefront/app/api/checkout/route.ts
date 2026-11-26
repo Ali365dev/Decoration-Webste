@@ -27,10 +27,10 @@ const checkoutSchema = z.object({
     id: z.string(),
     name: z.string(),
     price: z.number().positive(),
-    quantity: z.number().int().positive(),
+    quantity: z.number().int().min(1).max(100),
     imageUrl: z.string().nullable(),
     size: z.string().optional(),
-  })).min(1),
+  })).min(1).max(50),
   couponCode: z.string(),
   discount: z.number().min(0),
 });
@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
   }
 
   const subtotal = input.items.reduce((s, i) => s + i.price * i.quantity, 0);
-  const { shipping, total } = calcOrderTotals(subtotal, input.discount);
+  const { shipping, total, discount } = calcOrderTotals(subtotal, input.discount);
 
   // find or create customer by email
   let customerId: string | null = null;
@@ -64,25 +64,40 @@ export async function POST(req: NextRequest) {
   }
 
   const number = buildOrderNumber();
+  const idempotencyKey = `${input.contact.email}:${number}`;
 
-  const [order] = await db.insert(orders).values({
-    number,
-    customerId,
-    email: input.contact.email,
-    status: "pending",
-    currency: "PKR",
-    subtotalAmount: String(subtotal),
-    shippingAmount: String(shipping),
-    totalAmount: String(total),
-    contactName: input.shipping.fullName,
-    contactPhone: input.contact.phone,
-    whatsapp: input.contact.whatsapp || null,
-    discountAmount: String(input.discount),
-    couponCode: input.couponCode || null,
-    shippingZoneName: "Standard",
-    estimatedDays: 5,
-    idempotencyKey: `${input.contact.email}:${number}`,
-  }).returning({ id: orders.id, number: orders.number });
+  let order: { id: string; number: string } | undefined;
+  try {
+    const [inserted] = await db.insert(orders).values({
+      number,
+      customerId,
+      email: input.contact.email,
+      status: "pending",
+      currency: "PKR",
+      subtotalAmount: String(subtotal),
+      shippingAmount: String(shipping),
+      totalAmount: String(total),
+      contactName: input.shipping.fullName,
+      contactPhone: input.contact.phone,
+      whatsapp: input.contact.whatsapp || null,
+      discountAmount: String(discount),
+      couponCode: input.couponCode || null,
+      shippingZoneName: "Standard",
+      estimatedDays: 5,
+      idempotencyKey,
+    }).returning({ id: orders.id, number: orders.number });
+    order = inserted;
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
+    if (msg.includes("orders_idempotency_uq") || msg.includes("unique")) {
+      const [existing] = await db
+        .select({ id: orders.id, number: orders.number })
+        .from(orders)
+        .where(eq(orders.idempotencyKey, idempotencyKey));
+      if (existing) return NextResponse.json({ orderNumber: existing.number, orderId: existing.id });
+    }
+    return NextResponse.json({ error: "Failed to create order" }, { status: 500 });
+  }
 
   if (!order) return NextResponse.json({ error: "Failed to create order" }, { status: 500 });
 
@@ -114,7 +129,7 @@ export async function POST(req: NextRequest) {
     db.insert(payments).values({
       orderId: order.id,
       provider: "manual",
-      status: input.paymentMethod === "cod" ? "pending" : "awaiting_proof",
+      status: "pending",
       method: input.paymentMethod,
       amount: String(total),
       currency: "PKR",

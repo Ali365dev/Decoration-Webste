@@ -28,6 +28,18 @@ describe("calcOrderTotals", () => {
     const { total } = calcOrderTotals(3000, 500);
     expect(total).toBe(3000 + 200 - 500);
   });
+
+  it("caps discount at subtotal so total is never negative", () => {
+    const { total, discount } = calcOrderTotals(1000, 9999);
+    expect(discount).toBe(1000);
+    expect(total).toBeGreaterThanOrEqual(0);
+  });
+
+  it("caps discount at subtotal even after shipping is added", () => {
+    // subtotal 500, shipping 200, raw discount 9999 → discount capped at 500 → total = 500 + 200 - 500 = 200
+    const { total } = calcOrderTotals(500, 9999);
+    expect(total).toBe(200);
+  });
 });
 
 describe("mapCheckoutToOrder", () => {
