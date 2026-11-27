@@ -4,8 +4,14 @@
     {
       "name": "dashboard",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["--prefix", "apps/full-version", "run", "dev"],
+      "runtimeArgs": ["--prefix", "apps/dashboard", "run", "dev"],
       "port": 3001
+    },
+    {
+      "name": "storefront",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "apps/storefront", "run", "dev"],
+      "port": 3000
     }
   ]
 }

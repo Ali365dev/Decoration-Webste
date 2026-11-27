@@ -3,6 +3,7 @@
 import { Eye, EyeOff, Heart, Package, ShoppingBag } from "lucide-react";
 import Link from "next/link";
 import { useId, useState, type FormEvent } from "react";
+import { useRouter } from "next/navigation";
 import styles from "@/components/account/account.module.css";
 import { createSupabaseBrowserClient } from "@dec-walls/auth/supabase";
 
@@ -19,6 +20,7 @@ const titles: Record<Mode, string> = {
 
 export function AccountExperience() {
   const uid = useId();
+  const router = useRouter();
   const [mode, setMode] = useState<Mode>("signin");
   const [errors, setErrors] = useState<Errors>({});
   const [showPassword, setShowPassword] = useState(false);
@@ -55,7 +57,9 @@ export function AccountExperience() {
     if (mode === "signin") {
       const { error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) { setErrors({ email: error.message }); return; }
-      setNotice("Signed in successfully.");
+      // Same URL: refresh re-renders the server page, which now sees the session and shows the dashboard.
+      router.replace("/account");
+      router.refresh();
     } else if (mode === "register") {
       const { error } = await supabase.auth.signUp({ email, password, options: { data: { full_name: name } } });
       if (error) { setErrors({ email: error.message }); return; }

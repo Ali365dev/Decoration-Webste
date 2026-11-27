@@ -19,6 +19,13 @@ export async function GET(req: NextRequest) {
       description: collections.description,
       status: collections.status,
       productCount: sql<number>`count(${collectionProducts.productId})`.mapWith(Number),
+      thumbnailUrl: sql<string | null>`(
+        SELECT pi.url FROM product_images pi
+        INNER JOIN collection_products cp ON cp.product_id = pi.product_id
+        WHERE cp.collection_id = ${collections.id}
+        ORDER BY pi.is_primary DESC, pi.sort_order ASC
+        LIMIT 1
+      )`,
     })
     .from(collections)
     .leftJoin(collectionProducts, eq(collectionProducts.collectionId, collections.id))

@@ -16,6 +16,7 @@ export const publishStatusEnum = pgEnum("publish_status", [
   "draft",
   "published",
   "scheduled",
+  "archived",
 ]);
 
 export const orderStatusEnum = pgEnum("order_status", [

@@ -17,7 +17,7 @@
 - No `drop table`, `drop column`, `truncate` or `delete from` in any forward migration (§15).
 - **No `git commit`.** The user commits only when they ask. Each task ends with a checkpoint instead.
 - No new npm packages.
-- No UI changes. Nothing under `apps/*/components`, `apps/*/app` pages or `apps/full-version/src` changes in this phase.
+- No UI changes. Nothing under `apps/*/components`, `apps/*/app` pages or `apps/dashboard/src` changes in this phase.
 - Money is `numeric(12,2)`; times are `timestamptz`; every app-used table has `created_at` and `updated_at`, `not null default now()` (§4).
 - Existing product slugs and image URLs must be identical before and after (§15).
 - Docker Desktop must be running. It was **not** running when this plan was written.

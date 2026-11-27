@@ -29,7 +29,7 @@ The database exists and holds the catalog. Very little of either app uses it.
 
 ```text
 apps/storefront     Next 16.3.6, React 19, App Router, Tailwind 4   port 3000   (npm workspace)
-apps/full-version   Next 13.2.4, React 18, Pages Router, MUI 5      port 3001   (outside workspaces, own lockfile)
+apps/dashboard   Next 13.2.4, React 18, Pages Router, MUI 5      port 3001   (outside workspaces, own lockfile)
 packages/           auth, config, db, design-system, domain, integrations, types, ui, validation
 supabase/           config.toml (placeholder), migrations/, policies/rls.sql
 ```
@@ -49,7 +49,7 @@ Store checkout     -> browser only
 - **Database access** is a direct Postgres connection through Drizzle and the Supabase pooler.
 - **Supabase client libraries:** `packages/auth/src/supabase.ts` defines browser, server and service clients. No storefront file uses them. The browser and server ones require `NEXT_PUBLIC_SUPABASE_ANON_KEY`, but `.env.local` sets only the publishable key, so they would throw.
 - **Environment:** `.env.local` has the Supabase URL, publishable key, `DATABASE_URL`, `ADMIN_API_KEY` and Cloudinary keys. There is no `SUPABASE_SERVICE_ROLE_KEY`. No env file is tracked by Git.
-- **Git:** much of the work is uncommitted, including **the whole dashboard** (`apps/full-version`), the admin API, the migrations and the seed script.
+- **Git:** much of the work is uncommitted, including **the whole dashboard** (`apps/dashboard`), the admin API, the migrations and the seed script.
 - **Stale docs:** `README.md`, `docs/architecture.md` and `docs/authz.md` describe an `apps/ops` app and staff login that do not exist.
 - **Earlier spec:** `docs/superpowers/specs/2026-11-26-dashboard-products-design.md` is only partly built (section 8).
 

@@ -190,29 +190,9 @@ export async function CmsBlockRenderer({ block }: { block: CmsBlockDto }) {
       return msgs.length > 0 ? <AnnouncementTicker messages={msgs} /> : null;
     }
     case "hero": {
-      const heroSlides: HeroSlide[] = [
-        {
-          image: "/home/hero-3.jpg",
-          label: "New Collection",
-          heading: "Wall Art",
-          ctaHref: "/collections/new-in",
-          ctaLabel: "Shop Now",
-        },
-        {
-          image: "/home/hero-bedding.jpg",
-          label: "Premium Quality",
-          heading: "Bedding",
-          ctaHref: "/collections/new-in",
-          ctaLabel: "Shop Now",
-        },
-        {
-          image: "/home/hero-decor.jpg",
-          label: "Complete Your Home",
-          heading: "Home Decor",
-          ctaHref: "/collections/new-in",
-          ctaLabel: "Explore All",
-        },
-      ];
+      // Slides are validated when they're saved and again when they're read (see @dec-walls/validation/cms).
+      const heroSlides = (block.data.slides as HeroSlide[] | undefined) ?? [];
+      if (!heroSlides.length) return null;
       return <HeroCarousel slides={heroSlides} />;
     }
     case "banner": {

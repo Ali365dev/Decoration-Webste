@@ -26,6 +26,8 @@ export const products = pgTable(
       scale: 2,
     }),
     label: text("label"),
+    material: text("material"),
+    color: text("color"),
     createdAt: timestamp("created_at", { withTimezone: true })
       .defaultNow()
       .notNull(),
@@ -70,6 +72,7 @@ export const productImages = pgTable("product_images", {
   sortOrder: integer("sort_order").notNull().default(0),
   isPrimary: boolean("is_primary").default(false).notNull(),
   isHover: boolean("is_hover").default(false).notNull(),
+  storagePath: text("storage_path"),
 });
 
 export const categories = pgTable(
@@ -80,6 +83,9 @@ export const categories = pgTable(
     name: text("name").notNull(),
     parentId: uuid("parent_id"),
     sortOrder: integer("sort_order").notNull().default(0),
+    status: publishStatusEnum("status").notNull().default("published"),
+    imageUrl: text("image_url"),
+    imageStoragePath: text("image_storage_path"),
   },
   (t) => [uniqueIndex("categories_slug_uq").on(t.slug)],
 );

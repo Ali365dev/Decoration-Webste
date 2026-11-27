@@ -4,7 +4,7 @@ import {
   signAdminToken,
   verifyAdminToken,
   type AdminUser,
-} from "../../apps/full-version/src/lib/admin-auth";
+} from "../../apps/dashboard/src/lib/admin-auth";
 
 const SECRET = "test-secret-32-characters-long!!";
 const API_KEY = "test-api-key-abc";

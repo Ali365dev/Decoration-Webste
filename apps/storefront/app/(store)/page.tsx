@@ -4,6 +4,9 @@ import { getPublishedPageBySlug } from "@dec-walls/domain/cms";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+// Product grids read the live catalogue; rebuild the page from it at most every 5 minutes.
+export const revalidate = 300;
+
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getPublishedPageBySlug("home");
   if (!page) return {};

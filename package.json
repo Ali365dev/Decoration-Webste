@@ -9,8 +9,8 @@
   "scripts": {
     "dev": "turbo run dev",
     "dev:store": "turbo run dev --filter=@dec-walls/storefront",
-    "dev:dashboard": "npm --prefix apps/full-version run dev --",
-    "build:dashboard": "npm --prefix apps/full-version run build",
+    "dev:dashboard": "npm --prefix apps/dashboard run dev --",
+    "build:dashboard": "npm --prefix apps/dashboard run build",
     "build": "turbo run build",
     "lint": "turbo run lint",
     "test": "vitest run",

@@ -5,12 +5,12 @@ import {
   orderItems,
   orderAddresses,
   payments,
-  customers,
   discounts,
   couponUsages,
 } from "@dec-walls/db/schema";
 import { eq, sql } from "drizzle-orm";
 import { buildOrderNumber, calcOrderTotals, checkoutSchema, type CheckoutInput } from "./_checkout-helpers";
+import { getSignedInUser, resolveCustomerId } from "./_checkout-customer";
 import { validateCoupon, calcCouponDiscount } from "../coupons/_coupon-helpers";
 
 export async function POST(req: NextRequest) {
@@ -26,19 +26,13 @@ export async function POST(req: NextRequest) {
 
   const subtotal = input.items.reduce((s, i) => s + i.price * i.quantity, 0);
 
-  // find or create customer by email
-  let customerId: string | null = null;
-  const [existing] = await db.select({ id: customers.id }).from(customers).where(eq(customers.email, input.contact.email));
-  if (existing) {
-    customerId = existing.id;
-  } else {
-    const [created] = await db.insert(customers).values({
-      email: input.contact.email,
-      fullName: input.shipping.fullName,
-      phone: input.contact.phone,
-    }).returning({ id: customers.id });
-    customerId = created?.id ?? null;
-  }
+  // signed-in customers order under their own account; guests are matched by email
+  const user = await getSignedInUser().catch(() => null);
+  const customerId = await resolveCustomerId(db, user, {
+    email: input.contact.email,
+    fullName: input.shipping.fullName,
+    phone: input.contact.phone,
+  });
 
   // server-side coupon validation — ignore client-sent discount
   let validatedDiscount = 0;

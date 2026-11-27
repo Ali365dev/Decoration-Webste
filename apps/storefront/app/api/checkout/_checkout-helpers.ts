@@ -1,7 +1,7 @@
 import { z } from "zod/v4";
 
 export const checkoutSchema = z.object({
-  contact: z.object({ email: z.string().email(), phone: z.string().min(1), whatsapp: z.string() }),
+  contact: z.object({ email: z.string().trim().toLowerCase().email(), phone: z.string().min(1), whatsapp: z.string() }),
   shipping: z.object({
     fullName: z.string().min(1),
     province: z.string().min(1),

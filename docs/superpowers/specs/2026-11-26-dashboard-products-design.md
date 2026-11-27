@@ -4,7 +4,7 @@ Date: 2026-11-26. Status: waiting for approval.
 
 ## Intent
 
-Bring the existing admin dashboard (`../web/full-version`) into this repo as `apps/full-version` and connect it to the store, so that a product changed in the dashboard changes in the store. Products come first; other sections follow as separate projects.
+Bring the existing admin dashboard (`../web/full-version`) into this repo as `apps/dashboard` and connect it to the store, so that a product changed in the dashboard changes in the store. Products come first; other sections follow as separate projects.
 
 ## Order of work
 
@@ -16,7 +16,7 @@ Bring the existing admin dashboard (`../web/full-version`) into this repo as `ap
 
 ## Goals
 
-- The dashboard runs from `apps/full-version` on `127.0.0.1:3001`; the store stays on `127.0.0.1:3000`.
+- The dashboard runs from `apps/dashboard` on `127.0.0.1:3001`; the store stays on `127.0.0.1:3000`.
 - Products can be listed, viewed, created, edited and archived from the dashboard.
 - A published product appears in the store on the next page load. Draft and archived products do not appear.
 - The products the store has now are imported into the database with the same slugs, prices, images, categories and collections.

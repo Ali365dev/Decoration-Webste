@@ -6,7 +6,7 @@
  */
 import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
 
-// ── mapProduct helper (mirrors apps/full-version/src/services/products.js) ───
+// ── mapProduct helper (mirrors apps/dashboard/src/services/products.js) ───
 
 function mapProduct(p: Record<string, any>) {
   const primaryImage =

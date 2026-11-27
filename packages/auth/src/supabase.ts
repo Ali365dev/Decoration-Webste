@@ -10,15 +10,17 @@ export function resolveSupabaseAnonKey(env: {
 }
 
 export function createSupabaseBrowserClient() {
-  const env = getEnv();
-  const anonKey = resolveSupabaseAnonKey(env);
-  if (!env.NEXT_PUBLIC_SUPABASE_URL || !anonKey) {
+  // Next.js only inlines NEXT_PUBLIC_* values into browser code when each is read by its
+  // full literal name; the shared env helper spreads process.env and sees nothing there.
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL || undefined;
+  const anonKey = resolveSupabaseAnonKey({
+    NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || undefined,
+    NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || undefined,
+  });
+  if (!url || !anonKey) {
     throw new Error("Supabase public credentials are not configured");
   }
-  return createBrowserClient(
-    env.NEXT_PUBLIC_SUPABASE_URL,
-    anonKey,
-  );
+  return createBrowserClient(url, anonKey);
 }
 
 export function createSupabaseServerClient(cookieStore: {

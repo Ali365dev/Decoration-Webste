@@ -10,7 +10,10 @@
     "./cms": "./src/cms/index.ts",
     "./media": "./src/media/index.ts",
     "./checkout": "./src/checkout/index.ts",
-    "./orders": "./src/orders/index.ts"
+    "./orders": "./src/orders/index.ts",
+    "./cms/defaults": "./src/cms/defaults.ts",
+    "./cms/load": "./src/cms/load.ts",
+    "./cms/rows": "./src/cms/rows.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",

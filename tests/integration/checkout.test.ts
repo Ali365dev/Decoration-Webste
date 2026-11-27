@@ -91,3 +91,10 @@ describe("checkout pipeline — validation + totals", () => {
     expect(a).not.toBe(b);
   });
 });
+
+describe("checkoutSchema email normalisation", () => {
+  it("trims and lowercases the contact email", () => {
+    const parsed = checkoutSchema.parse({ ...validInput, contact: { ...validInput.contact, email: "  Ali.Raza@Example.COM " } });
+    expect(parsed.contact.email).toBe("ali.raza@example.com");
+  });
+});

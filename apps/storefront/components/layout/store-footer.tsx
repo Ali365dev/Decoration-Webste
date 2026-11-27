@@ -5,38 +5,16 @@ import Link from "next/link";
 import { useState } from "react";
 import { ArrowUp } from "lucide-react";
 
-type FooterLinks = {
-  customerCare: { label: string; href: string }[];
-  information: { label: string; href: string }[];
-  policies: { label: string; href: string }[];
-};
+type FooterColumn = { title: string; links: { label: string; href: string }[] };
+type FooterLinks = { information: FooterColumn; customerService: FooterColumn };
+type SocialNetwork = "facebook" | "instagram" | "youtube";
+type SiteContact = { address: string; email: string; phone: string; social: { network: SocialNetwork; href: string }[] };
 
-const INFORMATION_LINKS = [
-  { label: "About Us", href: "/pages/about" },
-  { label: "Blogs", href: "/blogs" },
-  { label: "Catalogues", href: "/pages/catalogues" },
-  { label: "Privacy Policy", href: "/pages/privacy" },
-  { label: "Terms & Conditions", href: "/pages/terms" },
-];
-
-const CUSTOMER_SERVICE_LINKS = [
-  { label: "FAQs", href: "/pages/faqs" },
-  { label: "Order Tracking", href: "/pages/track-order" },
-  { label: "Store Locator", href: "/pages/store-locator" },
-  { label: "Contact Us", href: "/pages/contact" },
-  { label: "Return & Exchange Policy", href: "/pages/returns" },
-];
-
-const CONTACT = {
-  address: "Lahore, Pakistan.",
-  email: "info@decwalls.com",
-  phone: "+92 300 0606662",
-};
-
-const SOCIAL: { label: string; href: string; svg: React.ReactNode }[] = [
+// Built-in icons; which networks show, and their links, come from the dashboard.
+const SOCIAL_ICONS: { network: SocialNetwork; label: string; svg: React.ReactNode }[] = [
   {
+    network: "facebook",
     label: "Facebook",
-    href: "https://facebook.com",
     svg: (
       <svg viewBox="0 0 24 24" fill="currentColor" className="h-[18px] w-[18px]" aria-hidden="true">
         <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
@@ -44,8 +22,8 @@ const SOCIAL: { label: string; href: string; svg: React.ReactNode }[] = [
     ),
   },
   {
+    network: "instagram",
     label: "Instagram",
-    href: "https://instagram.com",
     svg: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-[18px] w-[18px]" aria-hidden="true">
         <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
@@ -55,8 +33,8 @@ const SOCIAL: { label: string; href: string; svg: React.ReactNode }[] = [
     ),
   },
   {
+    network: "youtube",
     label: "YouTube",
-    href: "https://youtube.com",
     svg: (
       <svg viewBox="0 0 24 24" fill="currentColor" className="h-[18px] w-[18px]" aria-hidden="true">
         <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z" />
@@ -69,7 +47,11 @@ function scrollToTop() {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-export function StoreFooter({ links: _links }: { links: FooterLinks }) {
+export function StoreFooter({ links, contact }: { links: FooterLinks; contact: SiteContact }) {
+  const social = contact.social.flatMap((entry) => {
+    const icon = SOCIAL_ICONS.find((i) => i.network === entry.network);
+    return icon ? [{ ...icon, href: entry.href }] : [];
+  });
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
@@ -89,23 +71,23 @@ export function StoreFooter({ links: _links }: { links: FooterLinks }) {
             Contact Us
           </h3>
           <ul className="space-y-4">
-            <li className="text-[14px] leading-relaxed text-[#666]">{CONTACT.address}</li>
+            <li className="text-[14px] leading-relaxed text-[#666]">{contact.address}</li>
             <li>
-              <a href={`mailto:${CONTACT.email}`} className="text-[14px] text-[#666] transition-colors hover:text-[#222]">
-                {CONTACT.email}
+              <a href={`mailto:${contact.email}`} className="text-[14px] text-[#666] transition-colors hover:text-[#222]">
+                {contact.email}
               </a>
             </li>
-            <li className="text-[14px] text-[#666]">{CONTACT.phone}</li>
+            <li className="text-[14px] text-[#666]">{contact.phone}</li>
           </ul>
         </div>
 
         {/* Col 2 — Information */}
         <div>
           <h3 className="mb-6 text-[11px] font-medium uppercase tracking-[0.18em] text-[#333]">
-            Information
+            {links.information.title}
           </h3>
           <ul className="space-y-4">
-            {INFORMATION_LINKS.map((item) => (
+            {links.information.links.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
@@ -121,10 +103,10 @@ export function StoreFooter({ links: _links }: { links: FooterLinks }) {
         {/* Col 3 — Customer Services */}
         <div>
           <h3 className="mb-6 text-[11px] font-medium uppercase tracking-[0.18em] text-[#333]">
-            Customer Services
+            {links.customerService.title}
           </h3>
           <ul className="space-y-4">
-            {CUSTOMER_SERVICE_LINKS.map((item) => (
+            {links.customerService.links.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
@@ -181,7 +163,7 @@ export function StoreFooter({ links: _links }: { links: FooterLinks }) {
       {/* Social icons row — left-aligned, below columns */}
       <div className="mx-auto max-w-[1400px] px-8 pb-8 lg:px-16">
         <div className="flex items-center gap-5">
-          {SOCIAL.map((s) => (
+          {social.map((s) => (
             <a
               key={s.label}
               href={s.href}

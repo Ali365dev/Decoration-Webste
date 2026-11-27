@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getDb } from "@dec-walls/db/client";
 import { orders, orderItems, orderStatusHistory } from "@dec-walls/db/schema";
-import { and, eq, desc } from "drizzle-orm";
+import { and, eq, desc, sql } from "drizzle-orm";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = req.nextUrl;
@@ -27,7 +27,7 @@ export async function GET(req: NextRequest) {
       estimatedDays: orders.estimatedDays,
     })
     .from(orders)
-    .where(and(eq(orders.number, number), eq(orders.email, email)));
+    .where(and(eq(orders.number, number), sql`lower(${orders.email}) = ${email}`));
 
   if (!order) {
     return NextResponse.json({ error: "Order not found" }, { status: 404 });

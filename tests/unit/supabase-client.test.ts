@@ -47,3 +47,14 @@ describe("isSupabaseConfigured", () => {
     expect(typeof isSupabaseConfigured).toBe("function");
   });
 });
+
+describe("createSupabaseBrowserClient", () => {
+  it("reads NEXT_PUBLIC_* by literal name so Next.js can inline them in the browser", async () => {
+    const { readFileSync } = await import("node:fs");
+    const src = readFileSync(new URL("../../packages/auth/src/supabase.ts", import.meta.url), "utf8");
+    const body = src.slice(src.indexOf("export function createSupabaseBrowserClient"), src.indexOf("export function createSupabaseServerClient"));
+    expect(body).toContain("process.env.NEXT_PUBLIC_SUPABASE_URL");
+    expect(body).toContain("process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY");
+    expect(body).not.toContain("getEnv(");
+  });
+});

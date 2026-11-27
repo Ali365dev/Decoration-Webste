@@ -1,8 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getDb } from "@dec-walls/db/client";
-import { products, productImages, productVariants } from "@dec-walls/db/schema";
+import { products } from "@dec-walls/db/schema";
 import { eq } from "drizzle-orm";
 import { guardAdmin } from "../../_guard";
+import { errorResponse } from "../../_respond";
+import { productInputSchema } from "../_product-input";
+import { loadProduct, updateProduct } from "../_product-save";
 
 type Params = { params: Promise<{ id: string }> };
 
@@ -14,13 +17,9 @@ export async function GET(req: NextRequest, { params }: Params) {
   if (!db) return NextResponse.json({ error: "Database not configured" }, { status: 503 });
 
   const { id } = await params;
-  const [product] = await db.select().from(products).where(eq(products.id, id));
+  const product = await loadProduct(db, id).catch(() => null);
   if (!product) return NextResponse.json({ error: "Not found" }, { status: 404 });
-
-  const images = await db.select().from(productImages).where(eq(productImages.productId, id));
-  const variants = await db.select().from(productVariants).where(eq(productVariants.productId, id));
-
-  return NextResponse.json({ data: { ...product, images, variants } });
+  return NextResponse.json({ data: product });
 }
 
 export async function PUT(req: NextRequest, { params }: Params) {
@@ -31,23 +30,13 @@ export async function PUT(req: NextRequest, { params }: Params) {
   if (!db) return NextResponse.json({ error: "Database not configured" }, { status: 503 });
 
   const { id } = await params;
-  const body = await req.json();
-
-  // prevent slug from being changed
-  const { slug: _slug, id: _id, createdAt: _created, ...updates } = body;
-
   try {
-    const [updated] = await db
-      .update(products)
-      .set({ ...updates, updatedAt: new Date() })
-      .where(eq(products.id, id))
-      .returning();
-
+    const input = productInputSchema.parse(await req.json());
+    const updated = await updateProduct(db, id, input);
     if (!updated) return NextResponse.json({ error: "Not found" }, { status: 404 });
     return NextResponse.json({ data: updated });
-  } catch (err: unknown) {
-    const msg = err instanceof Error ? err.message : "Unknown error";
-    return NextResponse.json({ error: msg }, { status: 500 });
+  } catch (err) {
+    return errorResponse(err);
   }
 }
 
@@ -60,12 +49,12 @@ export async function DELETE(req: NextRequest, { params }: Params) {
 
   const { id } = await params;
 
-  // archive instead of delete — keeps historical order records valid
+  // Archive instead of delete, so past orders keep pointing at a real product.
   const [archived] = await db
     .update(products)
-    .set({ status: "scheduled", updatedAt: new Date() })
+    .set({ status: "archived", updatedAt: new Date() })
     .where(eq(products.id, id))
-    .returning();
+    .returning({ id: products.id, status: products.status });
 
   if (!archived) return NextResponse.json({ error: "Not found" }, { status: 404 });
   return NextResponse.json({ data: archived });
