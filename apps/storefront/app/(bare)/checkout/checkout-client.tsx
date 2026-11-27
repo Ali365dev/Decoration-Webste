@@ -260,11 +260,26 @@ export function CheckoutClient() {
     }
   };
 
-  const applyCoupon = () => {
+  const applyCoupon = async () => {
     const code = coupon.trim().toUpperCase();
-    if (code === "DECWALLS10") { setDiscount(Math.round(subtotal * 0.1)); setCouponApplied(true); }
-    else if (code === "WELCOME") { setDiscount(500); setCouponApplied(true); }
-    else { setErrors((p) => ({ ...p, coupon: "Invalid code" })); setCouponApplied(false); setDiscount(0); }
+    if (!code) return;
+    try {
+      const res = await fetch(`/api/coupons/validate?code=${encodeURIComponent(code)}&subtotal=${subtotal}`);
+      const data = await res.json() as { valid: boolean; discountAmount: number; message: string | null };
+      if (data.valid) {
+        setDiscount(data.discountAmount);
+        setCouponApplied(true);
+        setErrors((p) => ({ ...p, coupon: "" }));
+      } else {
+        setErrors((p) => ({ ...p, coupon: data.message ?? "Invalid code" }));
+        setCouponApplied(false);
+        setDiscount(0);
+      }
+    } catch {
+      setErrors((p) => ({ ...p, coupon: "Could not validate coupon" }));
+      setCouponApplied(false);
+      setDiscount(0);
+    }
   };
 
   const cities = shipping.province ? (CITIES[shipping.province] ?? []) : [];

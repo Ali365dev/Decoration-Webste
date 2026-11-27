@@ -6,9 +6,12 @@ import {
   orderAddresses,
   payments,
   customers,
+  discounts,
+  couponUsages,
 } from "@dec-walls/db/schema";
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import { buildOrderNumber, calcOrderTotals, checkoutSchema, type CheckoutInput } from "./_checkout-helpers";
+import { validateCoupon, calcCouponDiscount } from "../coupons/_coupon-helpers";
 
 export async function POST(req: NextRequest) {
   const db = getDb();
@@ -22,7 +25,6 @@ export async function POST(req: NextRequest) {
   }
 
   const subtotal = input.items.reduce((s, i) => s + i.price * i.quantity, 0);
-  const { shipping, total, discount } = calcOrderTotals(subtotal, input.discount);
 
   // find or create customer by email
   let customerId: string | null = null;
@@ -37,6 +39,49 @@ export async function POST(req: NextRequest) {
     }).returning({ id: customers.id });
     customerId = created?.id ?? null;
   }
+
+  // server-side coupon validation — ignore client-sent discount
+  let validatedDiscount = 0;
+  let couponId: string | null = null;
+  if (input.couponCode) {
+    const code = input.couponCode.trim().toUpperCase();
+    const [couponRow] = await db
+      .select({
+        id: discounts.id,
+        code: discounts.code,
+        type: discounts.type,
+        value: discounts.value,
+        isActive: discounts.isActive,
+        startsAt: discounts.startsAt,
+        endsAt: discounts.endsAt,
+        minOrderAmount: discounts.minOrderAmount,
+        usageLimit: discounts.usageLimit,
+        totalUsages: sql<number>`(select count(*) from coupon_usages where coupon_id = ${discounts.id})`,
+      })
+      .from(discounts)
+      .where(eq(discounts.code, code));
+
+    if (!couponRow) {
+      return NextResponse.json({ error: "Invalid or inactive coupon" }, { status: 400 });
+    }
+
+    const coupon = {
+      ...couponRow,
+      value: Number(couponRow.value),
+      minOrderAmount: Number(couponRow.minOrderAmount),
+      totalUsages: Number(couponRow.totalUsages),
+    };
+
+    const result = validateCoupon(coupon, subtotal);
+    if (!result.valid) {
+      return NextResponse.json({ error: result.message ?? "Invalid coupon" }, { status: 400 });
+    }
+
+    validatedDiscount = result.discountAmount;
+    couponId = couponRow.id;
+  }
+
+  const { shipping, total, discount } = calcOrderTotals(subtotal, validatedDiscount);
 
   const number = buildOrderNumber();
   const idempotencyKey = `${input.contact.email}:${number}`;
@@ -76,7 +121,7 @@ export async function POST(req: NextRequest) {
 
   if (!order) return NextResponse.json({ error: "Failed to create order" }, { status: 500 });
 
-  await Promise.all([
+  const insertPromises: Promise<unknown>[] = [
     db.insert(orderItems).values(
       input.items.map((item) => ({
         orderId: order.id,
@@ -109,7 +154,20 @@ export async function POST(req: NextRequest) {
       amount: String(total),
       currency: "PKR",
     }),
-  ]);
+  ];
+
+  if (couponId && customerId && discount > 0) {
+    insertPromises.push(
+      db.insert(couponUsages).values({
+        couponId,
+        orderId: order.id,
+        customerId,
+        discountAmount: String(discount),
+      })
+    );
+  }
+
+  await Promise.all(insertPromises);
 
   return NextResponse.json({ orderNumber: order.number, orderId: order.id });
 }

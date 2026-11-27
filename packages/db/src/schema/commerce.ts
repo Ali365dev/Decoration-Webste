@@ -221,6 +221,18 @@ export const discounts = pgTable("discounts", {
   isActive: integer("is_active").notNull().default(1),
   startsAt: timestamp("starts_at", { withTimezone: true }),
   endsAt: timestamp("ends_at", { withTimezone: true }),
+  minOrderAmount: numeric("min_order_amount", { precision: 12, scale: 2 }).notNull().default("0"),
+  usageLimit: integer("usage_limit"),
+  perCustomerLimit: integer("per_customer_limit"),
+});
+
+export const couponUsages = pgTable("coupon_usages", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  couponId: uuid("coupon_id").notNull().references(() => discounts.id),
+  orderId: uuid("order_id").notNull().references(() => orders.id),
+  customerId: uuid("customer_id").notNull().references(() => customers.id),
+  discountAmount: numeric("discount_amount", { precision: 12, scale: 2 }).notNull(),
+  releasedAt: timestamp("released_at", { withTimezone: true }),
 });
 
 export const reviews = pgTable("reviews", {
